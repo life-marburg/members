@@ -16,7 +16,7 @@ class CreatePersonalDataTable extends Migration
     {
         Schema::create('personal_data', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('instrument')->nullable();
             $table->text('street')->nullable();
             $table->text('city')->nullable();
