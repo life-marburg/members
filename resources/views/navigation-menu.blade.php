@@ -15,7 +15,7 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('personal-data.edit') }}" :active="request()->routeIs('dashboard')">
+                    <x-jet-nav-link href="{{ route('personal-data.edit') }}" :active="request()->routeIs('personal-data.edit')">
                         {{ __('Personal Data') }}
                     </x-jet-nav-link>
                 </div>
