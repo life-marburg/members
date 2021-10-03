@@ -15,3 +15,4 @@ yarn-error.log
 /.vscode
 
 .dbdata/
+public/css/app.css
