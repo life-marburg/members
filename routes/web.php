@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PersonalDataController;
+use App\Http\Controllers\SheetController;
 use App\Http\Middleware\Instrument;
 use Illuminate\Support\Facades\Route;
 
@@ -25,10 +26,17 @@ Route::group([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::prefix('personal-data')
+    Route::prefix('/personal-data')
         ->name('personal-data.')
         ->group(function () {
             Route::get('edit', [PersonalDataController::class, 'edit'])->name('edit');
+        });
+    Route::prefix('/sheets')
+        ->name('sheets.')
+        ->group(function () {
+            Route::get('', [SheetController::class, 'index'])->name('index');
+            Route::get('/{instrument}', [SheetController::class, 'show'])->name('show');
+            Route::get('/{sheet}/{instrument}/{variant}', [SheetController::class, 'download'])->name('download');
         });
 });
 

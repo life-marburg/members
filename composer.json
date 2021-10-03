@@ -13,7 +13,9 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.5",
-        "nwidart/laravel-modules": "^8.2"
+        "nwidart/laravel-modules": "^8.2",
+        "pbmedia/laravel-webdav": "^1.10",
+        "predis/predis": "^1.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

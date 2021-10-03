@@ -24,3 +24,6 @@ services:
       - MYSQL_USER=life
       - MYSQL_PASSWORD=life
       - MYSQL_ROOT_PASSWORD=life
+
+  redis:
+    image: redis

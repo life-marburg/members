@@ -43,9 +43,14 @@ class SheetTest extends TestCase
     {
         $sheets = $this->sheetService->getSheetsForInstrument('trumpet')->toArray();
 
-        $this->assertNotContains('Song1.TenorSax.1.pdf', $sheets['Song1']);
-        $this->assertContains('Song1.Trompete.1.pdf', $sheets['Song1']);
-        $this->assertContains('Song1.Trompete.2.pdf', $sheets['Song1']);
+        $this->assertEquals([
+            ['title' => '1. Stimme', 'path' => '1'],
+            ['title' => '2. Stimme', 'path' => '2'],
+        ], $sheets['Song1']);
+        $this->assertEquals([
+            ['title' => '1. Stimme', 'path' => '1'],
+            ['title' => '2. Stimme', 'path' => '2'],
+        ], $sheets['Song2']);
     }
 
     public function test_get_sheets_invalid_instrument()
@@ -54,4 +59,7 @@ class SheetTest extends TestCase
 
         $this->assertNull($sheets);
     }
+
+    // TODO: valid group, invalid instrument
+    // TODO: (maybe not in this test class) users should only be able to access instrument pages of their instrument group
 }
