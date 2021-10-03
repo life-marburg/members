@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PersonalData;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PersonalDataController extends Controller
 {
@@ -30,5 +31,18 @@ class PersonalDataController extends Controller
     public function destroy(PersonalData $personalData)
     {
         //
+    }
+
+    public function setInstrument()
+    {
+        return view('profile.set-instrument');
+    }
+
+    public function saveInstrument(Request $request)
+    {
+        $request->user()->personalData->instrument = $request->input('instrument');
+        $request->user()->personalData->save();
+
+        return redirect(route('dashboard'));
     }
 }

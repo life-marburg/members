@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PersonalDataController;
+use App\Http\Middleware\Instrument;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +20,7 @@ Route::get('/', function () {
 });
 
 Route::group([
-    'middleware' => ['auth:sanctum', 'verified'],
+    'middleware' => ['auth:sanctum', 'verified', Instrument::class],
 ], function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -30,3 +31,14 @@ Route::group([
             Route::get('edit', [PersonalDataController::class, 'edit'])->name('edit');
         });
 });
+
+Route::middleware(['auth:sanctum', 'verified'])
+    ->name('set-instrument.')
+    ->prefix('/user/set-instrument')
+    ->group(function () {
+        Route::get('', [PersonalDataController::class, 'setInstrument'])
+            ->name('form');
+        Route::post('', [PersonalDataController::class, 'saveInstrument'])
+            ->name('save');
+    });
+
