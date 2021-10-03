@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Instruments;
 use App\Models\PersonalData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class PersonalDataController extends Controller
 {
@@ -40,6 +42,10 @@ class PersonalDataController extends Controller
 
     public function saveInstrument(Request $request)
     {
+        $request->validate([
+            'instrument' => ['required', Rule::in(array_keys(Instruments::INSTRUMENT_GROUPS))]
+        ]);
+
         $request->user()->personalData->instrument = $request->input('instrument');
         $request->user()->personalData->save();
 

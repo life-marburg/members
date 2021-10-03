@@ -21,6 +21,17 @@ class InstrumentTest extends TestCase
         $response->assertRedirect(route('set-instrument.form'));
     }
 
+    public function test_new_account_set_invalid_instrument()
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->post(route('set-instrument.save'), ['instrument' => 'not-an-instrument']);
+
+        $response->assertSessionHasErrors();
+    }
+
     public function test_account_with_instrument()
     {
         /** @var User $user */

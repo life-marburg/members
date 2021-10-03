@@ -2,9 +2,9 @@
 
 namespace App;
 
-trait ManagesInstruments
+interface Instruments
 {
-    public static $instrumentGroups = [
+    public const INSTRUMENT_GROUPS = [
         'woodwind' => [
             'name' => 'Hohes Holz',
             'instruments' => ['Flöte', 'Oboe', 'Fagott'],
