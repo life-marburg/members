@@ -14,7 +14,7 @@ class SheetService
 
     protected function getSongFileStructure(): array
     {
-        return Cache::remember(self::CACHE_KEY, 3600, function () {
+        return Cache::rememberForever(self::CACHE_KEY, function () {
             $all = [];
             $files = Storage::disk('cloud')->allFiles(self::SHEET_FOLDER);
 
