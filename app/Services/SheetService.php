@@ -40,7 +40,7 @@ class SheetService
         $structure = collect($this->getSongFileStructure());
 
         return $structure
-            ->map(function ($item, $key) use ($instruments, $instrument) {
+            ->map(function ($item) use ($instruments, $instrument) {
                 $all = [];
                 foreach ($item as $it) {
                     if ($instrument === null) {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PersonalDataController;
 use App\Http\Controllers\SheetController;
 use App\Http\Middleware\Instrument;
@@ -23,9 +24,7 @@ Route::get('/', function () {
 Route::group([
     'middleware' => ['auth:sanctum', 'verified', Instrument::class],
 ], function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::prefix('/personal-data')
         ->name('personal-data.')
         ->group(function () {
