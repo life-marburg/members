@@ -1,8 +1,11 @@
+with (import <nixpkgs> {});
+
 let
     unstable = import <nixos-unstable> {};
 in
 { pkgs ? import <nixpkgs> {} }:
-  pkgs.mkShell {
+  stdenv.mkDerivation {
+    name = "life-dev";
     nativeBuildInputs = with pkgs; [
       (php80.withExtensions
         ({ all, ... }: with all; [
@@ -35,4 +38,7 @@ in
       unstable.php80Packages.composer # composer 2
       libjpeg
  ];
+ shellHook = ''
+   alias aa="docker-compose exec -T -u www-data web php artisan"
+ '';
 }
