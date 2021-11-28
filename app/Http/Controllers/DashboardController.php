@@ -12,7 +12,7 @@ class DashboardController extends Controller
     {
         $page = Page::wherePath('/dashboard')->first();
 
-        return view('dashboard', [
+        return view('pages.dashboard', [
             'page' => $page,
             'canEdit' => Auth::user()->hasPermissionTo(Rights::P_EDIT_PAGES),
         ]);
