@@ -19,6 +19,10 @@ class User extends Authenticatable
     use TwoFactorAuthenticatable;
     use HasRoles;
 
+    public const STATUS_NEW = 0;
+    public const STATUS_UNLOCKED = 1;
+    public const STATUS_LOCKED = 2;
+
     /**
      * The attributes that are mass assignable.
      *

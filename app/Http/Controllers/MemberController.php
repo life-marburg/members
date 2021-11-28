@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Page;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class PageController extends Controller
+class MemberController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $members = User::with('personalData')->paginate(25);
+
+        return view('pages.members.index', [
+            'members' => $members,
+        ]);
     }
 
     /**
@@ -49,11 +48,15 @@ class PageController extends Controller
         //
     }
 
-    public function edit(Page $page)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-        return view('pages.page-edit', [
-            'page' => $page,
-        ]);
+        //
     }
 
     /**

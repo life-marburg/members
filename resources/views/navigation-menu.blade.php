@@ -21,6 +21,11 @@
                     <x-jet-nav-link href="{{ route('personal-data.edit') }}" :active="request()->routeIs('personal-data.edit')">
                         {{ __('Personal Data') }}
                     </x-jet-nav-link>
+                    @can(\App\Rights::P_MANAGE_MEMBERS)
+                        <x-jet-nav-link href="{{ route('members.index') }}" :active="request()->routeIs('members.index')">
+                            {{ __('Manage Members') }}
+                        </x-jet-nav-link>
+                    @endcan
                 </div>
             </div>
 
