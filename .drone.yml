@@ -91,6 +91,8 @@ steps:
       DB_DATABASE: /drone/src/database.sqlite
       DB_FOREIGN_KEYS: true
     commands:
+      - cp .env.example .env
+      - php artisan key:generate
       - ./vendor/bin/phpunit
     depends_on:
       - dependencies
