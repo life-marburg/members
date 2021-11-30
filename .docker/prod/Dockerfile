@@ -7,6 +7,8 @@ RUN composer install --optimize-autoloader --ignore-platform-req=php
 FROM node:16 AS build-frontend
 
 WORKDIR /var/www
+# To make tailwind purge find templates from vendor
+COPY --from=build-php /var/www/vendor /var/www/vendor
 COPY . ./
 
 RUN yarn && yarn prod
