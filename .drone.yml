@@ -91,7 +91,6 @@ steps:
       DB_DATABASE: /drone/src/database.sqlite
       DB_FOREIGN_KEYS: true
     commands:
-      - ./vendor/bin/robo setup
       - ./vendor/bin/phpunit
     depends_on:
       - dependencies
