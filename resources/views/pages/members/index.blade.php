@@ -46,23 +46,7 @@
                                 {{ \App\Instruments::INSTRUMENT_GROUPS[$member->personalData->instrument]['name'] }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                @php
-                                    $statusColor = 'bg-orange-100 text-orange-800';
-                                    $status = __('New');
-
-                                    if($member->status === \App\Models\User::STATUS_UNLOCKED) {
-                                        $statusColor = 'bg-green-100 text-green-800';
-                                        $status = __('Active');
-                                    }
-                                    if($member->status === \App\Models\User::STATUS_LOCKED) {
-                                        $statusColor = 'bg-red-100 text-red-800';
-                                        $status = __('Locked');
-                                    }
-                                @endphp
-                                    <span
-                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusColor }}">
-                                    {{ $status }}
-                                </span>
+                                <x-status :status="$member->status"/>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <a href="{{ route('members.edit', ['member' => $member]) }}"
