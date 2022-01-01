@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Rights;
 use Livewire\Component;
 
 class UserUpdateMeta extends UserEditComponent
@@ -17,6 +18,7 @@ class UserUpdateMeta extends UserEditComponent
 
         $this->state['status'] = $this->user->status;
         $this->state['instrument'] = $this->user->personalData->instrument;
+        $this->state['is_admin'] = $this->user->hasRole(Rights::R_ADMIN);
     }
 
     protected function save()
@@ -26,5 +28,11 @@ class UserUpdateMeta extends UserEditComponent
 
         $this->user->status = $this->state['status'];
         $this->user->save();
+
+        if ($this->state['is_admin']) {
+            $this->user->assignRole(Rights::R_ADMIN);
+        } else {
+            $this->user->removeRole(Rights::R_ADMIN);
+        }
     }
 }

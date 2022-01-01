@@ -21,7 +21,7 @@
 
         <!-- Instrument -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="Instrument" value="{{ __('Instrument') }}"/>
+            <x-jet-label for="instrument" value="{{ __('Instrument') }}"/>
             <x-select id="instrument" type="text" class="mt-1 block w-full" wire:model.defer="state.instrument">
                 <option></option>
                 @foreach(\App\Instruments::INSTRUMENT_GROUPS as $key => $instrument)
@@ -32,6 +32,13 @@
         </div>
 
         <!-- Admin -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label>
+                <x-jet-checkbox id="is_admin" wire:model.defer="state.is_admin" class="mr-2"/>
+                {{ __('Is Admin') }}
+            </x-jet-label>
+            <x-jet-input-error for="is_admin" class="mt-2"/>
+        </div>
     </x-slot>
 
     <x-slot name="actions">
