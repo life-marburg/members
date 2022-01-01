@@ -1,6 +1,6 @@
 <x-jet-form-section submit="update">
     <x-slot name="title">
-        {{ __('Various Settings') }}
+        {{ __('Admin Settings') }}
     </x-slot>
 
     <x-slot name="description">

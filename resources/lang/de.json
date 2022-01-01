@@ -717,5 +717,11 @@
     "Zip Code": "Postleitzahl",
     "Sheets": "Noten",
     "Sheets Per Instrument": "Noten nach Instrumenten",
-    "Sheets For :instrument": "Noten für :instrument"
+    "Sheets For :instrument": "Noten für :instrument",
+    "Locked": "Gesperrt",
+    "Active": "Aktiv",
+    "Admin Settings": "Administrative Einstellungen",
+    "Set the user's state, admin status or instrument here.": "Hier kannst du den Status, die Adminzugehörigkeit oder das Instrument einstellen.",
+    "Is Admin": "Hat Administrationsrechte",
+    "Manage Members": "Mitgliederverwaltung"
 }
