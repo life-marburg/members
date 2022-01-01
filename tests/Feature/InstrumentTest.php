@@ -35,11 +35,25 @@ class InstrumentTest extends TestCase
         $response->assertSessionHasErrors();
     }
 
-    public function test_account_with_instrument()
+    public function test_should_not_redirect_inactive_accounts_with_instrument_to_dashboard()
     {
         /** @var User $user */
         $user = User::factory()->create();
         $user->personalData->instrument = 'trumpet';
+        $user->personalData->save();
+        $this->actingAs($user);
+
+        $response = $this->get(route('dashboard'));
+
+        $response->assertRedirect(route('not-yet-active'));
+    }
+
+    public function test_should_redirect_active_account_to_dashboard()
+    {
+        /** @var User $user */
+        $user = User::factory()->create(['status' => User::STATUS_UNLOCKED]);
+        $user->personalData->instrument = 'trumpet';
+        $user->personalData->save();
         $this->actingAs($user);
 
         $response = $this->get(route('dashboard'));
