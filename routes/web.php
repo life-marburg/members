@@ -5,6 +5,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PersonalDataController;
 use App\Http\Controllers\SheetController;
+use App\Http\Middleware\CheckIfActive;
 use App\Http\Middleware\Instrument;
 use App\Rights;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +26,7 @@ Route::get('/', function () {
 });
 
 Route::group([
-    'middleware' => ['auth:sanctum', 'verified', Instrument::class],
+    'middleware' => ['auth:sanctum', 'verified', Instrument::class, CheckIfActive::class],
 ], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::prefix('/personal-data')
@@ -54,3 +55,6 @@ Route::middleware(['auth:sanctum', 'verified'])
             ->name('save');
     });
 
+Route::get('not-yet-active', function () {
+    return view('pages.not-yet-active');
+})->name('not-yet-active');
