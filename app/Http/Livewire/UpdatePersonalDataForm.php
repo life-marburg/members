@@ -2,24 +2,19 @@
 
 namespace App\Http\Livewire;
 
-use Illuminate\Support\Facades\Auth;
-use Livewire\Component;
-
-class UpdatePersonalDataForm extends Component
+class UpdatePersonalDataForm extends UserEditComponent
 {
-    public $state = [];
-
     public function mount()
     {
-        $this->state = Auth::user()->personalData->toArray();
-        $this->state['name'] = Auth::user()->name;
+        parent::mount();
+
+        $this->state = $this->user->personalData->toArray();
+        $this->state['name'] = $this->user->name;
     }
 
-    public function update()
+    protected function save()
     {
-        $this->resetErrorBag();
-
-        Auth::user()
+        $this->user
             ->personalData
             ->fill([
                 'street' => $this->state['street'],
@@ -28,10 +23,8 @@ class UpdatePersonalDataForm extends Component
             ])
             ->save();
 
-        Auth::user()->name = $this->state['name'];
-        Auth::user()->save();
-
-        $this->emit('saved');
+        $this->user->name = $this->state['name'];
+        $this->user->save();
     }
 
     public function render()

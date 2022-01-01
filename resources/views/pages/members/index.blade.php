@@ -26,11 +26,8 @@
                             {{ __('Status') }}
                         </th>
                         <th scope="col" class="relative px-6 py-3">
-                            <span class="sr-only">{{ __('Details') }}</span>
+                            <span class="sr-only">{{ __('Edit') }}</span>
                         </th>
-                        {{--                            <th scope="col" class="relative px-6 py-3">--}}
-                        {{--                                <span class="sr-only">Edit</span>--}}
-                        {{--                            </th>--}}
                     </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -68,12 +65,9 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <a href="{{ route('members.show', ['member' => $member]) }}"
-                                   class="text-indigo-600 hover:text-indigo-900">{{ __('Details') }}</a>
+                                <a href="{{ route('members.edit', ['member' => $member]) }}"
+                                   class="text-indigo-600 hover:text-indigo-900">{{ __('Edit') }}</a>
                             </td>
-                            {{--                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">--}}
-                            {{--                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>--}}
-                            {{--                                </td>--}}
                         </tr>
                     @endforeach
                     </tbody>
