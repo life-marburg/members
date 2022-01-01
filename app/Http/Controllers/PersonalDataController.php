@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Instruments;
 use App\Models\PersonalData;
+use App\Models\User;
+use App\Notifications\UserIsWaitingForActivation;
+use App\Rights;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
 
 class PersonalDataController extends Controller
 {
@@ -48,6 +52,12 @@ class PersonalDataController extends Controller
 
         $request->user()->personalData->instrument = $request->input('instrument');
         $request->user()->personalData->save();
+
+        /** @var User[] $admins */
+        $admins = Role::findByName(Rights::R_ADMIN, 'web')->users()->get();
+        foreach ($admins as $admin) {
+            $admin->notify(new UserIsWaitingForActivation($request->user()));
+        }
 
         return redirect(route('dashboard'));
     }

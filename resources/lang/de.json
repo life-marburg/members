@@ -723,5 +723,8 @@
     "Admin Settings": "Administrative Einstellungen",
     "Set the user's state, admin status or instrument here.": "Hier kannst du den Status, die Adminzugehörigkeit oder das Instrument einstellen.",
     "Is Admin": "Hat Administrationsrechte",
-    "Manage Members": "Mitgliederverwaltung"
+    "Manage Members": "Mitgliederverwaltung",
+    ":user is waiting for activation": ":user wartet auf Freischaltung",
+    "Activate": "Freischalten",
+    ":user just registered and is now waiting for activation in the admin panel.": ":user hat sich gerade registriert und wartet jetzt auf die Freischaltung im Adminpanel."
 }
