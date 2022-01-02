@@ -1,7 +1,7 @@
 <x-app-layout :pageTitle="__('Sheets Per Instrument')">
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ $pageTitle }}
+        <h2 class="text-xl text-gray-800 leading-tight font-display">
+            {{ __('Sheets Per Instrument') }}
         </h2>
     </x-slot>
 

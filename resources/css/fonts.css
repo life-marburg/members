@@ -1,0 +1,44 @@
+@font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 400;
+    font-stretch: normal;
+    font-display: swap;
+    src: url(../fonts/opensans-memQYaGs126MiZpBA-UFUIcVXSCEkx2cmqvXlWq8tWZ0Pw86hd0Rk8ZkaVc.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-stretch: normal;
+    font-display: swap;
+    src: url(../fonts/opensans-memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0C4n.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'Poppins';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url(../fonts/poppins-pxiGyp8kv8JHgFVrJJLedw.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'Poppins';
+    font-style: italic;
+    font-weight: 600;
+    font-display: swap;
+    src: url(../fonts/poppins-pxiDyp8kv8JHgFVrJJLmr19lEA.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(../fonts/poppins-pxiEyp8kv8JHgFVrFJA.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url(../fonts/poppins-pxiByp8kv8JHgFVrLEj6V1s.ttf) format('truetype');
+}

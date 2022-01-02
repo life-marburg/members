@@ -1,7 +1,7 @@
 <x-app-layout :pageTitle="__('Personal Data')">
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ $pageTitle }}
+        <h2 class="text-xl text-gray-800 leading-tight font-display">
+            {{ __('Personal Data') }}
         </h2>
     </x-slot>
 
