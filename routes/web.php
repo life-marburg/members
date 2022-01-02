@@ -7,7 +7,9 @@ use App\Http\Controllers\PersonalDataController;
 use App\Http\Controllers\SheetController;
 use App\Http\Middleware\CheckIfActive;
 use App\Http\Middleware\Instrument;
+use App\Models\User;
 use App\Rights;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,5 +58,9 @@ Route::middleware(['auth:sanctum', 'verified'])
     });
 
 Route::get('not-yet-active', function () {
+    if (Auth::user()->status === User::STATUS_UNLOCKED) {
+        return redirect(route('dashboard'));
+    }
+
     return view('pages.not-yet-active');
 })->name('not-yet-active');
