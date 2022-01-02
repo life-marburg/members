@@ -39,8 +39,8 @@ class UserIsWaitingForActivation extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject(__(':user is waiting for activation'))
-            ->line(__(':user just registered and is now waiting for activation in the admin panel.'))
+            ->subject(__(':user is waiting for activation', ['user' => $this->user->name]))
+            ->line(__(':user just registered and is now waiting for activation in the admin panel.', ['user' => $this->user->name]))
             ->action(__('Activate'), route('members.edit', ['member' => $this->user]));
     }
 
