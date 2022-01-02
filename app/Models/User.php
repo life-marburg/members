@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Instruments;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -80,5 +81,10 @@ class User extends Authenticatable implements HasLocalePreference
     public function preferredLocale()
     {
         return 'de';
+    }
+
+    public function getInstrumentAttribute(): ?string
+    {
+        return Instruments::INSTRUMENT_GROUPS[$this->personalData->instrument]['name'] ?? null;
     }
 }

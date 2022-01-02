@@ -43,7 +43,7 @@
                                 {{ $member->email }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                {{ \App\Instruments::INSTRUMENT_GROUPS[$member->personalData->instrument]['name'] }}
+                                {{ $member->instrument }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <x-status :status="$member->status"/>
