@@ -31,6 +31,17 @@
             <x-jet-input-error for="instrument" class="mt-2"/>
         </div>
 
+        <!-- Disable after days -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="disable-after-days" value="{{ __('Disable after inactivity') }}"/>
+            <x-select id="disable-after-days" type="text" class="mt-1 block w-full" wire:model.defer="state.disable_after">
+                <option value="null">{{ __('Never') }}</option>
+                <option value="14">{{ __('After :n days', ['n' => 14]) }}</option>
+                <option value="90">{{ __('After :n days', ['n' => 90]) }}</option>
+            </x-select>
+            <x-jet-input-error for="disable-after-days" class="mt-2"/>
+        </div>
+
         <!-- Admin -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label>

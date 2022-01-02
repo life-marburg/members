@@ -736,5 +736,8 @@
     "Welcome, :user": "Herzlich Willkommen, :user",
     "Your account will be disabled in 3 days": "Dein Account wird in 3 Tagen deaktiviert",
     "Due to inactivity, your account will be disabled in 3 days.": "Da du deinen Account in letzter Zeit nicht genutzt hast, werden wir ihn in 3 Tagen deaktivieren.",
-    "If you want to continue using your account, log in now.": "Wenn du ihn weiter nutzen möchtest, melde dich bitte im internen Bereich an."
+    "If you want to continue using your account, log in now.": "Wenn du ihn weiter nutzen möchtest, melde dich bitte im internen Bereich an.",
+    "Disable after inactivity": "Bei Inaktivität deaktivieren",
+    "Never": "Nie",
+    "After :n days": "Nach :n Tagen"
 }
