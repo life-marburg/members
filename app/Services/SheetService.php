@@ -12,22 +12,30 @@ class SheetService
     private const SHEET_FOLDER = 'Life/Noten';
     private const CACHE_KEY = 'sheet_files';
 
+    protected function getSheetStructureFromWebdav(): array
+    {
+        $all = [];
+        $files = Storage::disk('cloud')->allFiles(self::SHEET_FOLDER);
+
+        foreach ($files as $file) {
+            $file = str_replace(self::SHEET_FOLDER . '/', '', $file);
+            $parts = explode('/', $file);
+            if (count($parts) === 2) {
+                $all[$parts[0]][] = $parts[1];
+            }
+        }
+
+        return $all;
+    }
+
     protected function getSongFileStructure(): array
     {
-        return Cache::rememberForever(self::CACHE_KEY, function () {
-            $all = [];
-            $files = Storage::disk('cloud')->allFiles(self::SHEET_FOLDER);
+        return Cache::rememberForever(self::CACHE_KEY, fn() => $this->getSheetStructureFromWebdav());
+    }
 
-            foreach ($files as $file) {
-                $file = str_replace(self::SHEET_FOLDER . '/', '', $file);
-                $parts = explode('/', $file);
-                if (count($parts) === 2) {
-                    $all[$parts[0]][] = $parts[1];
-                }
-            }
-
-            return $all;
-        });
+    public function refreshSheetsCache()
+    {
+        Cache::put(self::CACHE_KEY, $this->getSheetStructureFromWebdav());
     }
 
     public function getSheetsForInstrument(string $instrumentGroup, string $instrument = null): ?Collection
