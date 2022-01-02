@@ -1,7 +1,5 @@
 <?php
 
-use Nwidart\Modules\Activators\FileActivator;
-
 return [
 
     /*
