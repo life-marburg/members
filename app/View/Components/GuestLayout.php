@@ -8,7 +8,7 @@ class GuestLayout extends Component
 {
     public ?string $pageTitle = null;
 
-    public function __construct(string $pageTitle)
+    public function __construct(?string $pageTitle = null)
     {
         $this->pageTitle = $pageTitle;
     }
