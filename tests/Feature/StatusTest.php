@@ -66,6 +66,7 @@ class StatusTest extends TestCase
                 'status' => User::STATUS_UNLOCKED,
                 'instrument' => 'trumpet',
                 'is_admin' => false,
+                'disable_after' => 90,
             ])
             ->call('update');
 
@@ -87,6 +88,7 @@ class StatusTest extends TestCase
                 'status' => User::STATUS_LOCKED,
                 'instrument' => 'trumpet',
                 'is_admin' => false,
+                'disable_after' => 90,
             ])
             ->call('update');
 
@@ -108,6 +110,7 @@ class StatusTest extends TestCase
                 'status' => User::STATUS_UNLOCKED,
                 'instrument' => 'trumpet',
                 'is_admin' => false,
+                'disable_after' => 90,
             ])
             ->call('update');
 
