@@ -8,35 +8,14 @@ use App\Models\User;
 use App\Notifications\UserIsWaitingForActivation;
 use App\Rights;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 
 class PersonalDataController extends Controller
 {
-    public function index()
-    {
-        //
-    }
-
-    public function show(PersonalData $personalData)
-    {
-        //
-    }
-
     public function edit(PersonalData $personalData)
     {
         return view('profile.manage-personal-data');
-    }
-
-    public function update(Request $request, PersonalData $personalData)
-    {
-        //
-    }
-
-    public function destroy(PersonalData $personalData)
-    {
-        //
     }
 
     public function setInstrument()

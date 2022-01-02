@@ -6,11 +6,13 @@ use Illuminate\View\Component;
 
 class GuestLayout extends Component
 {
-    /**
-     * Get the view / contents that represents the component.
-     *
-     * @return \Illuminate\View\View
-     */
+    public ?string $pageTitle = null;
+
+    public function __construct(string $pageTitle)
+    {
+        $this->pageTitle = $pageTitle;
+    }
+
     public function render()
     {
         return view('layouts.guest');

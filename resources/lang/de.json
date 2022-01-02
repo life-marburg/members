@@ -729,5 +729,8 @@
     ":user just registered and is now waiting for activation in the admin panel.": ":user hat sich gerade registriert und wartet jetzt auf die Freischaltung im Adminpanel.",
     "Your account has just been enabled": "Dein Account wurde gerade aktiviert",
     "An admin has unlocked your account just now. You can now use the site.": "Ein Admin hat gerade deinen Account aktiviert. Du kannst die Seite jetzt nutzen.",
-    "Login now": "Jetzt einloggen"
+    "Login now": "Jetzt einloggen",
+    "Edit :user": ":user bearbeiten",
+    "Edit Page": "Seite bearbeiten",
+    "Set Instrument": "Instrument einstellen"
 }
