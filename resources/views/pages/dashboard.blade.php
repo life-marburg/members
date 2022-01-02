@@ -1,5 +1,6 @@
 <x-content title="Dashboard">
     <div class="prose">
+        <h3>{{ __('Welcome, :user', ['user' => \Illuminate\Support\Facades\Auth::user()->name]) }}</h3>
         {!! $page->content !!}
     </div>
     @if($canEdit)

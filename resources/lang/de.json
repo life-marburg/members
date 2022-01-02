@@ -732,5 +732,6 @@
     "Login now": "Jetzt einloggen",
     "Edit :user": ":user bearbeiten",
     "Edit Page": "Seite bearbeiten",
-    "Set Instrument": "Instrument einstellen"
+    "Set Instrument": "Instrument einstellen",
+    "Welcome, :user": "Herzlich Willkommen, :user"
 }
