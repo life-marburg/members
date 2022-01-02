@@ -32,13 +32,15 @@ class UserUpdateMeta extends UserEditComponent
             $this->user->notify(new UserStatusChanged());
         }
 
-        $this->user->status = $this->state['status'];
-        $this->user->save();
-
         if ($this->state['is_admin']) {
             $this->user->assignRole(Rights::R_ADMIN);
+            $this->user->disable_after_days = null;
         } else {
             $this->user->removeRole(Rights::R_ADMIN);
+            $this->user->disable_after_days = 90;
         }
+
+        $this->user->status = $this->state['status'];
+        $this->user->save();
     }
 }
