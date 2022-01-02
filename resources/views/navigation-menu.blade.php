@@ -102,6 +102,17 @@
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('sheets.index') }}" :active="request()->routeIs('sheets.index') || request()->routeIs('sheets.show')">
+                {{ __('Sheets') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('personal-data.edit') }}" :active="request()->routeIs('personal-data.edit')">
+                {{ __('Personal Data') }}
+            </x-jet-responsive-nav-link>
+            @can(\App\Rights::P_MANAGE_MEMBERS)
+                <x-jet-responsive-nav-link href="{{ route('members.index') }}" :active="request()->routeIs('members.index')">
+                    {{ __('Manage Members') }}
+                </x-jet-responsive-nav-link>
+            @endcan
         </div>
 
         <!-- Responsive Settings Options -->
