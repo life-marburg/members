@@ -28,7 +28,7 @@ class UserUpdateMeta extends UserEditComponent
         $this->user->personalData->save();
 
         $status = (int)$this->state['status'];
-        if ($this->user->status !== $status && $status === User::STATUS_UNLOCKED) {
+        if ($this->user->status != $status && $status === User::STATUS_UNLOCKED) {
             $this->user->notify(new UserStatusChanged());
         }
 
