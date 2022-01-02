@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\User;
+use App\Notifications\UserStatusChanged;
 use App\Rights;
-use Livewire\Component;
 
 class UserUpdateMeta extends UserEditComponent
 {
@@ -25,6 +26,10 @@ class UserUpdateMeta extends UserEditComponent
     {
         $this->user->personalData->instrument = $this->state['instrument'];
         $this->user->personalData->save();
+
+        if ($this->user->status != $this->state['status'] && $this->state['status'] === User::STATUS_UNLOCKED) {
+            $this->user->notify(new UserStatusChanged());
+        }
 
         $this->user->status = $this->state['status'];
         $this->user->save();

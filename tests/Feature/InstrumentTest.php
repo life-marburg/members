@@ -48,19 +48,6 @@ class InstrumentTest extends TestCase
         $response->assertRedirect(route('not-yet-active'));
     }
 
-    public function test_should_redirect_active_account_to_dashboard()
-    {
-        /** @var User $user */
-        $user = User::factory()->create(['status' => User::STATUS_UNLOCKED]);
-        $user->personalData->instrument = 'trumpet';
-        $user->personalData->save();
-        $this->actingAs($user);
-
-        $response = $this->get(route('dashboard'));
-
-        $response->assertStatus(200);
-    }
-
     public function test_new_user_instrument_set_should_trigger_notification()
     {
         Notification::fake();
