@@ -12,6 +12,9 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * @mixin IdeHelperUser
+ */
 class User extends Authenticatable implements HasLocalePreference
 {
     use HasApiTokens;
@@ -34,6 +37,7 @@ class User extends Authenticatable implements HasLocalePreference
         'name',
         'email',
         'password',
+        'last_active_at',
     ];
 
     /**
@@ -55,6 +59,7 @@ class User extends Authenticatable implements HasLocalePreference
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'last_active_at' => 'datetime',
     ];
 
     /**
