@@ -19,7 +19,7 @@ class Instrument
     {
         $user = Auth::user();
 
-        if($user->personalData->instrument === null) {
+        if($user->instrumentGroups->count() === 0) {
             return redirect(route('set-instrument.form'));
         }
 
