@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Instruments;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -85,9 +86,9 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->hasOne(PersonalData::class);
     }
 
-    public function instrumentGroups(): HasMany
+    public function instrumentGroups(): BelongsToMany
     {
-        return $this->hasMany(InstrumentGroup::class);
+        return $this->belongsToMany(InstrumentGroup::class, 'user_instrument_group');
     }
 
     public function preferredLocale(): string
