@@ -739,5 +739,7 @@
     "If you want to continue using your account, log in now.": "Wenn du ihn weiter nutzen möchtest, melde dich bitte im internen Bereich an.",
     "Disable after inactivity": "Bei Inaktivität deaktivieren",
     "Never": "Nie",
-    "After :n days": "Nach :n Tagen"
+    "After :n days": "Nach :n Tagen",
+    "Can view sheets for all instruments": "Darf Noten für alle Instrumente sehen",
+    "Already implied since this user has admin permissions.": "Bereits dadurch gesetzt, dass dieses Mitglied Admin-Rechte hat."
 }

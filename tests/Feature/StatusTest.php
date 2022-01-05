@@ -67,6 +67,7 @@ class StatusTest extends TestCase
                 'instrument' => 'trumpet',
                 'is_admin' => false,
                 'disable_after' => 90,
+                'can_view_all_instruments' => false,
             ])
             ->call('update');
 
@@ -89,6 +90,7 @@ class StatusTest extends TestCase
                 'instrument' => 'trumpet',
                 'is_admin' => false,
                 'disable_after' => 90,
+                'can_view_all_instruments' => false,
             ])
             ->call('update');
 
@@ -111,6 +113,7 @@ class StatusTest extends TestCase
                 'instrument' => 'trumpet',
                 'is_admin' => false,
                 'disable_after' => 90,
+                'can_view_all_instruments' => false,
             ])
             ->call('update');
 

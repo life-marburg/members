@@ -24,7 +24,9 @@
             <x-jet-label for="instrument" value="{{ __('Instrument') }}"/>
             <x-select id="instrument" type="text" class="mt-1 block w-full" wire:model.defer="state.instrument">
                 @foreach(\App\Instruments::INSTRUMENT_GROUPS as $key => $instrument)
-                    <option value="{{ $key }}">{{ $instrument['name'] }} ({{ implode(', ', $instrument['instruments']) }})</option>
+                    <option value="{{ $key }}">
+                        {{ $instrument['name'] }} ({{ implode(', ', $instrument['instruments']) }})
+                    </option>
                 @endforeach
             </x-select>
             <x-jet-input-error for="instrument" class="mt-2"/>
@@ -33,7 +35,8 @@
         <!-- Disable after days -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="disable-after-days" value="{{ __('Disable after inactivity') }}"/>
-            <x-select id="disable-after-days" type="text" class="mt-1 block w-full" wire:model.defer="state.disable_after">
+            <x-select id="disable-after-days" type="text" class="mt-1 block w-full"
+                      wire:model.defer="state.disable_after">
                 <option value="null">{{ __('Never') }}</option>
                 <option value="14">{{ __('After :n days', ['n' => 14]) }}</option>
                 <option value="90">{{ __('After :n days', ['n' => 90]) }}</option>
@@ -44,10 +47,26 @@
         <!-- Admin -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label>
-                <x-jet-checkbox id="is_admin" wire:model.defer="state.is_admin" class="mr-2"/>
+                <x-jet-checkbox id="is_admin" wire:model="state.is_admin" class="mr-2"/>
                 {{ __('Is Admin') }}
             </x-jet-label>
             <x-jet-input-error for="is_admin" class="mt-2"/>
+        </div>
+
+        <!-- All Instruments -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label>
+                <x-jet-checkbox id="can_view_all_instruments" wire:model="state.can_view_all_instruments" class="mr-2"
+                                :disabled="$state['is_admin']"/>
+                {{ __('Can view sheets for all instruments') }}
+                @if($state['is_admin'])
+                    <br/>
+                    <span class="text-xs text-gray-500">
+                        {{ __('Already implied since this user has admin permissions.') }}
+                    </span>
+                @endif
+            </x-jet-label>
+            <x-jet-input-error for="can_view_all_instruments" class="mt-2"/>
         </div>
     </x-slot>
 

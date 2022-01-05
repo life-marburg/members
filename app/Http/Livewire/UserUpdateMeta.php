@@ -21,6 +21,7 @@ class UserUpdateMeta extends UserEditComponent
         $this->state['instrument'] = $this->user->personalData->instrument;
         $this->state['is_admin'] = $this->user->hasRole(Rights::R_ADMIN);
         $this->state['disable_after'] = $this->user->disable_after_days;
+        $this->state['can_view_all_instruments'] = $this->user->hasPermissionTo(Rights::P_VIEW_ALL_INSTRUMENTS);
     }
 
     protected function save()
@@ -41,6 +42,15 @@ class UserUpdateMeta extends UserEditComponent
             } else {
                 $this->user->removeRole(Rights::R_ADMIN);
                 $this->user->disable_after_days = 90;
+            }
+        }
+
+        if (!$this->user->hasRole(Rights::R_ADMIN) &&
+            $this->user->hasPermissionTo(Rights::P_VIEW_ALL_INSTRUMENTS) !== boolval($this->state['can_view_all_instruments'])) {
+            if ($this->state['can_view_all_instruments']) {
+                $this->user->givePermissionTo(Rights::P_VIEW_ALL_INSTRUMENTS);
+            } else {
+                $this->user->revokePermissionTo(Rights::P_VIEW_ALL_INSTRUMENTS);
             }
         }
 
