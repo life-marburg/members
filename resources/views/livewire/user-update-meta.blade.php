@@ -23,7 +23,6 @@
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="instrument" value="{{ __('Instrument') }}"/>
             <x-select id="instrument" type="text" class="mt-1 block w-full" wire:model.defer="state.instrument">
-                <option></option>
                 @foreach(\App\Instruments::INSTRUMENT_GROUPS as $key => $instrument)
                     <option value="{{ $key }}">{{ $instrument['name'] }} ({{ implode(', ', $instrument['instruments']) }})</option>
                 @endforeach
