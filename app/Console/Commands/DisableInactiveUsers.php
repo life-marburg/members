@@ -18,14 +18,14 @@ class DisableInactiveUsers extends Command
         $users = User::whereNotNull('disable_after_days')->get();
 
         foreach ($users as $user) {
-            if ($user->last_active_at->clone()->addDays($user->disable_after_days)->isPast()) {
+            if ($user->last_active_at !== null && $user->last_active_at->clone()->addDays($user->disable_after_days)->isPast()) {
                 $user->status = User::STATUS_LOCKED;
                 $user->save();
                 $this->info('Locked account of user ' . $user->id);
                 continue;
             }
 
-            if ($user->last_active_at->clone()->addDays($user->disable_after_days - 3)->isPast()) {
+            if ($user->last_active_at !== null && $user->last_active_at->clone()->addDays($user->disable_after_days - 3)->isPast()) {
                 $user->notify(new AccountAlmostInactive());
                 $this->info('Sent account almost inactive notification to user ' . $user->id);
             }
