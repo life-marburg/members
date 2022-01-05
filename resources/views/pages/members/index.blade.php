@@ -1,5 +1,5 @@
 <x-content title="Manage Members">
-    <div class="-m-6 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="-m-6 mb-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-2 lg:px-4">
             <div class="overflow-hidden border-b border-gray-200">
                 <table class="min-w-full divide-y divide-gray-200">
@@ -60,5 +60,7 @@
         </div>
     </div>
 
-    {{ $members->links() }}
+    <div>
+        {{ $members->links() }}
+    </div>
 </x-content>
