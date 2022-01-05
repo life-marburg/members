@@ -17,4 +17,9 @@ class PersonalData extends Model
         'city',
         'zip',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
