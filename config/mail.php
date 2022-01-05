@@ -92,7 +92,12 @@ return [
     */
 
     'from' => [
-        'address' => 'info@life-marburg.de',
+        'address' => 'members@life-marburg.de',
+        'name' => 'Life Marburg',
+    ],
+
+    'reply_to' => [
+        'address' => 'management@life-marburg.de',
         'name' => 'Life Marburg',
     ],
 
