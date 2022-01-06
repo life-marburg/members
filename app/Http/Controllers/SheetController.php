@@ -13,12 +13,16 @@ class SheetController extends Controller
 {
     public function index()
     {
+        $with = ['instruments' => function ($query) {
+            $query->orderBy('title');
+        }];
+
         if (Auth::user()->hasPermissionTo(Rights::P_VIEW_ALL_INSTRUMENTS)) {
-            $groups = InstrumentGroup::with('instruments')->get();
+            $groups = InstrumentGroup::with($with)->get();
         } else {
             $groups = Auth::user()
                 ->instrumentGroups()
-                ->with('instruments')
+                ->with($with)
                 ->get();
         }
 
