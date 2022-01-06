@@ -95,9 +95,4 @@ class User extends Authenticatable implements HasLocalePreference
     {
         return 'de';
     }
-
-    public function getInstrumentAttribute(): ?string
-    {
-        return Instruments::INSTRUMENT_GROUPS[$this->personalData->instrument]['name'] ?? null;
-    }
 }
