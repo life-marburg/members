@@ -21,6 +21,9 @@
                     <x-jet-nav-link href="{{ route('personal-data.edit') }}" :active="request()->routeIs('personal-data.edit')">
                         {{ __('Personal Data') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="https://life-marburg.de/kalender.html" target="_blank">
+                        {{ __('Calendar') }}
+                    </x-jet-nav-link>
                     @can(\App\Rights::P_MANAGE_MEMBERS)
                         <x-jet-nav-link href="{{ route('members.index') }}" :active="request()->routeIs('members.index')">
                             {{ __('Manage Members') }}
@@ -107,6 +110,9 @@
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('personal-data.edit') }}" :active="request()->routeIs('personal-data.edit')">
                 {{ __('Personal Data') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="https://life-marburg.de/kalender.html" target="_blank">
+                {{ __('Calendar') }}
             </x-jet-responsive-nav-link>
             @can(\App\Rights::P_MANAGE_MEMBERS)
                 <x-jet-responsive-nav-link href="{{ route('members.index') }}" :active="request()->routeIs('members.index')">

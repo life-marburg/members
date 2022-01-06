@@ -743,5 +743,6 @@
     "Can view sheets for all instruments": "Darf Noten für alle Instrumente sehen",
     "Already implied since this user has admin permissions.": "Bereits dadurch gesetzt, dass dieses Mitglied Admin-Rechte hat.",
     "Instrument Groups": "Instrumentengruppen",
-    "The captcha is invalid.": "Das Captcha ist ungültig."
+    "The captcha is invalid.": "Das Captcha ist ungültig.",
+    "Calendar": "Kalender"
 }
