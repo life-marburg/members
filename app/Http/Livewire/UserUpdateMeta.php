@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\User;
 use App\Notifications\UserStatusChanged;
 use App\Rights;
+use Illuminate\Support\Facades\DB;
 
 class UserUpdateMeta extends UserEditComponent
 {
@@ -18,7 +19,7 @@ class UserUpdateMeta extends UserEditComponent
         parent::mount();
 
         $this->state['status'] = $this->user->status;
-        $this->state['instrument'] = $this->user->personalData->instrument;
+        $this->state['instrument_groups'] = $this->user->instrumentGroups->map(fn($i) => $i->id)->toArray();
         $this->state['is_admin'] = $this->user->hasRole(Rights::R_ADMIN);
         $this->state['disable_after'] = $this->user->disable_after_days;
         $this->state['can_view_all_instruments'] = $this->user->hasPermissionTo(Rights::P_VIEW_ALL_INSTRUMENTS);
@@ -26,7 +27,9 @@ class UserUpdateMeta extends UserEditComponent
 
     protected function save()
     {
-        $this->user->personalData->instrument = $this->state['instrument'];
+        $this->user->instrumentGroups()->detach();
+        $this->user->instrumentGroups()->attach($this->state['instrument_groups']);
+
         $this->user->personalData->save();
         $this->user->disable_after_days = $this->state['disable_after'] === 'null' ? null : $this->state['disable_after'];
 
