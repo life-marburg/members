@@ -50,6 +50,7 @@ COPY --from=build-php /var/www/vendor /var/www/vendor
 RUN rm /var/www/node_modules -rf
 RUN php artisan storage:link
 
+EXPOSE 80
 ADD .docker/dev/setup.sh /usr/local/bin/setup
 ADD .docker/prod/run.sh /
 CMD /run.sh
