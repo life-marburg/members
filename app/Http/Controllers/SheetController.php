@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Instrument;
+use App\Models\InstrumentGroup;
 use App\Rights;
 use App\Services\SheetService;
 use Illuminate\Support\Facades\Auth;
@@ -13,16 +14,16 @@ class SheetController extends Controller
     public function index()
     {
         if (Auth::user()->hasPermissionTo(Rights::P_VIEW_ALL_INSTRUMENTS)) {
-            $instruments = Instrument::all();
+            $groups = InstrumentGroup::with('instruments')->get();
         } else {
-            $instruments = Auth::user()
-                ->instrumentGroups
-                ->map(fn($g) => $g->instruments)
-                ->flatten();
+            $groups = Auth::user()
+                ->instrumentGroups()
+                ->with('instruments')
+                ->get();
         }
 
         return view('pages.sheets', [
-            'instruments' => $instruments->sortBy('title'),
+            'groups' => $groups->sortBy('title'),
         ]);
     }
 
