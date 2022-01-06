@@ -59,6 +59,18 @@ class SheetTest extends TestCase
         ], $sheets['Song2']);
     }
 
+    public function test_should_get_sheets_with_spaces()
+    {
+        $altSax = Instrument::whereId(6)->first();
+        $sheets = $this->sheetService->getSheetsForInstrument($altSax)->toArray();
+
+        $this->assertFalse(isset($sheets['Song1']));
+        $this->assertEquals([
+            ['title' => '1. Stimme', 'path' => '1'],
+            ['title' => '2. Stimme', 'path' => '2'],
+        ], $sheets['Song2']);
+    }
+
     public function test_get_sheets_invalid_instrument()
     {
         $sheets = $this->sheetService->getSheetsForInstrument(null);

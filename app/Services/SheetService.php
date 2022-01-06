@@ -50,7 +50,7 @@ class SheetService
             ->map(function ($item) use ($instrument) {
                 $all = [];
                 foreach ($item as $it) {
-                    if (str_contains($it, $instrument->title)) {
+                    if (str_contains($it, str_replace(' ', '', $instrument->title))) {
                         $all[] = $it;
                     }
                 }
