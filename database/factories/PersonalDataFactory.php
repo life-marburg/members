@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Instruments;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PersonalDataFactory extends Factory

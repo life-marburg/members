@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Instruments;
 use App\Models\Instrument;
 use App\Rights;
 use App\Services\SheetService;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 

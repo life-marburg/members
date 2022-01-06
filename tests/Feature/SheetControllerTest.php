@@ -2,13 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Instruments;
 use App\Models\Instrument;
 use App\Models\InstrumentGroup;
 use App\Models\User;
 use App\Rights;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class SheetControllerTest extends TestCase

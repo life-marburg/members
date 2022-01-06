@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Instruments;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

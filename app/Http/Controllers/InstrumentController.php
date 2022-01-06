@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Instruments;
 use App\Models\InstrumentGroup;
 use App\Models\User;
 use App\Notifications\UserIsWaitingForActivation;
@@ -13,7 +12,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 
 class InstrumentController extends Controller

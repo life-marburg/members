@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Instruments;
 use App\Models\Instrument;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
