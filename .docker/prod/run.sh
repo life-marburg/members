@@ -4,6 +4,7 @@ setup
 
 artisan="/usr/local/bin/php /var/www/artisan"
 $artisan down
+$artisan clear
 $artisan cache:clear
 
 $artisan migrate --force
