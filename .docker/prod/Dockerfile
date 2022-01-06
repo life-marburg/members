@@ -56,6 +56,7 @@ COPY . ./
 COPY --from=build-frontend /var/www/public /var/www/public
 COPY --from=build-php /var/www/vendor /var/www/vendor
 RUN rm /var/www/node_modules -rf
+RUN php artisan storage:link
 
 ADD .docker/dev/setup.sh /usr/local/bin/setup
 ADD .docker/prod/run.sh /
