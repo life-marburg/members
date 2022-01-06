@@ -2,7 +2,7 @@ version: '3'
 
 services:
   web:
-    build: .docker/octance
+    build: .docker/dev
     image: hub.kolaente.de/wobsites/live-v2
     depends_on:
       - db
