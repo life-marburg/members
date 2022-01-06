@@ -50,7 +50,7 @@ class SheetService
             ->map(function ($item) use ($instrument) {
                 $all = [];
                 foreach ($item as $it) {
-                    if (str_contains($it, str_replace(' ', '', $instrument->title))) {
+                    if (str_contains($it, $instrument->file_title)) {
                         $all[] = $it;
                     }
                 }
@@ -96,6 +96,6 @@ class SheetService
 
     public static function getSheetDownloadPath(string $sheet, Instrument $instrument, string $variant): string
     {
-        return '/' . self::SHEET_FOLDER . '/' . $sheet . '/' . $sheet . '.' . $instrument->title . '.' . $variant . '.pdf';
+        return '/' . self::SHEET_FOLDER . '/' . $sheet . '/' . $sheet . '.' . $instrument->file_title . '.' . $variant . '.pdf';
     }
 }

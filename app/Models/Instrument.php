@@ -17,4 +17,9 @@ class Instrument extends Model
     {
         return $this->belongsTo(InstrumentGroup::class);
     }
+
+    public function getFileTitleAttribute(): string
+    {
+        return str_replace(' ', '', $this->title);
+    }
 }
