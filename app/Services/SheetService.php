@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Instruments;
+use App\Models\Instrument;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -38,29 +39,20 @@ class SheetService
         Cache::put(self::CACHE_KEY, $this->getSheetStructureFromWebdav());
     }
 
-    public function getSheetsForInstrument(string $instrumentGroup, string $instrument = null): ?Collection
+    public function getSheetsForInstrument(?Instrument $instrument): ?Collection
     {
-        if (!isset(Instruments::INSTRUMENT_GROUPS[$instrumentGroup])) {
+        if ($instrument === null) {
             return null;
         }
 
-        $instruments = Instruments::INSTRUMENT_GROUPS[$instrumentGroup]['instruments'];
         $structure = collect($this->getSongFileStructure());
 
         return $structure
-            ->map(function ($item) use ($instruments, $instrument) {
+            ->map(function ($item) use ($instrument) {
                 $all = [];
                 foreach ($item as $it) {
-                    if ($instrument === null) {
-                        foreach ($instruments as $int) {
-                            if (str_contains($it, $int)) {
-                                $all[] = $it;
-                            }
-                        }
-                    } else {
-                        if (str_contains($it, $instrument)) {
-                            $all[] = $it;
-                        }
+                    if (str_contains($it, $instrument->title)) {
+                        $all[] = $it;
                     }
                 }
 
@@ -103,8 +95,8 @@ class SheetService
             });
     }
 
-    public static function getSheetDownloadPath(string $sheet, string $instrument, string $variant): string
+    public static function getSheetDownloadPath(string $sheet, Instrument $instrument, string $variant): string
     {
-        return '/' . self::SHEET_FOLDER . '/' . $sheet . '/' . $sheet . '.' . $instrument . '.' . $variant . '.pdf';
+        return '/' . self::SHEET_FOLDER . '/' . $sheet . '/' . $sheet . '.' . $instrument->title . '.' . $variant . '.pdf';
     }
 }
