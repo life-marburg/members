@@ -742,5 +742,6 @@
     "After :n days": "Nach :n Tagen",
     "Can view sheets for all instruments": "Darf Noten für alle Instrumente sehen",
     "Already implied since this user has admin permissions.": "Bereits dadurch gesetzt, dass dieses Mitglied Admin-Rechte hat.",
-    "Instrument Groups": "Instrumentengruppen"
+    "Instrument Groups": "Instrumentengruppen",
+    "The captcha is invalid.": "Das Captcha ist ungültig."
 }
