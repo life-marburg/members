@@ -50,12 +50,14 @@ class SheetService
             ->map(function ($item) use ($instrument) {
                 $all = [];
                 foreach ($item as $it) {
-                    if (str_contains($it, $instrument->file_title)) {
-                        $all[] = $it;
+                    foreach ($instrument->title_with_alias as $title) {
+                        if (str_contains($it, $title)) {
+                            $all[] = $it;
+                        }
                     }
                 }
 
-                return $all;
+                return collect($all)->unique()->toArray();
             })
             ->filter(function ($item) {
                 return count($item) > 0;
@@ -86,6 +88,7 @@ class SheetService
                     $all[] = [
                         'title' => $title,
                         'path' => $variant,
+                        'instrument' => $parts[1],
                     ];
                 }
 
@@ -94,8 +97,8 @@ class SheetService
             });
     }
 
-    public static function getSheetDownloadPath(string $sheet, Instrument $instrument, string $variant): string
+    public static function getSheetDownloadPath(string $sheet, string $instrumentFileName, string $variant): string
     {
-        return '/' . self::SHEET_FOLDER . '/' . $sheet . '/' . $sheet . '.' . $instrument->file_title . '.' . $variant . '.pdf';
+        return '/' . self::SHEET_FOLDER . '/' . $sheet . '/' . $sheet . '.' . $instrumentFileName . '.' . $variant . '.pdf';
     }
 }

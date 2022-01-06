@@ -11,8 +11,12 @@
                 @foreach($sheets as $sheet => $variants)
                     <h2 class="font-display mb-2 mt-4 text-xl">{{ preg_replace('/([A-Z]|[0-9])/', ' $1', $sheet) }}</h2>
                     @foreach($variants as $variant)
-                        <x-link href="{{ route('sheets.download', ['sheet' => $sheet, 'instrument' => $instrument, 'variant' => $variant['path']]) }}">
+                        <x-link
+                            href="{{ route('sheets.download', ['sheet' => $sheet, 'instrument' => $variant['instrument'], 'variant' => $variant['path']]) }}">
                             {{ $variant['title'] }}
+                            @if($variant['instrument'] !== $instrument->file_title)
+                                - {{ \Illuminate\Support\Str::headline($variant['instrument']) }}
+                            @endif
                         </x-link><br/>
                     @endforeach
                 @endforeach

@@ -35,10 +35,10 @@ class SheetController extends Controller
         ]);
     }
 
-    public function download(string $sheet, Instrument $instrument, string $variant)
+    public function download(string $sheet, string $instrumentFileName, string $variant)
     {
-        $file = Storage::disk('cloud')->get(SheetService::getSheetDownloadPath($sheet, $instrument, $variant));
-        $name = $sheet . ' ' . $instrument->title . ' ' . $variant . '. Stimme.pdf';
+        $file = Storage::disk('cloud')->get(SheetService::getSheetDownloadPath($sheet, $instrumentFileName, $variant));
+        $name = $sheet . ' ' . $instrumentFileName . ' ' . $variant . '. Stimme.pdf';
 
         return response($file, 200, [
             'Content-Type' => 'application/pdf',

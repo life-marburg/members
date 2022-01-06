@@ -39,6 +39,12 @@ class SheetTest extends TestCase
                         'Song1.Trompete.2.pdf',
                         'Song1.Tuba.1.pdf',
                     ],
+                    'Song3' => [
+                        'Song3.Floete.1.pdf',
+                        'Song3.Floete.2.pdf',
+                        'Song3.Trompete.1.pdf',
+                        'Song3.Trompete.2.pdf',
+                    ],
                 ]);
         });
         $this->sheetService = resolve(SheetService::class);
@@ -50,12 +56,12 @@ class SheetTest extends TestCase
         $sheets = $this->sheetService->getSheetsForInstrument($trumpet)->toArray();
 
         $this->assertEquals([
-            ['title' => '1. Stimme', 'path' => '1'],
-            ['title' => '2. Stimme', 'path' => '2'],
+            ['title' => '1. Stimme', 'path' => '1', 'instrument' => $trumpet->file_title],
+            ['title' => '2. Stimme', 'path' => '2', 'instrument' => $trumpet->file_title],
         ], $sheets['Song1']);
         $this->assertEquals([
-            ['title' => '1. Stimme', 'path' => '1'],
-            ['title' => '2. Stimme', 'path' => '2'],
+            ['title' => '1. Stimme', 'path' => '1', 'instrument' => $trumpet->file_title],
+            ['title' => '2. Stimme', 'path' => '2', 'instrument' => $trumpet->file_title],
         ], $sheets['Song2']);
     }
 
@@ -66,9 +72,20 @@ class SheetTest extends TestCase
 
         $this->assertFalse(isset($sheets['Song1']));
         $this->assertEquals([
-            ['title' => '1. Stimme', 'path' => '1'],
-            ['title' => '2. Stimme', 'path' => '2'],
+            ['title' => '1. Stimme', 'path' => '1', 'instrument' => $altSax->file_title],
+            ['title' => '2. Stimme', 'path' => '2', 'instrument' => $altSax->file_title],
         ], $sheets['Song2']);
+    }
+
+    public function test_should_get_sheets_with_aliases()
+    {
+        $flute = Instrument::whereId(1)->first();
+        $sheets = $this->sheetService->getSheetsForInstrument($flute)->toArray();
+
+        $this->assertEquals([
+            ['title' => '1. Stimme', 'path' => '1', 'instrument' => 'Floete'],
+            ['title' => '2. Stimme', 'path' => '2', 'instrument' => 'Floete'],
+        ], $sheets['Song3']);
     }
 
     public function test_get_sheets_invalid_instrument()

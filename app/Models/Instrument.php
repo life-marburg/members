@@ -13,6 +13,10 @@ class Instrument extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'aliases' => 'array',
+    ];
+
     public function instrumentGroup(): BelongsTo
     {
         return $this->belongsTo(InstrumentGroup::class);
@@ -21,5 +25,13 @@ class Instrument extends Model
     public function getFileTitleAttribute(): string
     {
         return str_replace(' ', '', $this->title);
+    }
+
+    public function getTitleWithAliasAttribute(): array
+    {
+        return [
+            $this->file_title,
+            ...($this->aliases ?? []),
+        ];
     }
 }
