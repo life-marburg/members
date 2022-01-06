@@ -43,7 +43,7 @@
                                 {{ $member->email }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                {{ $member->instrument }}
+                                {{ $member->instrumentGroups->implode('title', ', ') }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <x-status :status="$member->status"/>

@@ -2,12 +2,17 @@
 
 namespace Tests\Feature;
 
+use App\Models\Instrument;
+use App\Models\InstrumentGroup;
 use App\Services\SheetService;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery\MockInterface;
 use Tests\TestCase;
 
 class SheetTest extends TestCase
 {
+    use RefreshDatabase;
+
     private SheetService $sheetService;
 
     protected function setUp(): void
@@ -41,7 +46,8 @@ class SheetTest extends TestCase
 
     public function test_get_sheets()
     {
-        $sheets = $this->sheetService->getSheetsForInstrument('trumpet')->toArray();
+        $trumpet = Instrument::whereId(9)->first();
+        $sheets = $this->sheetService->getSheetsForInstrument($trumpet)->toArray();
 
         $this->assertEquals([
             ['title' => '1. Stimme', 'path' => '1'],
@@ -55,7 +61,7 @@ class SheetTest extends TestCase
 
     public function test_get_sheets_invalid_instrument()
     {
-        $sheets = $this->sheetService->getSheetsForInstrument('not-an-instrument');
+        $sheets = $this->sheetService->getSheetsForInstrument(null);
 
         $this->assertNull($sheets);
     }

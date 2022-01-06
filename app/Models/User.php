@@ -5,6 +5,9 @@ namespace App\Models;
 use App\Instruments;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -78,18 +81,18 @@ class User extends Authenticatable implements HasLocalePreference
         });
     }
 
-    public function personalData()
+    public function personalData(): HasOne
     {
         return $this->hasOne(PersonalData::class);
     }
 
-    public function preferredLocale()
+    public function instrumentGroups(): BelongsToMany
     {
-        return 'de';
+        return $this->belongsToMany(InstrumentGroup::class, 'user_instrument_group');
     }
 
-    public function getInstrumentAttribute(): ?string
+    public function preferredLocale(): string
     {
-        return Instruments::INSTRUMENT_GROUPS[$this->personalData->instrument]['name'] ?? null;
+        return 'de';
     }
 }

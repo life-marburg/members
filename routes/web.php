@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InstrumentController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PersonalDataController;
@@ -51,9 +52,9 @@ Route::middleware(['auth:sanctum', 'verified'])
     ->name('set-instrument.')
     ->prefix('/user/set-instrument')
     ->group(function () {
-        Route::get('', [PersonalDataController::class, 'setInstrument'])
+        Route::get('', [InstrumentController::class, 'setInstrument'])
             ->name('form');
-        Route::post('', [PersonalDataController::class, 'saveInstrument'])
+        Route::post('', [InstrumentController::class, 'saveInstrument'])
             ->name('save');
     });
 

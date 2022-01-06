@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow sm:rounded-lg p-6">
                 @foreach($instruments as $instrument)
                     <a href="{{ route('sheets.show', ['instrument' => $instrument]) }}">
-                        {{ $instrument }}
+                        {{ $instrument->title }}
                     </a><br/>
                 @endforeach
             </div>

@@ -81,9 +81,9 @@ class DisableInactiveUsersTest extends TestCase
         Livewire::test(UserUpdateMeta::class, ['user' => $user])
             ->set('state', [
                 'status' => User::STATUS_LOCKED,
-                'instrument' => 'trumpet',
                 'is_admin' => true,
                 'disable_after' => 90,
+                'instrument_groups' => [1],
             ])
             ->call('update');
 

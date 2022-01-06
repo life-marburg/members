@@ -13,8 +13,8 @@
                 @csrf
 
                 <x-select name="instrument" class="mb-4">
-                    @foreach(\App\Instruments::INSTRUMENT_GROUPS as $key => $instrument)
-                        <option value="{{ $key }}">{{ $instrument['name'] }} ({{ implode(', ', $instrument['instruments']) }})</option>
+                    @foreach($instruments as $group)
+                        <option value="{{ $group->id }}">{{ $group->title }} ({{ $group->instruments->implode('title', ', ') }})</option>
                     @endforeach
                 </x-select>
 

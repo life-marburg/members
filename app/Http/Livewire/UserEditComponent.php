@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 abstract class UserEditComponent extends Component
@@ -20,7 +21,9 @@ abstract class UserEditComponent extends Component
     {
         $this->resetErrorBag();
 
-        $this->save();
+        DB::transaction(function () {
+            $this->save();
+        });
 
         $this->emit('saved');
     }

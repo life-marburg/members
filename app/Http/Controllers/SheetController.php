@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Instruments;
+use App\Models\Instrument;
 use App\Rights;
 use App\Services\SheetService;
 use Illuminate\Http\Response;
@@ -13,34 +14,32 @@ class SheetController extends Controller
 {
     public function index()
     {
-        $instruments = collect(Instruments::INSTRUMENT_GROUPS[Auth::user()->personalData->instrument]['instruments']);
-
         if (Auth::user()->hasPermissionTo(Rights::P_VIEW_ALL_INSTRUMENTS)) {
-            $instruments = collect([]);
-            foreach (Instruments::INSTRUMENT_GROUPS as $i) {
-                $instruments->add($i['instruments']);
-            }
-
-            $instruments = $instruments->flatten();
+            $instruments = Instrument::all();
+        } else {
+            $instruments = Auth::user()
+                ->instrumentGroups
+                ->map(fn($g) => $g->instruments)
+                ->flatten();
         }
 
         return view('pages.sheets', [
-            'instruments' => $instruments->sort(),
+            'instruments' => $instruments->sortBy('title'),
         ]);
     }
 
-    public function show(SheetService $sheetService, string $instrument)
+    public function show(SheetService $sheetService, Instrument $instrument)
     {
         return view('pages.sheets-show', [
             'instrument' => $instrument,
-            'sheets' => $sheetService->getSheetsForInstrument(Auth::user()->personalData->instrument, $instrument),
+            'sheets' => $sheetService->getSheetsForInstrument($instrument),
         ]);
     }
 
-    public function download(string $sheet, string $instrument, string $variant)
+    public function download(string $sheet, Instrument $instrument, string $variant)
     {
         $file = Storage::disk('cloud')->get(SheetService::getSheetDownloadPath($sheet, $instrument, $variant));
-        $name = $sheet . ' ' . $instrument . ' ' . $variant . '. Stimme.pdf';
+        $name = $sheet . ' ' . $instrument->title . ' ' . $variant . '. Stimme.pdf';
 
         return response($file, 200, [
             'Content-Type' => 'application/pdf',

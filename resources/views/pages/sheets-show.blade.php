@@ -1,7 +1,7 @@
-<x-app-layout :pageTitle="__('Sheets For :instrument', ['instrument' => $instrument])">
+<x-app-layout :pageTitle="__('Sheets For :instrument', ['instrument' => $instrument->title])">
     <x-slot name="header">
         <h2 class="text-xl text-gray-800 leading-tight font-display">
-            {{ __('Sheets For :instrument', ['instrument' => $instrument]) }}
+            {{ __('Sheets For :instrument', ['instrument' => $instrument->title]) }}
         </h2>
     </x-slot>
 

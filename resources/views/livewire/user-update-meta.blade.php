@@ -21,15 +21,15 @@
 
         <!-- Instrument -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="instrument" value="{{ __('Instrument') }}"/>
-            <x-select id="instrument" type="text" class="mt-1 block w-full" wire:model.defer="state.instrument">
-                @foreach(\App\Instruments::INSTRUMENT_GROUPS as $key => $instrument)
-                    <option value="{{ $key }}">
-                        {{ $instrument['name'] }} ({{ implode(', ', $instrument['instruments']) }})
+            <x-jet-label for="instrument_groups" value="{{ __('Instrument Groups') }}"/>
+            <x-select id="instrument_groups" type="text" class="mt-1 block w-full" wire:model.defer="state.instrument_groups" multiple>
+                @foreach(\App\Models\InstrumentGroup::with('instruments')->get() as $group)
+                    <option value="{{ $group->id }}">
+                        {{ $group->title }} ({{ $group->instruments->implode('title', ', ') }})
                     </option>
                 @endforeach
             </x-select>
-            <x-jet-input-error for="instrument" class="mt-2"/>
+            <x-jet-input-error for="instrument_groups" class="mt-2"/>
         </div>
 
         <!-- Disable after days -->
