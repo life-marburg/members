@@ -17,7 +17,10 @@ class SheetController extends Controller
         if (Auth::user()->hasPermissionTo(Rights::P_VIEW_ALL_INSTRUMENTS)) {
             $instruments = Instrument::all();
         } else {
-            $instruments = Auth::user()->instruments();
+            $instruments = Auth::user()
+                ->instrumentGroups
+                ->map(fn($g) => $g->instruments)
+                ->flatten();
         }
 
         return view('pages.sheets', [

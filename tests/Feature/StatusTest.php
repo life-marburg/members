@@ -19,7 +19,7 @@ class StatusTest extends TestCase
     {
         /** @var User $user */
         $user = User::factory()->create(['status' => User::STATUS_NEW]);
-        $user->personalData->instrument = 'trumpet';
+        $user->instrumentGroups()->attach(1);
         $this->actingAs($user);
 
         $response = $this->get(route('dashboard'));
@@ -31,7 +31,7 @@ class StatusTest extends TestCase
     {
         /** @var User $user */
         $user = User::factory()->create(['status' => User::STATUS_UNLOCKED]);
-        $user->personalData->instrument = 'trumpet';
+        $user->instrumentGroups()->attach(1);
         $this->actingAs($user);
 
         $response = $this->get(route('dashboard'));
@@ -42,8 +42,8 @@ class StatusTest extends TestCase
     public function test_should_not_allow_login_when_locked()
     {
         /** @var User $user */
-        $user = User::factory()->create(['status' => User::STATUS_NEW]);
-        $user->personalData->instrument = 'trumpet';
+        $user = User::factory()->create(['status' => User::STATUS_LOCKED]);
+        $user->instrumentGroups()->attach(1);
         $this->actingAs($user);
 
         $response = $this->get(route('dashboard'));
@@ -59,15 +59,15 @@ class StatusTest extends TestCase
         $admin->assignRole(Rights::R_ADMIN);
         $this->actingAs($admin);
         /** @var User $user */
-        $user = User::factory()->create();
+        $user = User::factory()->create(['status' => User::STATUS_NEW]);
 
         Livewire::test(UserUpdateMeta::class, ['user' => $user])
             ->set('state', [
                 'status' => User::STATUS_UNLOCKED,
-                'instrument' => 'trumpet',
                 'is_admin' => false,
                 'disable_after' => 90,
                 'can_view_all_instruments' => false,
+                'instrument_groups' => [1],
             ])
             ->call('update');
 
@@ -87,10 +87,10 @@ class StatusTest extends TestCase
         Livewire::test(UserUpdateMeta::class, ['user' => $user])
             ->set('state', [
                 'status' => User::STATUS_LOCKED,
-                'instrument' => 'trumpet',
                 'is_admin' => false,
                 'disable_after' => 90,
                 'can_view_all_instruments' => false,
+                'instrument_groups' => [1],
             ])
             ->call('update');
 
@@ -110,10 +110,10 @@ class StatusTest extends TestCase
         Livewire::test(UserUpdateMeta::class, ['user' => $user])
             ->set('state', [
                 'status' => User::STATUS_UNLOCKED,
-                'instrument' => 'trumpet',
                 'is_admin' => false,
                 'disable_after' => 90,
                 'can_view_all_instruments' => false,
+                'instrument_groups' => [1],
             ])
             ->call('update');
 

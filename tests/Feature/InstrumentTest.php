@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\InstrumentGroup;
 use App\Models\User;
 use App\Notifications\UserIsWaitingForActivation;
 use App\Rights;
@@ -30,7 +31,7 @@ class InstrumentTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $response = $this->post(route('set-instrument.save'), ['instrument' => 'not-an-instrument']);
+        $response = $this->post(route('set-instrument.save'), ['instrument' => '999999']);
 
         $response->assertSessionHasErrors();
     }
@@ -38,9 +39,8 @@ class InstrumentTest extends TestCase
     public function test_should_not_redirect_inactive_accounts_with_instrument_to_dashboard()
     {
         /** @var User $user */
-        $user = User::factory()->create();
-        $user->personalData->instrument = 'trumpet';
-        $user->personalData->save();
+        $user = User::factory()->newAccount()->create();
+        $user->instrumentGroups()->attach(1);
         $this->actingAs($user);
 
         $response = $this->get(route('dashboard'));
@@ -54,7 +54,7 @@ class InstrumentTest extends TestCase
         /** @var User $user */
         $user = User::factory()->create();
         $this->actingAs($user);
-        $instrument = 'trumpet';
+        $instrument = 1;
         /** @var User $admin1 */
         $admin1 = User::factory()->create();
         $admin1->assignRole(Rights::R_ADMIN);
@@ -67,9 +67,9 @@ class InstrumentTest extends TestCase
         ]);
         $response->assertRedirect(route('dashboard'));
 
-        $this->assertDatabaseHas('personal_data', [
+        $this->assertDatabaseHas('user_instrument_group', [
             'user_id' => $user->id,
-            'instrument' => $instrument,
+            'instrument_group_id' => $instrument,
         ]);
         Notification::assertSentTo([$admin1, $admin2], UserIsWaitingForActivation::class);
     }
