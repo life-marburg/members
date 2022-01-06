@@ -13,14 +13,9 @@ COPY . ./
 
 RUN yarn && yarn prod
 
-FROM php:8.0-apache
+FROM php:8.0-buster
 
-ENV APACHE_DOCUMENT_ROOT /var/www/public
-
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf && \
-sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf && \
-sed -ri -e 's!LogFormat\ "\%h\ \%l\ \%u\ \%t!LogFormat\ "\%h\ \%l\ \%u\ \%t\ \%D!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf && \
-echo "upload_max_filesize = 2G; " > /usr/local/etc/php/conf.d/upload.ini && \
+RUN echo "upload_max_filesize = 2G; " > /usr/local/etc/php/conf.d/upload.ini && \
 echo "post_max_size = 2500M;" >> /usr/local/etc/php/conf.d/upload.ini && \
 echo "date.timezone = \"Europe/Berlin\"" >> /usr/local/etc/php/conf.d/timezone.ini && \
 echo 'memory_limit = 2G' >> /usr/local/etc/php/conf.d/max_memory.ini
@@ -41,21 +36,19 @@ RUN apt-get update && \
   docker-php-ext-configure gd && \
   docker-php-ext-install gd && \
   docker-php-ext-install pdo pdo_mysql && \
-  docker-php-ext-install opcache && \
-  a2enmod rewrite && \
-  a2enmod deflate
-
-RUN pecl install -o -f redis && \
+  docker-php-ext-install pcntl && \
+  pecl install swoole && docker-php-ext-enable swoole && \
+  pecl install -o -f redis && \
   rm -rf /tmp/pear && \
   docker-php-ext-enable redis
 
 WORKDIR /var/www
 
-COPY .docker/prod/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 COPY . ./
 COPY --from=build-frontend /var/www/public /var/www/public
 COPY --from=build-php /var/www/vendor /var/www/vendor
 RUN rm /var/www/node_modules -rf
+RUN php artisan storage:link
 
 ADD .docker/dev/setup.sh /usr/local/bin/setup
 ADD .docker/prod/run.sh /

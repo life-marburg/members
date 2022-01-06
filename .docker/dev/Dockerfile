@@ -1,11 +1,6 @@
-FROM php:8.0-apache
+FROM php:8.0-buster
 
-ENV APACHE_DOCUMENT_ROOT /var/www/public
-
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf && \
-sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf && \
-sed -ri -e 's!LogFormat\ "\%h\ \%l\ \%u\ \%t!LogFormat\ "\%h\ \%l\ \%u\ \%t\ \%D!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf && \
-echo "upload_max_filesize = 2G; " > /usr/local/etc/php/conf.d/upload.ini && \
+RUN echo "upload_max_filesize = 2G; " > /usr/local/etc/php/conf.d/upload.ini && \
 echo "post_max_size = 2500M;" >> /usr/local/etc/php/conf.d/upload.ini && \
 echo "date.timezone = \"Europe/Berlin\"" >> /usr/local/etc/php/conf.d/timezone.ini && \
 echo 'memory_limit = 2G' >> /usr/local/etc/php/conf.d/max_memory.ini
@@ -26,11 +21,17 @@ RUN apt-get update && \
   docker-php-ext-configure gd && \
   docker-php-ext-install gd && \
   docker-php-ext-install pdo pdo_mysql && \
-  a2enmod rewrite
+  docker-php-ext-install pcntl && \
+  pecl install swoole && docker-php-ext-enable swoole
+
+# The octance watcher requires node
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash && \
+    apt-get install nodejs -yq && \
+    apt-get clean -y
 
 RUN pecl install xdebug && \
   docker-php-ext-enable xdebug && \
-  echo 'zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20190902/xdebug.so' >> /usr/local/etc/php/php.ini && \
+#  echo 'zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20190902/xdebug.so' >> /usr/local/etc/php/php.ini && \
   touch /usr/local/etc/php/conf.d/xdebug.ini; \
   echo xdebug.mode=debug >> /usr/local/etc/php/conf.d/xdebug.ini; \
   echo xdebug.discover_client_host=true >> /usr/local/etc/php/conf.d/xdebug.ini
