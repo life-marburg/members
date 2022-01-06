@@ -19,7 +19,7 @@ class CreateNewUser implements CreatesNewUsers
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
-            'frc-captcha-solution' => ['required', resolve(FriendlyCaptcha::class)],
+            'frc-captcha-solution' => config('captcha.enable') ? ['required', resolve(FriendlyCaptcha::class)] : '',
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
         ])->validate();
 
