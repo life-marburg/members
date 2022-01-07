@@ -7,7 +7,8 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PersonalDataController;
 use App\Http\Controllers\SheetController;
 use App\Http\Middleware\CheckIfActive;
-use App\Http\Middleware\Instrument;
+use App\Http\Middleware\MustHaveInstrument;
+use App\Http\Middleware\MustHavePersonalData;
 use App\Models\User;
 use App\Rights;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,7 @@ Route::get('/', function () {
 });
 
 Route::group([
-    'middleware' => ['auth:sanctum', 'verified', Instrument::class, CheckIfActive::class],
+    'middleware' => ['auth:sanctum', 'verified', MustHaveInstrument::class, MustHavePersonalData::class, CheckIfActive::class],
 ], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::prefix('/personal-data')
@@ -55,6 +56,15 @@ Route::middleware(['auth:sanctum', 'verified'])
         Route::get('', [InstrumentController::class, 'setInstrument'])
             ->name('form');
         Route::post('', [InstrumentController::class, 'saveInstrument'])
+            ->name('save');
+    });
+Route::middleware(['auth:sanctum', 'verified'])
+    ->name('set-personal-data.')
+    ->prefix('/user/set-personal-data')
+    ->group(function () {
+        Route::get('', [PersonalDataController::class, 'set'])
+            ->name('form');
+        Route::post('', [PersonalDataController::class, 'save'])
             ->name('save');
     });
 

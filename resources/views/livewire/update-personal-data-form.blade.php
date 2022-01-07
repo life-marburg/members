@@ -1,4 +1,4 @@
-<x-jet-form-section submit="update">
+<x-jet-form-section submit="update" :has-form-shell="$hasFormShell">
     <x-slot name="title">
         {{ __('Address Data') }}
     </x-slot>

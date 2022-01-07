@@ -8,4 +8,14 @@ class PersonalDataController extends Controller
     {
         return view('profile.manage-personal-data');
     }
+
+    public function set()
+    {
+        return view('pages.personal-data.form');
+    }
+
+    public function save()
+    {
+
+    }
 }

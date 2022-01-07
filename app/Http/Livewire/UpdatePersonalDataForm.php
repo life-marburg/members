@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 class UpdatePersonalDataForm extends UserEditComponent
 {
+    public bool $hasFormShell = true;
+
     protected array $rules = [
         'state.name' => 'required',
         'state.street' => 'required',

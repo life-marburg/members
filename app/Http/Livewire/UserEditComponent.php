@@ -11,6 +11,7 @@ abstract class UserEditComponent extends Component
 {
     public array $state = [];
     public ?User $user = null;
+    public string $redirectAfterSave = '';
 
     public function mount()
     {
@@ -26,6 +27,10 @@ abstract class UserEditComponent extends Component
         });
 
         $this->emit('saved');
+
+        if($this->redirectAfterSave !== '') {
+            return redirect()->to(route($this->redirectAfterSave));
+        }
     }
 
     abstract protected function save();
