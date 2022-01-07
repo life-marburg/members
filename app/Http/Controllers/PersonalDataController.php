@@ -13,9 +13,4 @@ class PersonalDataController extends Controller
     {
         return view('pages.personal-data.form');
     }
-
-    public function save()
-    {
-
-    }
 }
