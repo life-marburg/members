@@ -51,16 +51,13 @@ class SheetService
                 $all = [];
                 foreach ($item as $it) {
                     foreach ($instrument->title_with_alias as $title) {
-                        if (str_contains($it, '.'.$title.'.')) {
+                        if (str_contains($it, '.' . $title . '.')) {
                             $all[] = $it;
                         }
                     }
                 }
 
                 return collect($all)->unique()->toArray();
-            })
-            ->filter(function ($item) {
-                return count($item) > 0;
             })
             ->map(function ($item) {
                 $all = [];
@@ -94,6 +91,9 @@ class SheetService
 
                 asort($all);
                 return $all;
+            })
+            ->filter(function ($item) {
+                return count($item) > 0;
             });
     }
 
