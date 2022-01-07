@@ -9,6 +9,13 @@
 
     <div class="py-12">
         <div class="@if(!$isFullwidth) max-w-7xl @endif mx-auto sm:px-6 lg:px-8">
+
+            @if (session('success'))
+                <div class="border border-green-500 bg-green-100 p-3 rounded mb-4 text-green-800 text-sm">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             <div class="bg-white overflow-hidden shadow sm:rounded-lg p-4">
                 {{ $slot }}
             </div>

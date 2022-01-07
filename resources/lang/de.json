@@ -747,5 +747,11 @@
     "Calendar": "Kalender",
     "First and lastname": "Vor- und Nachname",
     "Phone": "Telefonnummer",
-    "Mobile Phone": "Handynummer"
+    "Mobile Phone": "Handynummer",
+    "The user :user has been deleted successfully!": "Die:der Benutzer:in :user wurde erfolgreich gelöscht!",
+    "You don't have the right to do this.": "Du hast keine Berechtigung, dies zu tun.",
+    "Permanently delete this account.": "Diesen Account dauerhaft löschen.",
+    "Once this account is deleted, all of its resources and data will be permanently deleted. The user will not be able to log in or use it.": "Sobald dieser Account gelöscht ist, werden alle dazugehörigen Daten dauerhaft gelöscht. Der:die Benutzer:in wir nicht mehr in der Lage sein, diesen Account zu nutzen oder sich mit ihm einzuloggen.",
+    "Are you sure you want to delete the account of :user?": "Bist du sicher, dass du den Account von :user wirklich löschen willst?",
+    "Please enter your password to confirm you would like to permanently delete this account.": "Bitte gib dein Passwort ein, um die Accountlöschung zu bestätigen."
 }

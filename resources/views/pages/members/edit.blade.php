@@ -10,6 +10,8 @@
             <livewire:update-personal-data-form :user="$member"/>
             <x-jet-section-border/>
             <livewire:user-update-meta :user="$member"/>
+            <x-jet-section-border/>
+            <livewire:admin-delete-user-form :user="$member"/>
         </div>
     </div>
 </x-app-layout>
