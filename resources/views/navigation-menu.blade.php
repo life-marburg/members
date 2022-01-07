@@ -18,7 +18,7 @@
                     <x-jet-nav-link href="{{ route('sheets.index') }}" :active="request()->routeIs('sheets.index') || request()->routeIs('sheets.show')">
                         {{ __('Sheets') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('personal-data.edit') }}" :active="request()->routeIs('personal-data.edit')">
+                    <x-jet-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('personal-data.edit')">
                         {{ __('Personal Data') }}
                     </x-jet-nav-link>
                     <x-jet-nav-link href="https://life-marburg.de/kalender.html" target="_blank">
@@ -107,9 +107,6 @@
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('sheets.index') }}" :active="request()->routeIs('sheets.index') || request()->routeIs('sheets.show')">
                 {{ __('Sheets') }}
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('personal-data.edit') }}" :active="request()->routeIs('personal-data.edit')">
-                {{ __('Personal Data') }}
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="https://life-marburg.de/kalender.html" target="_blank">
                 {{ __('Calendar') }}

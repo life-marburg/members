@@ -33,11 +33,6 @@ Route::group([
     'middleware' => ['auth:sanctum', 'verified', MustHaveInstrument::class, MustHavePersonalData::class, CheckIfActive::class],
 ], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::prefix('/personal-data')
-        ->name('personal-data.')
-        ->group(function () {
-            Route::get('edit', [PersonalDataController::class, 'edit'])->name('edit');
-        });
     Route::prefix('/sheets')
         ->name('sheets.')
         ->group(function () {
