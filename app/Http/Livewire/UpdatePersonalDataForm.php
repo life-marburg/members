@@ -4,6 +4,32 @@ namespace App\Http\Livewire;
 
 class UpdatePersonalDataForm extends UserEditComponent
 {
+    protected array $rules = [
+        'state.name' => 'required',
+        'state.street' => 'required',
+        'state.city' => 'required',
+        'state.zip' => 'required',
+        'state.mobile_phone' => 'required',
+    ];
+
+    protected array $validationAttributes = [
+        'state.name' => 'First and lastname',
+        'state.street' => 'Street and Housenumber',
+        'state.city' => 'City',
+        'state.zip' => 'Zip Code',
+        'state.phone' => 'Phone',
+        'state.mobile_phone' => 'Mobile Phone',
+    ];
+
+    public function __construct($id = null)
+    {
+        parent::__construct($id);
+
+        foreach ($this->validationAttributes as $key => $value) {
+            $this->validationAttributes[$key] = __($value);
+        }
+    }
+
     public function mount()
     {
         parent::mount();
@@ -14,6 +40,8 @@ class UpdatePersonalDataForm extends UserEditComponent
 
     protected function save()
     {
+        $this->validate();
+
         $this->user
             ->personalData
             ->fill([
