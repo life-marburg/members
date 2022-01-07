@@ -8,6 +8,7 @@ use App\Rights;
 use App\Services\SheetService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class SheetController extends Controller
 {
@@ -42,7 +43,7 @@ class SheetController extends Controller
     public function download(string $sheet, string $instrumentFileName, string $variant)
     {
         $file = Storage::disk('cloud')->get(SheetService::getSheetDownloadPath($sheet, $instrumentFileName, $variant));
-        $name = $sheet . ' ' . $instrumentFileName . ' ' . $variant . '. Stimme.pdf';
+        $name = $sheet . ' ' . Str::headline($instrumentFileName) . ' ' . $variant . '. Stimme.pdf';
 
         return response($file, 200, [
             'Content-Type' => 'application/pdf',

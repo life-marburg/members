@@ -51,7 +51,7 @@ class SheetService
                 $all = [];
                 foreach ($item as $it) {
                     foreach ($instrument->title_with_alias as $title) {
-                        if (str_contains($it, $title)) {
+                        if (str_contains($it, '.'.$title.'.')) {
                             $all[] = $it;
                         }
                     }
