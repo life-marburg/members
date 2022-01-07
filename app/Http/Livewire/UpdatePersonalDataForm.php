@@ -20,6 +20,8 @@ class UpdatePersonalDataForm extends UserEditComponent
                 'street' => $this->state['street'],
                 'city' => $this->state['city'],
                 'zip' => $this->state['zip'],
+                'phone' => $this->state['phone'],
+                'mobile_phone' => $this->state['mobile_phone'],
             ])
             ->save();
 

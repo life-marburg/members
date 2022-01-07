@@ -16,6 +16,8 @@ class PersonalData extends Model
         'street',
         'city',
         'zip',
+        'phone',
+        'mobile_phone',
     ];
 
     public function user()

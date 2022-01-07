@@ -17,6 +17,20 @@
             <x-jet-input-error for="name" class="mt-2"/>
         </div>
 
+        <!-- Phone -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="phone" value="{{ __('Phone') }}"/>
+            <x-jet-input id="phone" type="text" class="mt-1 block w-full" wire:model.defer="state.phone"/>
+            <x-jet-input-error for="phone" class="mt-2"/>
+        </div>
+
+        <!-- Mobile Phone -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="mobile_phone" value="{{ __('Mobile Phone') }}"/>
+            <x-jet-input id="mobile_phone" type="text" class="mt-1 block w-full" wire:model.defer="state.mobile_phone"/>
+            <x-jet-input-error for="mobile_phone" class="mt-2"/>
+        </div>
+
         <!-- Address -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="street" value="{{ __('Street and Housenumber') }}"/>
