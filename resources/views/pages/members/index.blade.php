@@ -1,4 +1,4 @@
-<x-content title="Manage Members">
+<x-content title="Manage Members" :isFullwidth="true">
     <div class="-m-6 mb-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-2 lg:px-4">
             <div class="overflow-hidden border-b border-gray-200">
@@ -20,6 +20,14 @@
                         <th scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             {{ __('Instrument') }}
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            {{ __('Address') }}
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            {{ __('Mobile Phone') }}
                         </th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -48,6 +56,14 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 {{ $member->instrumentGroups->implode('title', ', ') }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {{ $member->personalData->street }},
+                                {{ $member->personalData->zip }}
+                                {{ $member->personalData->city }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {{ $member->personalData->mobile_phone }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <x-status :status="$member->status"/>
