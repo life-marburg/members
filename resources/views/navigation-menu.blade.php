@@ -19,7 +19,7 @@
                         {{ __('Sheets') }}
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
-                        {{ __('Personal Data') }}
+                        {{ __('Profile') }}
                     </x-jet-nav-link>
                     <x-jet-nav-link href="https://life-marburg.de/kalender.html" target="_blank">
                         {{ __('Calendar') }}
@@ -101,22 +101,6 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('sheets.index') }}" :active="request()->routeIs('sheets.index') || request()->routeIs('sheets.show')">
-                {{ __('Sheets') }}
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="https://life-marburg.de/kalender.html" target="_blank">
-                {{ __('Calendar') }}
-            </x-jet-responsive-nav-link>
-            @can(\App\Rights::P_MANAGE_MEMBERS)
-                <x-jet-responsive-nav-link href="{{ route('members.index') }}" :active="request()->routeIs('members.index')">
-                    {{ __('Manage Members') }}
-                </x-jet-responsive-nav-link>
-            @endcan
-        </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
@@ -134,6 +118,20 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    {{ __('Dashboard') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('sheets.index') }}" :active="request()->routeIs('sheets.index') || request()->routeIs('sheets.show')">
+                    {{ __('Sheets') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="https://life-marburg.de/kalender.html" target="_blank">
+                    {{ __('Calendar') }}
+                </x-jet-responsive-nav-link>
+                @can(\App\Rights::P_MANAGE_MEMBERS)
+                    <x-jet-responsive-nav-link href="{{ route('members.index') }}" :active="request()->routeIs('members.index')">
+                        {{ __('Manage Members') }}
+                    </x-jet-responsive-nav-link>
+                @endcan
                 <!-- Account Management -->
                 <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('Profile') }}
