@@ -18,12 +18,7 @@
             Du kannst diese Daten später jederzeit ändern.
         </p>
 
-        <form method="POST" action="{{ route('logout') }}" class="mt-4">
-            @csrf
-
-            <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900">
-                {{ __('Log Out') }}
-            </button>
-        </form>
+        <x-help-email/>
+        <x-logout-link/>
     </x-jet-authentication-card>
 </x-guest-layout>

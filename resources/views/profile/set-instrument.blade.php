@@ -4,9 +4,10 @@
             <x-jet-authentication-card-logo />
         </x-slot>
 
-        <div class="mb-4 text-sm text-gray-600">
-            Hi! Cool, dass du dabei bist. Bevor es losgehen kann, gib bitte an, in welcher Instrumentengruppe du spielst:
-        </div>
+        <h2 class="text-xl font-display mb-2">Hi!</h2>
+        <p class="mb-4 text-sm text-gray-600">
+            Cool, dass du dabei bist. Bevor es losgehen kann, gib bitte an, in welcher Instrumentengruppe du spielst:
+        </p>
 
         <div class="mt-4">
             <form method="POST" action="{{ route('set-instrument.save') }}">
@@ -25,13 +26,8 @@
                 </div>
             </form>
 
-            <form method="POST" action="{{ route('logout') }}" class="mt-4">
-                @csrf
-
-                <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900">
-                    {{ __('Log Out') }}
-                </button>
-            </form>
+            <x-help-email/>
+            <x-logout-link/>
         </div>
     </x-jet-authentication-card>
 </x-guest-layout>

@@ -120,4 +120,5 @@ return [
         ],
     ],
 
+    'help_address' => 'management@life-marburg.de',
 ];
