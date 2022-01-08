@@ -9,7 +9,7 @@
         "laravel/jetstream": "2.4.4",
         "laravel/octane": "1.1.3",
         "laravel/sanctum": "2.12.2",
-        "laravel/tinker": "2.6.2",
+        "laravel/tinker": "2.6.3",
         "livewire/livewire": "2.8.0",
         "pbmedia/laravel-webdav": "1.10.0",
         "predis/predis": "1.1.9",
