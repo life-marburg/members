@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "18294472ccd0a30be094987902595722",
+    "content-hash": "86859500df1f01f063d384963356b2a2",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2917,26 +2917,26 @@
         },
         {
             "name": "pbmedia/laravel-webdav",
-            "version": "1.10.0",
+            "version": "1.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/protonemedia/laravel-webdav.git",
-                "reference": "b61e47c0f8e2d9dd531e644915ef0e2018a076e2"
+                "reference": "d341764f3f5a2d3ac62d39fa9a87fb1c01126cf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/protonemedia/laravel-webdav/zipball/b61e47c0f8e2d9dd531e644915ef0e2018a076e2",
-                "reference": "b61e47c0f8e2d9dd531e644915ef0e2018a076e2",
+                "url": "https://api.github.com/repos/protonemedia/laravel-webdav/zipball/d341764f3f5a2d3ac62d39fa9a87fb1c01126cf3",
+                "reference": "d341764f3f5a2d3ac62d39fa9a87fb1c01126cf3",
                 "shasum": ""
             },
             "require": {
-                "illuminate/filesystem": "^6.0 || ^7.0 || ^8.0",
+                "illuminate/filesystem": "^8.67",
                 "league/flysystem-webdav": "^1.0",
-                "php": "^7.3 || ^8.0"
+                "php": "^7.4 || ^8.0 || ^8.1"
             },
             "require-dev": {
-                "orchestra/testbench": "^4.0 || ^5.0 || ^6.0",
-                "phpunit/phpunit": "~7.0 || ~8.0 || ~9.0"
+                "orchestra/testbench": "^6.23",
+                "phpunit/phpunit": "^9.4"
             },
             "type": "library",
             "extra": {
@@ -2971,7 +2971,7 @@
             ],
             "support": {
                 "issues": "https://github.com/protonemedia/laravel-webdav/issues",
-                "source": "https://github.com/protonemedia/laravel-webdav/tree/1.10.0"
+                "source": "https://github.com/protonemedia/laravel-webdav/tree/1.11.0"
             },
             "funding": [
                 {
@@ -2979,7 +2979,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-31T22:17:55+00:00"
+            "time": "2021-12-19T18:07:56+00:00"
         },
         {
             "name": "phpoption/phpoption",
