@@ -66,6 +66,7 @@ WORKDIR /var/www
 COPY . ./
 COPY --from=build-frontend /var/www/public /var/www/public
 COPY --from=build-php /var/www/vendor /var/www/vendor
+COPY --from=build-php /var/www/bootstrap /var/www/bootstrap
 RUN rm /var/www/node_modules -rf
 RUN php artisan storage:link
 
