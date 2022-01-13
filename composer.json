@@ -10,7 +10,7 @@
         "laravel/octane": "1.2.0",
         "laravel/sanctum": "2.14.0",
         "laravel/tinker": "2.7.0",
-        "livewire/livewire": "2.8.2",
+        "livewire/livewire": "2.9.0",
         "pbmedia/laravel-webdav": "1.11.0",
         "predis/predis": "1.1.10",
         "spatie/laravel-permission": "5.5.0"
