@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "78b070b50a80959125ad565b0a82c13f",
+    "content-hash": "b910e42eeec8a833db4f7fb718904344",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1598,21 +1598,21 @@
         },
         {
             "name": "laravel/octane",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/octane.git",
-                "reference": "5862dec90e3c064bd7d4c31f3f3a20467baa4027"
+                "reference": "e3d1639a2e8b91361e86c67e9452fd4a28aa98ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/octane/zipball/5862dec90e3c064bd7d4c31f3f3a20467baa4027",
-                "reference": "5862dec90e3c064bd7d4c31f3f3a20467baa4027",
+                "url": "https://api.github.com/repos/laravel/octane/zipball/e3d1639a2e8b91361e86c67e9452fd4a28aa98ea",
+                "reference": "e3d1639a2e8b91361e86c67e9452fd4a28aa98ea",
                 "shasum": ""
             },
             "require": {
                 "laminas/laminas-diactoros": "^2.5",
-                "laravel/framework": "^8.77|^9.0",
+                "laravel/framework": "^8.81|^9.0",
                 "laravel/serializable-closure": "^1.0",
                 "php": "^8.0",
                 "symfony/psr-http-message-bridge": "^2.0"
@@ -1669,7 +1669,7 @@
                 "issues": "https://github.com/laravel/octane/issues",
                 "source": "https://github.com/laravel/octane"
             },
-            "time": "2022-01-12T15:35:48+00:00"
+            "time": "2022-02-08T14:10:34+00:00"
         },
         {
             "name": "laravel/sanctum",
