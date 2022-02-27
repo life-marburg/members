@@ -9,11 +9,7 @@ class MemberController extends Controller
 {
     public function index()
     {
-        $members = User::with('personalData')->paginate(25);
-
-        return view('pages.members.index', [
-            'members' => $members,
-        ]);
+        return view('pages.members.index');
     }
 
     public function edit(User $member)
