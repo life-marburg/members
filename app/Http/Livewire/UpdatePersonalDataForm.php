@@ -2,9 +2,15 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\User;
+use App\Notifications\UserIsWaitingForActivation;
+use App\Rights;
+use Spatie\Permission\Models\Role;
+
 class UpdatePersonalDataForm extends UserEditComponent
 {
     public bool $hasFormShell = true;
+    public bool $notifyAdmin = false;
 
     protected array $rules = [
         'state.name' => 'required',
@@ -50,13 +56,21 @@ class UpdatePersonalDataForm extends UserEditComponent
                 'street' => $this->state['street'],
                 'city' => $this->state['city'],
                 'zip' => $this->state['zip'],
-                'phone' => $this->state['phone'],
+                'phone' => $this->state['phone'] ?? null,
                 'mobile_phone' => $this->state['mobile_phone'],
             ])
             ->save();
 
         $this->user->name = $this->state['name'];
         $this->user->save();
+
+        if($this->notifyAdmin) {
+            /** @var User[] $admins */
+            $admins = Role::findByName(Rights::R_ADMIN, 'web')->users()->get();
+            foreach ($admins as $admin) {
+                $admin->notify(new UserIsWaitingForActivation($this->user));
+            }
+        }
     }
 
     public function render()

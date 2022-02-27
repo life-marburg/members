@@ -12,6 +12,7 @@
         <livewire:update-personal-data-form
             :user="Auth::user()"
             :has-form-shell="false"
+            :notify-admin="true"
             redirect-after-save="dashboard"/>
 
         <p class="my-4 text-sm text-gray-600">

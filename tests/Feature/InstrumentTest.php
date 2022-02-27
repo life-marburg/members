@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\InstrumentGroup;
 use App\Models\User;
 use App\Notifications\UserIsWaitingForActivation;
 use App\Rights;
@@ -48,19 +47,12 @@ class InstrumentTest extends TestCase
         $response->assertRedirect(route('not-yet-active'));
     }
 
-    public function test_new_user_instrument_set_should_trigger_notification()
+    public function test_new_user_instrument_set_should_work()
     {
-        Notification::fake();
         /** @var User $user */
         $user = User::factory()->create();
         $this->actingAs($user);
         $instrument = 1;
-        /** @var User $admin1 */
-        $admin1 = User::factory()->create();
-        $admin1->assignRole(Rights::R_ADMIN);
-        /** @var User $admin2 */
-        $admin2 = User::factory()->create();
-        $admin2->assignRole(Rights::R_ADMIN);
 
         $response = $this->post(route('set-instrument.save'), [
             'instrument' => $instrument,
@@ -71,6 +63,5 @@ class InstrumentTest extends TestCase
             'user_id' => $user->id,
             'instrument_group_id' => $instrument,
         ]);
-        Notification::assertSentTo([$admin1, $admin2], UserIsWaitingForActivation::class);
     }
 }

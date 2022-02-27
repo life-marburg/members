@@ -59,8 +59,6 @@ Route::middleware(['auth:sanctum', 'verified'])
     ->group(function () {
         Route::get('', [PersonalDataController::class, 'set'])
             ->name('form');
-        Route::post('', [PersonalDataController::class, 'save'])
-            ->name('save');
     });
 
 Route::get('not-yet-active', function () {

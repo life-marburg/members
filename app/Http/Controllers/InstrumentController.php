@@ -31,12 +31,6 @@ class InstrumentController extends Controller
 
         $request->user()->instrumentGroups()->attach($request->input('instrument'));
 
-        /** @var User[] $admins */
-        $admins = Role::findByName(Rights::R_ADMIN, 'web')->users()->get();
-        foreach ($admins as $admin) {
-            $admin->notify(new UserIsWaitingForActivation($request->user()));
-        }
-
         return redirect(route('dashboard'));
     }
 }
