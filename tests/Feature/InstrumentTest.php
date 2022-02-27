@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\InstrumentGroup;
 use App\Models\User;
 use App\Notifications\UserIsWaitingForActivation;
 use App\Rights;
@@ -63,5 +64,35 @@ class InstrumentTest extends TestCase
             'user_id' => $user->id,
             'instrument_group_id' => $instrument,
         ]);
+    }
+
+    public function test_should_only_see_selectable_instruments()
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $instrumentGroups = InstrumentGroup::all();
+
+        $response = $this->get(route('set-instrument.form'));
+        foreach ($instrumentGroups as $instrumentGroup) {
+            if($instrumentGroup->is_user_selectable) {
+                $response->assertSee($instrumentGroup->title);
+            } else {
+                $response->assertDontSee($instrumentGroup->title);
+            }
+        }
+    }
+
+    public function test_should_not_select_not_selectable_instrument()
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $instrument = InstrumentGroup::whereIsUserSelectable(false)->first();
+
+        $response = $this->post(route('set-instrument.save'), [
+            'instrument' => $instrument->id,
+        ]);
+        $response->assertSessionHasErrors();
     }
 }

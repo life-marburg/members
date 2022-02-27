@@ -19,14 +19,24 @@ class InstrumentController extends Controller
     public function setInstrument(): Factory|View|Application
     {
         return view('profile.set-instrument', [
-            'instruments' => InstrumentGroup::with('instruments')->get(),
+            'instruments' => InstrumentGroup::with('instruments')
+                ->where('is_user_selectable', true)
+                ->get(),
         ]);
     }
 
     public function saveInstrument(Request $request): Redirector|Application|RedirectResponse
     {
         $request->validate([
-            'instrument' => ['required', 'exists:instrument_groups,id']
+            'instrument' => [
+                'required',
+                'exists:instrument_groups,id',
+                function ($attribute, $value, $fail) {
+                    if (!InstrumentGroup::whereId($value)->where('is_user_selectable', true)->exists()) {
+                        $fail('The selected value is not an available option.');
+                    }
+                },
+            ],
         ]);
 
         $request->user()->instrumentGroups()->attach($request->input('instrument'));
