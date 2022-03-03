@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb138f17303fa3df9936b3997f4c27ac",
+    "content-hash": "16a3af48414b28dbceafb2867ac0dcb4",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1309,16 +1309,16 @@
         },
         {
             "name": "laravel/fortify",
-            "version": "v1.10.2",
+            "version": "v1.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/fortify.git",
-                "reference": "0047871070407e9b2727a2110425419312c009e0"
+                "reference": "eb1d07c849fee750e4cacba969490a72e88211ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/fortify/zipball/0047871070407e9b2727a2110425419312c009e0",
-                "reference": "0047871070407e9b2727a2110425419312c009e0",
+                "url": "https://api.github.com/repos/laravel/fortify/zipball/eb1d07c849fee750e4cacba969490a72e88211ae",
+                "reference": "eb1d07c849fee750e4cacba969490a72e88211ae",
                 "shasum": ""
             },
             "require": {
@@ -1368,7 +1368,7 @@
                 "issues": "https://github.com/laravel/fortify/issues",
                 "source": "https://github.com/laravel/fortify"
             },
-            "time": "2022-02-05T18:22:32+00:00"
+            "time": "2022-02-23T15:04:40+00:00"
         },
         {
             "name": "laravel/framework",
@@ -1545,21 +1545,21 @@
         },
         {
             "name": "laravel/jetstream",
-            "version": "v2.6.6",
+            "version": "v2.6.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/jetstream.git",
-                "reference": "a03b8ececef21e4d2c3bfb8a7e90ec36c2dfaaf9"
+                "reference": "b30740ff43fb8ad3fb33f1ef2b528a866adb126b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/jetstream/zipball/a03b8ececef21e4d2c3bfb8a7e90ec36c2dfaaf9",
-                "reference": "a03b8ececef21e4d2c3bfb8a7e90ec36c2dfaaf9",
+                "url": "https://api.github.com/repos/laravel/jetstream/zipball/b30740ff43fb8ad3fb33f1ef2b528a866adb126b",
+                "reference": "b30740ff43fb8ad3fb33f1ef2b528a866adb126b",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "illuminate/support": "^8.0|^9.0",
+                "illuminate/support": "^8.37|^9.0",
                 "jenssegers/agent": "^2.6",
                 "laravel/fortify": "^1.9",
                 "php": "^7.3|^8.0"
@@ -1607,7 +1607,7 @@
                 "issues": "https://github.com/laravel/jetstream/issues",
                 "source": "https://github.com/laravel/jetstream"
             },
-            "time": "2022-02-15T14:30:06+00:00"
+            "time": "2022-03-02T14:22:15+00:00"
         },
         {
             "name": "laravel/octane",
