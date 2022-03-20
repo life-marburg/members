@@ -4,7 +4,7 @@
     "require": {
         "php": "^8.0",
         "fruitcake/laravel-cors": "3.0.0",
-        "guzzlehttp/guzzle": "7.4.1",
+        "guzzlehttp/guzzle": "7.4.2",
         "laravel/framework": "8.83.5",
         "laravel/jetstream": "2.6.8",
         "laravel/octane": "1.2.3",
