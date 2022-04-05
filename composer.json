@@ -7,7 +7,7 @@
         "guzzlehttp/guzzle": "7.4.2",
         "laravel/framework": "8.83.6",
         "laravel/jetstream": "2.7.1",
-        "laravel/octane": "1.2.5",
+        "laravel/octane": "1.2.6",
         "laravel/sanctum": "2.15.0",
         "laravel/tinker": "2.7.2",
         "livewire/livewire": "2.10.4",
