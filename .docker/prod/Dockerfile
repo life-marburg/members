@@ -4,7 +4,7 @@ WORKDIR /var/www
 COPY . ./
 RUN composer install --optimize-autoloader --ignore-platform-req=php
 
-FROM node:16 AS build-frontend
+FROM node:18 AS build-frontend
 
 WORKDIR /var/www
 # To make tailwind purge find templates from vendor
