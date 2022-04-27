@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dbb2ba0f647ff4b70edf6048e6c72583",
+    "content-hash": "65e2af84dc9877d78507ab488334a451",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1611,16 +1611,16 @@
         },
         {
             "name": "laravel/octane",
-            "version": "v1.2.7",
+            "version": "v1.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/octane.git",
-                "reference": "c08cff913657080455b1f2fa504ded3825ba8824"
+                "reference": "f03913ab0498e157a0eac49f1e5cff7584d074cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/octane/zipball/c08cff913657080455b1f2fa504ded3825ba8824",
-                "reference": "c08cff913657080455b1f2fa504ded3825ba8824",
+                "url": "https://api.github.com/repos/laravel/octane/zipball/f03913ab0498e157a0eac49f1e5cff7584d074cf",
+                "reference": "f03913ab0498e157a0eac49f1e5cff7584d074cf",
                 "shasum": ""
             },
             "require": {
@@ -1682,7 +1682,7 @@
                 "issues": "https://github.com/laravel/octane/issues",
                 "source": "https://github.com/laravel/octane"
             },
-            "time": "2022-04-11T14:09:11+00:00"
+            "time": "2022-04-20T14:24:51+00:00"
         },
         {
             "name": "laravel/sanctum",
