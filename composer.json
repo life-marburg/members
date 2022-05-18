@@ -5,7 +5,7 @@
         "php": "^8.0",
         "fruitcake/laravel-cors": "3.0.0",
         "guzzlehttp/guzzle": "7.4.2",
-        "laravel/framework": "8.83.12",
+        "laravel/framework": "8.83.13",
         "laravel/jetstream": "2.8.1",
         "laravel/octane": "1.2.10",
         "laravel/sanctum": "2.15.1",
