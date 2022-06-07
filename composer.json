@@ -6,7 +6,7 @@
         "fruitcake/laravel-cors": "3.0.0",
         "guzzlehttp/guzzle": "7.4.2",
         "laravel/framework": "8.83.13",
-        "laravel/jetstream": "2.8.1",
+        "laravel/jetstream": "2.8.4",
         "laravel/octane": "1.2.12",
         "laravel/sanctum": "2.15.1",
         "laravel/tinker": "2.7.2",
