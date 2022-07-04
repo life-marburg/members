@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c1d9f4e1d875a4332c39673bb96e9d27",
+    "content-hash": "af05286a69f8202058c326030cb7d995",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1210,16 +1210,16 @@
         },
         {
             "name": "laminas/laminas-diactoros",
-            "version": "2.11.0",
+            "version": "2.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-diactoros.git",
-                "reference": "d1bc565b23c2040fafde398a8a5db083c47928c0"
+                "reference": "78846cbce0550ec174508a646f46fd6dee76099b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-diactoros/zipball/d1bc565b23c2040fafde398a8a5db083c47928c0",
-                "reference": "d1bc565b23c2040fafde398a8a5db083c47928c0",
+                "url": "https://api.github.com/repos/laminas/laminas-diactoros/zipball/78846cbce0550ec174508a646f46fd6dee76099b",
+                "reference": "78846cbce0550ec174508a646f46fd6dee76099b",
                 "shasum": ""
             },
             "require": {
@@ -1305,7 +1305,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-05-17T10:57:52+00:00"
+            "time": "2022-06-29T14:15:02+00:00"
         },
         {
             "name": "laravel/fortify",
@@ -1611,16 +1611,16 @@
         },
         {
             "name": "laravel/octane",
-            "version": "v1.2.12",
+            "version": "v1.2.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/octane.git",
-                "reference": "0e360cfef791ae31cf22092aaf09004f863a7f7f"
+                "reference": "a746fd50aa973da8c07cffa7da49630ae884dde1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/octane/zipball/0e360cfef791ae31cf22092aaf09004f863a7f7f",
-                "reference": "0e360cfef791ae31cf22092aaf09004f863a7f7f",
+                "url": "https://api.github.com/repos/laravel/octane/zipball/a746fd50aa973da8c07cffa7da49630ae884dde1",
+                "reference": "a746fd50aa973da8c07cffa7da49630ae884dde1",
                 "shasum": ""
             },
             "require": {
@@ -1682,7 +1682,7 @@
                 "issues": "https://github.com/laravel/octane/issues",
                 "source": "https://github.com/laravel/octane"
             },
-            "time": "2022-05-31T12:32:48+00:00"
+            "time": "2022-06-27T13:29:02+00:00"
         },
         {
             "name": "laravel/sanctum",
