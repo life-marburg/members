@@ -11,66 +11,12 @@ WORKDIR /var/www
 COPY --from=build-php /var/www/vendor /var/www/vendor
 COPY . ./
 
-RUN yarn && yarn prod
+RUN yarn --frozen-lockfile && yarn prod && rm -rf node_modules
 
-FROM php:8.0-buster
-
-RUN echo "upload_max_filesize = 2G; " > /usr/local/etc/php/conf.d/upload.ini && \
-echo "post_max_size = 2500M;" >> /usr/local/etc/php/conf.d/upload.ini && \
-echo "date.timezone = \"Europe/Berlin\"" >> /usr/local/etc/php/conf.d/timezone.ini && \
-echo 'memory_limit = 2G' >> /usr/local/etc/php/conf.d/max_memory.ini
-RUN apt-get update && \
-  apt-get install -y \
-    git \
-    curl libcurl3-dev \
-    mariadb-client \
-    libpng-dev libwebp-dev libjpeg62-turbo-dev libfreetype6-dev libpng-dev \
-    libxpm-dev \
-    zip libzip-dev \
-    gnupg2 \
-    sudo && \
-  docker-php-ext-configure curl && \
-  docker-php-ext-install mysqli curl exif && \
-  docker-php-ext-configure zip && \
-  docker-php-ext-install zip && \
-  docker-php-ext-configure gd && \
-  docker-php-ext-install gd && \
-  docker-php-ext-install pdo pdo_mysql && \
-  docker-php-ext-install pcntl && \
-  pecl install swoole && docker-php-ext-enable swoole && \
-  pecl install -o -f redis && \
-  rm -rf /tmp/pear && \
-  docker-php-ext-enable redis
-
-ENV NGINX_VERSION   1.21.5
-ENV NJS_VERSION     0.7.1
-ENV PKG_RELEASE     1~buster
-RUN apt-key adv --keyserver "hkp://keyserver.ubuntu.com:80" --keyserver-options timeout=10 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62 && \
-    echo "deb https://nginx.org/packages/mainline/debian/ buster nginx" >> /etc/apt/sources.list.d/nginx.list && \
-    apt-get update && \
-    apt-get install --no-install-recommends --no-install-suggests -y \
-      nginx=${NGINX_VERSION}-${PKG_RELEASE} \
-      nginx-module-xslt=${NGINX_VERSION}-${PKG_RELEASE} \
-      nginx-module-geoip=${NGINX_VERSION}-${PKG_RELEASE} \
-      nginx-module-image-filter=${NGINX_VERSION}-${PKG_RELEASE} \
-      nginx-module-njs=${NGINX_VERSION}+${NJS_VERSION}-${PKG_RELEASE} \
-      gettext-base \
-      curl && \
-    apt-get remove --purge --auto-remove -y && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/nginx.list && \
-    ln -sf /dev/stdout /var/log/nginx/access.log && \
-    ln -sf /dev/stderr /var/log/nginx/error.log
-COPY .docker/prod/nginx.conf /etc/nginx/conf.d/default.conf
-
-WORKDIR /var/www
+FROM kolaente/laravel:8.0-octane-prod
 
 COPY . ./
 COPY --from=build-frontend /var/www/public /var/www/public
 COPY --from=build-php /var/www/vendor /var/www/vendor
 COPY --from=build-php /var/www/bootstrap /var/www/bootstrap
-RUN rm /var/www/node_modules -rf
 RUN php artisan storage:link
-
-EXPOSE 80
-ADD .docker/dev/setup.sh /usr/local/bin/setup
-ADD .docker/prod/run.sh /
-CMD /run.sh
