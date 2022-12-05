@@ -7,7 +7,7 @@ in
   stdenv.mkDerivation {
     name = "life-dev";
     nativeBuildInputs = with pkgs; [
-      (php80.withExtensions
+      (php81.withExtensions
         ({ all, ... }: with all; [
           bz2
           curl
@@ -35,7 +35,7 @@ in
           zlib
         ])
       )
-      unstable.php80Packages.composer # composer 2
+      unstable.php81Packages.composer # composer 2
       libjpeg
  ];
  shellHook = ''
