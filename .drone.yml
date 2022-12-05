@@ -128,7 +128,6 @@ steps:
       repo: hub.kolaente.de/wobsites/life-v2
       registry: hub.kolaente.de
       tags: latest
-      dockerfile: .docker/prod/Dockerfile
     depends_on: [ fetch-tags ]
 
 ---
@@ -162,20 +161,4 @@ steps:
       repo: hub.kolaente.de/wobsites/life-v2
       registry: hub.kolaente.de
       tags: unstable
-      dockerfile: .docker/prod/Dockerfile
-    depends_on: [ fetch-tags ]
-
-  - name: docker-dev
-    image: plugins/docker:linux-amd64
-    pull: true
-    settings:
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
-      repo: hub.kolaente.de/wobsites/life-v2
-      registry: hub.kolaente.de
-      context: .docker/dev
-      dockerfile: .docker/dev/Dockerfile
-      tags: dev
     depends_on: [ fetch-tags ]
