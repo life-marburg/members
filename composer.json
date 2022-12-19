@@ -21,7 +21,7 @@
         "fakerphp/faker": "1.21.0",
         "mockery/mockery": "1.5.1",
         "nunomaduro/collision": "6.3.1",
-        "phpunit/phpunit": "9.5.26"
+        "phpunit/phpunit": "9.5.27"
     },
     "autoload": {
         "psr-4": {
