@@ -18,7 +18,7 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "2.12.3",
         "spatie/laravel-ignition": "^1.0",
-        "fakerphp/faker": "1.20.0",
+        "fakerphp/faker": "1.21.0",
         "mockery/mockery": "1.5.1",
         "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "9.5.26"
