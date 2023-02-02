@@ -27,7 +27,7 @@ class MembersList extends Component
 
     public function render()
     {
-        $members = User::with('personalData')
+        $members = User::with(['personalData', 'instrumentGroups'])
             ->orderBy($this->sortBy);
 
         if ($this->sortBy === 'instrument') {
