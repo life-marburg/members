@@ -103,4 +103,9 @@ class User extends Authenticatable implements HasLocalePreference
             $this->personalData->city !== null &&
             $this->personalData->mobile_phone !== null;
     }
+
+    public function additionalEmails(): HasMany
+    {
+        return $this->hasMany(AdditionalEmails::class);
+    }
 }

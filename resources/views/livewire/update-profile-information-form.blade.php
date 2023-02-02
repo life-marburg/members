@@ -58,6 +58,22 @@
             <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="state.email" />
             <x-jet-input-error for="email" class="mt-2" />
         </div>
+
+        <!-- More Email addresses -->
+        @php($i = 0)
+        @foreach($state['additional_emails'] as $i => $mail)
+            <div class="col-span-6 sm:col-span-4">
+                <x-jet-label :for="'email' . $mail['id']" value="{{ __('Additional Email :number', ['number' => $i + 1]) }}" />
+                <x-jet-input :id="'email' . $mail['id']" type="email" class="mt-1 block w-full" wire:model.defer="state.additional_emails.{{ $i }}.email"/>
+                <x-jet-input-error :for="'email' . $mail['id']" class="mt-2" />
+            </div>
+        @endforeach
+
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="email_new" value="{{ __('Additional Email :number', ['number' => count($state['additional_emails']) + 1]) }}" />
+            <x-jet-input id="email_new" type="email" class="mt-1 block w-full" wire:model.defer="state.additional_emails.{{ $i + 1 }}.email"/>
+            <x-jet-input-error for="email_new" class="mt-2" />
+        </div>
     </x-slot>
 
     <x-slot name="actions">
