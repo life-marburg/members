@@ -47,7 +47,7 @@ class MembersList extends Component
         }
 
         return view('livewire.members-list', [
-            'members' => $members->paginate(25),
+            'members' => $members->paginate(50),
         ]);
     }
 }
