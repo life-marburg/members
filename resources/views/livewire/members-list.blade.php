@@ -9,6 +9,7 @@
             <option value="street">{{ __('Street and Housenumber') }}</option>
             <option value="zip">{{ __('Zip Code') }}</option>
             <option value="city">{{ __('City') }}</option>
+            <option value="instrument">{{ __('Instrument') }}</option>
         </x-select>
     </div>
 

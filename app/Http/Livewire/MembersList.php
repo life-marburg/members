@@ -30,15 +30,14 @@ class MembersList extends Component
         $members = User::with('personalData')
             ->orderBy($this->sortBy);
 
-        // This does not work. Probably because the instrument relation is 1:n
-//        if ($this->sortBy === 'instrument') {
-//            $members = User::select('users.*')
-//                ->distinct()
-//                ->join('personal_data', 'users.id', '=', 'personal_data.user_id')
-//                ->leftJoin('user_instrument_group', 'users.id', '=', 'user_instrument_group.instrument_group_id')
-//                ->leftJoin('instrument_groups', 'user_instrument_group.instrument_group_id', '=', 'instrument_groups.id')
-//                ->orderBy('instrument_groups.title');
-//        }
+        if ($this->sortBy === 'instrument') {
+            $members = User::select('users.*')
+                ->distinct()
+                ->join('personal_data', 'users.id', '=', 'personal_data.user_id')
+                ->leftJoin('user_instrument_group', 'users.id', '=', 'user_instrument_group.user_id')
+                ->leftJoin('instrument_groups', 'user_instrument_group.instrument_group_id', '=', 'instrument_groups.id')
+                ->orderBy('instrument_groups.title');
+        }
 
         if (in_array($this->sortBy, ['street', 'city', 'zip'])) {
             $members = User::select('users.*')
