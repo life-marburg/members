@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InstrumentController;
 use App\Http\Controllers\MemberController;
@@ -68,3 +69,7 @@ Route::get('not-yet-active', function () {
 
     return view('pages.not-yet-active');
 })->name('not-yet-active');
+
+Route::get('/calendar/internal', [CalendarController::class, 'getCalDAVCalendarOutput'])
+    ->name('calendar.internal')
+    ->middleware('auth.basic');
