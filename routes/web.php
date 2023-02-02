@@ -41,6 +41,7 @@ Route::group([
             Route::get('/{instrument}', [SheetController::class, 'show'])->name('show');
             Route::get('/{sheet}/{instrument}/{variant}', [SheetController::class, 'download'])->name('download');
         });
+    Route::view('/calendar', 'pages.calendar')->name('calendar');
     Route::middleware(['can:' . Rights::P_EDIT_PAGES])->resource('pages', PageController::class);
     Route::middleware(['can:' . Rights::P_MANAGE_MEMBERS])->resource('members', MemberController::class);
 });
@@ -70,6 +71,6 @@ Route::get('not-yet-active', function () {
     return view('pages.not-yet-active');
 })->name('not-yet-active');
 
-Route::get('/calendar/internal', [CalendarController::class, 'getCalDAVCalendarOutput'])
-    ->name('calendar.internal')
+Route::get('/calendar/caldav/internal', [CalendarController::class, 'getCalDAVCalendarOutput'])
+    ->name('caldav.calendar.internal')
     ->middleware('auth.basic');
