@@ -27,13 +27,14 @@ class MembersList extends Component
 
     public function render()
     {
-        $members = User::with(['personalData', 'instrumentGroups'])
+        $members = User::with(['personalData', 'instrumentGroups', 'additionalEmails'])
             ->orderBy($this->sortBy);
 
         if ($this->sortBy === 'instrument') {
             $members = User::select('users.*')
                 ->distinct()
                 ->join('personal_data', 'users.id', '=', 'personal_data.user_id')
+                ->join('additional_emails', 'users.id', '=', 'additional_emails.user_id')
                 ->leftJoin('user_instrument_group', 'users.id', '=', 'user_instrument_group.user_id')
                 ->leftJoin('instrument_groups', 'user_instrument_group.instrument_group_id', '=', 'instrument_groups.id')
                 ->orderBy('instrument_groups.title');
@@ -42,6 +43,7 @@ class MembersList extends Component
         if (in_array($this->sortBy, ['street', 'city', 'zip'])) {
             $members = User::select('users.*')
                 ->join('personal_data', 'users.id', '=', 'personal_data.user_id')
+                ->join('additional_emails', 'users.id', '=', 'additional_emails.user_id')
                 ->orderBy('personal_data.'.$this->sortBy);
         }
 

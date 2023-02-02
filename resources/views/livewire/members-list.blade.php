@@ -70,7 +70,7 @@
                                 {{ $member->name }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                {{ $member->email }}
+                                {{ join(', ', [$member->email, ...$member->additionalEmails->map(fn($e) => $e->email)]) }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 {{ $member->instrumentGroups->implode('title', ', ') }}
