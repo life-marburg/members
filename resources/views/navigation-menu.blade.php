@@ -21,7 +21,7 @@
                     <x-jet-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                         {{ __('Profile') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="https://life-marburg.de/kalender.html" target="_blank">
+                    <x-jet-nav-link href="{{ route('calendar') }}" :active="request()->routeIs('calendar')">
                         {{ __('Calendar') }}
                     </x-jet-nav-link>
                     <x-jet-nav-link href="https://life-marburg.de/" target="_blank">
@@ -131,7 +131,7 @@
                 <x-jet-responsive-nav-link href="{{ route('sheets.index') }}" :active="request()->routeIs('sheets.index') || request()->routeIs('sheets.show')">
                     {{ __('Sheets') }}
                 </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="https://life-marburg.de/kalender.html" target="_blank">
+                <x-jet-responsive-nav-link href="{{ route('calendar') }}" :active="request()->routeIs('calendar')">
                     {{ __('Calendar') }}
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="https://life-marburg.de/" target="_blank" class="flex items-center">
