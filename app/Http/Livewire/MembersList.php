@@ -27,25 +27,22 @@ class MembersList extends Component
 
     public function render()
     {
-        $members = User::with(['personalData', 'instrumentGroups', 'additionalEmails'])
-            ->orderBy($this->sortBy);
-
-        if ($this->sortBy === 'instrument') {
-            $members = User::select('users.*')
+        $members = match ($this->sortBy) {
+            'street', 'city', 'zip' => User::select('users.*')
                 ->distinct()
                 ->join('personal_data', 'users.id', '=', 'personal_data.user_id')
-                ->join('additional_emails', 'users.id', '=', 'additional_emails.user_id')
+                ->leftJoin('additional_emails', 'users.id', '=', 'additional_emails.user_id')
+                ->orderBy('personal_data.' . $this->sortBy),
+            'instrument' => User::select('users.*')
+                ->distinct()
+                ->join('personal_data', 'users.id', '=', 'personal_data.user_id')
+                ->leftJoin('additional_emails', 'users.id', '=', 'additional_emails.user_id')
                 ->leftJoin('user_instrument_group', 'users.id', '=', 'user_instrument_group.user_id')
                 ->leftJoin('instrument_groups', 'user_instrument_group.instrument_group_id', '=', 'instrument_groups.id')
-                ->orderBy('instrument_groups.title');
-        }
-
-        if (in_array($this->sortBy, ['street', 'city', 'zip'])) {
-            $members = User::select('users.*')
-                ->join('personal_data', 'users.id', '=', 'personal_data.user_id')
-                ->join('additional_emails', 'users.id', '=', 'additional_emails.user_id')
-                ->orderBy('personal_data.'.$this->sortBy);
-        }
+                ->orderBy('instrument_groups.title'),
+            default => User::with(['personalData', 'instrumentGroups', 'additionalEmails'])
+                ->orderBy($this->sortBy),
+        };
 
         return view('livewire.members-list', [
             'members' => $members->paginate(50),
