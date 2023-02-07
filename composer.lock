@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3517f70f18a9b02072a07856b852596a",
+    "content-hash": "2d97fa49a21f229a275f898305ff7271",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1725,16 +1725,16 @@
         },
         {
             "name": "laravel/octane",
-            "version": "v1.4.0",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/octane.git",
-                "reference": "665b693bf86a23bae4a70f1e7a600284d736877d"
+                "reference": "ef2bc175fdbe8af967511650975f62e86ebe8f8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/octane/zipball/665b693bf86a23bae4a70f1e7a600284d736877d",
-                "reference": "665b693bf86a23bae4a70f1e7a600284d736877d",
+                "url": "https://api.github.com/repos/laravel/octane/zipball/ef2bc175fdbe8af967511650975f62e86ebe8f8e",
+                "reference": "ef2bc175fdbe8af967511650975f62e86ebe8f8e",
                 "shasum": ""
             },
             "require": {
@@ -1748,7 +1748,7 @@
             "require-dev": {
                 "guzzlehttp/guzzle": "^7.2",
                 "mockery/mockery": "^1.4",
-                "nunomaduro/collision": "^5.10|^6.0",
+                "nunomaduro/collision": "^5.10|^6.0|^7.0",
                 "orchestra/testbench": "^6.16|^7.0|^8.0",
                 "phpunit/phpunit": "^9.3",
                 "spiral/roadrunner": "^2.8.2"
@@ -1797,7 +1797,7 @@
                 "issues": "https://github.com/laravel/octane/issues",
                 "source": "https://github.com/laravel/octane"
             },
-            "time": "2023-01-10T09:17:37+00:00"
+            "time": "2023-02-03T16:19:05+00:00"
         },
         {
             "name": "laravel/sanctum",
