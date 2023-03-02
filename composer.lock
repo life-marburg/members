@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f92365335800489d0109eed66af8dfa",
+    "content-hash": "4654d19742a9365ff85f0f65a60a57d2",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1649,16 +1649,16 @@
         },
         {
             "name": "laravel/octane",
-            "version": "v1.4.2",
+            "version": "v1.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/octane.git",
-                "reference": "b7b1fb4e77c57edd3cdc668ce483adff6830fc4c"
+                "reference": "c9aaf232c0700ba41e2ef14423b1153258e4cbcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/octane/zipball/b7b1fb4e77c57edd3cdc668ce483adff6830fc4c",
-                "reference": "b7b1fb4e77c57edd3cdc668ce483adff6830fc4c",
+                "url": "https://api.github.com/repos/laravel/octane/zipball/c9aaf232c0700ba41e2ef14423b1153258e4cbcb",
+                "reference": "c9aaf232c0700ba41e2ef14423b1153258e4cbcb",
                 "shasum": ""
             },
             "require": {
@@ -1671,9 +1671,14 @@
             },
             "require-dev": {
                 "guzzlehttp/guzzle": "^7.2",
+                "inertiajs/inertia-laravel": "^0.6.9",
+                "laravel/scout": "^9.8",
+                "laravel/socialite": "^5.6",
+                "livewire/livewire": "^2.12",
                 "mockery/mockery": "^1.4",
                 "nunomaduro/collision": "^5.10|^6.0|^7.0",
                 "orchestra/testbench": "^6.16|^7.0|^8.0",
+                "phpstan/phpstan": "^1.10",
                 "phpunit/phpunit": "^9.3",
                 "spiral/roadrunner": "^2.8.2"
             },
@@ -1721,7 +1726,7 @@
                 "issues": "https://github.com/laravel/octane/issues",
                 "source": "https://github.com/laravel/octane"
             },
-            "time": "2023-02-08T02:10:42+00:00"
+            "time": "2023-03-01T20:00:17+00:00"
         },
         {
             "name": "laravel/sanctum",
