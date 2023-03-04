@@ -9,7 +9,7 @@
         "laravel/octane": "1.4.3",
         "laravel/sanctum": "3.2.1",
         "laravel/tinker": "2.8.1",
-        "livewire/livewire": "2.12.2",
+        "livewire/livewire": "2.12.3",
         "predis/predis": "2.1.2",
         "singlequote/laravel-webdav": "1.0.2",
         "spatie/laravel-permission": "5.9.1"
