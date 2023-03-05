@@ -22,12 +22,6 @@ RUN pnpm run prod && rm -rf node_modules
 
 FROM kolaente/laravel:8.2-octane-prod
 
-ENV PHPREDIS_VERSION 5.3.7
-RUN mkdir -p /usr/src/php/ext/redis \
-    && curl -L https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz | tar xvz -C /usr/src/php/ext/redis --strip 1 \
-    && echo 'redis' >> /usr/src/php-available-exts \
-    && docker-php-ext-install redis
-
 COPY . ./
 COPY --from=build-frontend /var/www/public /var/www/public
 COPY --from=build-php /var/www/vendor /var/www/vendor
