@@ -4,14 +4,21 @@ WORKDIR /var/www
 COPY . ./
 RUN composer install --optimize-autoloader --ignore-platform-req=php --ignore-platform-req=ext-bcmath
 
-FROM node:18 AS build-frontend
+FROM node:18-alpine AS build-frontend
 
 WORKDIR /var/www
+
+COPY package.json ./
+COPY pnpm-lock.yaml ./
+
+RUN corepack enable && \
+    pnpm install
+
 # To make tailwind purge find templates from vendor
 COPY --from=build-php /var/www/vendor /var/www/vendor
 COPY . ./
 
-RUN yarn --frozen-lockfile && yarn prod && rm -rf node_modules
+RUN pnpm run prod && rm -rf node_modules
 
 FROM kolaente/laravel:8.2-octane-prod
 
