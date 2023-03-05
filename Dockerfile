@@ -13,7 +13,7 @@ COPY . ./
 
 RUN yarn --frozen-lockfile && yarn prod && rm -rf node_modules
 
-FROM kolaente/laravel:8.1-octane-prod
+FROM kolaente/laravel:8.2-octane-prod
 
 ENV PHPREDIS_VERSION 5.3.7
 RUN mkdir -p /usr/src/php/ext/redis \

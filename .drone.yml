@@ -84,7 +84,7 @@ steps:
       - dependencies-frontend
 
   - name: test
-    image: kolaente/laravel:8.1-octane-dev
+    image: kolaente/laravel:8.2-octane-dev
     pull: true
     environment:
       DB_CONNECTION: sqlite
