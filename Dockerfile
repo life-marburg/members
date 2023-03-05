@@ -10,6 +10,7 @@ WORKDIR /var/www
 
 COPY package.json ./
 COPY pnpm-lock.yaml ./
+COPY .npmrc ./
 
 RUN corepack enable && \
     pnpm install
