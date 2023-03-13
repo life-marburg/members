@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Rights;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Contracts\Translation\HasLocalePreference;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,6 +16,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use function Filament\get_asset_id;
 
 /**
  * @mixin IdeHelperUser
@@ -113,5 +115,33 @@ class User extends Authenticatable implements HasLocalePreference, FilamentUser
     public function canAccessFilament(): bool
     {
         return $this->hasRole(Rights::R_ADMIN);
+    }
+
+    protected function allEmails(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => join(', ', [$this->email, ...$this->additionalEmails->map(fn($e) => $e->email)])
+        );
+    }
+
+    protected function fullAddress(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->personalData->street . ', ' . $this->personalData->zip . ' ' . $this->personalData->city
+        );
+    }
+
+    protected function isAdmin(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->hasRole(Rights::R_ADMIN),
+        );
+    }
+
+    protected function canViewAllSheets(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->can(Rights::P_VIEW_ALL_INSTRUMENTS),
+        );
     }
 }
