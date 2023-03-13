@@ -2,10 +2,10 @@
 
 <div {{ $attributes->merge(['class' => $hasFormShell ? 'md:grid md:grid-cols-3 md:gap-6' : '']) }}>
     @if($hasFormShell)
-        <x-jet-section-title>
+        <x-section-title>
             <x-slot name="title">{{ $title }}</x-slot>
             <x-slot name="description">{{ $description }}</x-slot>
-        </x-jet-section-title>
+        </x-section-title>
     @endif
 
     <div class="mt-5 md:mt-0 md:col-span-2">

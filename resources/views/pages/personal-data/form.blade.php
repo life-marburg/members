@@ -1,7 +1,7 @@
 <x-guest-layout>
-    <x-jet-authentication-card>
+    <x-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo/>
+            <x-authentication-card-logo/>
         </x-slot>
 
         <h2 class="text-xl font-display mb-2">Eine Sache noch...</h2>
@@ -21,5 +21,5 @@
 
         <x-help-email/>
         <x-logout-link/>
-    </x-jet-authentication-card>
+    </x-authentication-card>
 </x-guest-layout>

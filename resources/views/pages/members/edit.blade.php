@@ -8,9 +8,9 @@
     <div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             <livewire:update-personal-data-form :user="$member"/>
-            <x-jet-section-border/>
+            <x-section-border/>
             <livewire:user-update-meta :user="$member"/>
-            <x-jet-section-border/>
+            <x-section-border/>
             <livewire:admin-delete-user-form :user="$member"/>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <x-guest-layout>
-    <x-jet-authentication-card>
+    <x-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+            <x-authentication-card-logo />
         </x-slot>
 
         <h2 class="text-xl font-display mb-2">Hi!</h2>
@@ -20,14 +20,14 @@
                 </x-select>
 
                 <div>
-                    <x-jet-button type="submit">
+                    <x-button type="submit">
                         Instrument Speichern
-                    </x-jet-button>
+                    </x-button>
                 </div>
             </form>
 
             <x-help-email/>
             <x-logout-link/>
         </div>
-    </x-jet-authentication-card>
+    </x-authentication-card>
 </x-guest-layout>
