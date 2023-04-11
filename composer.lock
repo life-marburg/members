@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ca616d9ee1f675bfd9f5cefa6d0e1c92",
+    "content-hash": "1a4f6fce67586ad9db5829f251f767e1",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -1985,16 +1985,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v10.7.0",
+            "version": "v10.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "a1b2196d2327f4db378993076d66c49e7e136541"
+                "reference": "ddbbb2b50388721fe63312bb4469cae13163fd36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/a1b2196d2327f4db378993076d66c49e7e136541",
-                "reference": "a1b2196d2327f4db378993076d66c49e7e136541",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/ddbbb2b50388721fe63312bb4469cae13163fd36",
+                "reference": "ddbbb2b50388721fe63312bb4469cae13163fd36",
                 "shasum": ""
             },
             "require": {
@@ -2181,7 +2181,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-04-11T13:36:39+00:00"
+            "time": "2023-04-11T14:11:49+00:00"
         },
         {
             "name": "laravel/jetstream",
