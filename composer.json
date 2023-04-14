@@ -20,7 +20,7 @@
         "doctrine/dbal": "^3.6",
         "fakerphp/faker": "1.21.0",
         "mockery/mockery": "1.5.1",
-        "nunomaduro/collision": "7.4.0",
+        "nunomaduro/collision": "7.5.0",
         "phpunit/phpunit": "10.1.0",
         "spatie/laravel-ignition": "2.1.0"
     },
