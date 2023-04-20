@@ -44,7 +44,7 @@ steps:
       - restore-cache
 
   - name: dependencies-frontend
-    image: node:19
+    image: node:20
     pull: true
     environment:
       YARN_CACHE_FOLDER: .cache/yarn/
@@ -74,7 +74,7 @@ steps:
       - dependencies
 
   - name: build-frontend
-    image: node:19
+    image: node:20
     pull: true
     environment:
       YARN_CACHE_FOLDER: .cache/yarn/
