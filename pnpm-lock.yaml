@@ -2,8 +2,8 @@ lockfileVersion: '6.0'
 
 dependencies:
   friendly-challenge:
-    specifier: 0.9.11
-    version: 0.9.11
+    specifier: 0.9.12
+    version: 0.9.12
 
 devDependencies:
   '@tailwindcss/forms':
@@ -2980,8 +2980,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
-  /friendly-challenge@0.9.11:
-    resolution: {integrity: sha512-5kpn5Fg4noxFDNl1OKrdisL5jCa7CYECc3RZ+ToUwEuTj1yg7ayQFofOTtAhiT+lmwp4VE4oxHqQadg5hvJEXg==}
+  /friendly-challenge@0.9.12:
+    resolution: {integrity: sha512-U1MQ2zl7txKdDuD7Y8jZ8a4CtaXjZSFlWXNmGb22KV1sBnGIKDBIkelShBd5zfZUo4dWml0ikKVJMLQjwLLeSQ==}
     dependencies:
       '@babel/runtime-corejs3': 7.21.0
       core-js: 3.29.0
