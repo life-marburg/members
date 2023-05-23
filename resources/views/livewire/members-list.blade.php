@@ -1,16 +1,20 @@
 <div>
-    <div class="flex items-center">
-        <span class="mr-2">
-            {{ __('Sort By') }}:
-        </span>
-        <x-select wire:model="sortBy" wire:change="sort">
-            <option value="id">{{ __('Created At') }}</option>
-            <option value="name">{{ __('Name') }}</option>
-            <option value="street">{{ __('Street and Housenumber') }}</option>
-            <option value="zip">{{ __('Zip Code') }}</option>
-            <option value="city">{{ __('City') }}</option>
-            <option value="instrument">{{ __('Instrument') }}</option>
-        </x-select>
+    <div class="flex items-center justify-between">
+        <div>
+            <span class="mr-2">
+                {{ __('Sort By') }}:
+            </span>
+            <x-select wire:model="sortBy" wire:change="sort">
+                <option value="id">{{ __('Created At') }}</option>
+                <option value="name">{{ __('Name') }}</option>
+                <option value="street">{{ __('Street and Housenumber') }}</option>
+                <option value="zip">{{ __('Zip Code') }}</option>
+                <option value="city">{{ __('City') }}</option>
+                <option value="instrument">{{ __('Instrument') }}</option>
+            </x-select>
+        </div>
+
+        <livewire:export-users/>
     </div>
 
     <div class="border-t border-gray-200 mt-4 mb-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
