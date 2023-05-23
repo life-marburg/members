@@ -2,7 +2,7 @@ FROM composer:2 AS build-php
 
 WORKDIR /var/www
 COPY . ./
-RUN composer install --optimize-autoloader --ignore-platform-req=php --ignore-platform-req=ext-bcmath
+RUN composer install --optimize-autoloader --ignore-platform-req=php --ignore-platform-req=ext-bcmath --ignore-platform-req=ext-gd
 
 FROM node:20-alpine AS build-frontend
 

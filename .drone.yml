@@ -39,7 +39,7 @@ steps:
     environment:
       COMPOSER_HOME: .cache/composer
     commands:
-      - composer install --ignore-platform-req=php
+      - composer install --optimize-autoloader --ignore-platform-req=php --ignore-platform-req=ext-bcmath --ignore-platform-req=ext-gd
     depends_on:
       - restore-cache
 
