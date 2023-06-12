@@ -20,7 +20,7 @@
         "barryvdh/laravel-ide-helper": "2.13.0",
         "doctrine/dbal": "^3.6",
         "fakerphp/faker": "1.21.0",
-        "mockery/mockery": "1.5.1",
+        "mockery/mockery": "1.6.2",
         "nunomaduro/collision": "7.5.2",
         "phpunit/phpunit": "10.1.2",
         "spatie/laravel-ignition": "2.1.0"
