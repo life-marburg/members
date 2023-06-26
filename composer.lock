@@ -1821,16 +1821,16 @@
         },
         {
             "name": "jaybizzle/crawler-detect",
-            "version": "v1.2.114",
+            "version": "v1.2.115",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JayBizzle/Crawler-Detect.git",
-                "reference": "62d0e6b38f6715c673e156ffb0fc894791de3452"
+                "reference": "4531e4a70d55d10cbe7d41ac1ff0d75a5fe2ef1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/62d0e6b38f6715c673e156ffb0fc894791de3452",
-                "reference": "62d0e6b38f6715c673e156ffb0fc894791de3452",
+                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/4531e4a70d55d10cbe7d41ac1ff0d75a5fe2ef1e",
+                "reference": "4531e4a70d55d10cbe7d41ac1ff0d75a5fe2ef1e",
                 "shasum": ""
             },
             "require": {
@@ -1867,9 +1867,9 @@
             ],
             "support": {
                 "issues": "https://github.com/JayBizzle/Crawler-Detect/issues",
-                "source": "https://github.com/JayBizzle/Crawler-Detect/tree/v1.2.114"
+                "source": "https://github.com/JayBizzle/Crawler-Detect/tree/v1.2.115"
             },
-            "time": "2023-03-21T21:54:27+00:00"
+            "time": "2023-06-05T21:32:18+00:00"
         },
         {
             "name": "jenssegers/agent",
@@ -2041,16 +2041,16 @@
         },
         {
             "name": "laravel/fortify",
-            "version": "v1.17.2",
+            "version": "v1.17.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/fortify.git",
-                "reference": "fc4b9b00b0d657dd035751b286f412976596ba32"
+                "reference": "110dd0d09b70461d651218240120e24ba8d8cbe1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/fortify/zipball/fc4b9b00b0d657dd035751b286f412976596ba32",
-                "reference": "fc4b9b00b0d657dd035751b286f412976596ba32",
+                "url": "https://api.github.com/repos/laravel/fortify/zipball/110dd0d09b70461d651218240120e24ba8d8cbe1",
+                "reference": "110dd0d09b70461d651218240120e24ba8d8cbe1",
                 "shasum": ""
             },
             "require": {
@@ -2101,7 +2101,7 @@
                 "issues": "https://github.com/laravel/fortify/issues",
                 "source": "https://github.com/laravel/fortify"
             },
-            "time": "2023-04-26T13:35:07+00:00"
+            "time": "2023-06-18T09:17:00+00:00"
         },
         {
             "name": "laravel/framework",
@@ -2305,16 +2305,16 @@
         },
         {
             "name": "laravel/jetstream",
-            "version": "v3.2.2",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/jetstream.git",
-                "reference": "6ca907084102b567645b59a7114889b0a0a992cf"
+                "reference": "c65656cc4743b3b87837777e24f6caffdc9ce3f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/jetstream/zipball/6ca907084102b567645b59a7114889b0a0a992cf",
-                "reference": "6ca907084102b567645b59a7114889b0a0a992cf",
+                "url": "https://api.github.com/repos/laravel/jetstream/zipball/c65656cc4743b3b87837777e24f6caffdc9ce3f3",
+                "reference": "c65656cc4743b3b87837777e24f6caffdc9ce3f3",
                 "shasum": ""
             },
             "require": {
@@ -2370,7 +2370,7 @@
                 "issues": "https://github.com/laravel/jetstream/issues",
                 "source": "https://github.com/laravel/jetstream"
             },
-            "time": "2023-05-30T14:24:35+00:00"
+            "time": "2023-06-07T13:20:25+00:00"
         },
         {
             "name": "laravel/octane",
