@@ -13,7 +13,7 @@ services:
             - .:/var/www/
 
     db:
-        image: mariadb:11.2.2
+        image: mariadb:11.2.3
         volumes:
             - .dbdata:/var/lib/mysql
         ports:
