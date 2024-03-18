@@ -5,7 +5,7 @@
         "php": "8.2.*",
         "filament/filament": "^2.0",
         "guzzlehttp/guzzle": "7.7.0",
-        "laravel/framework": "10.14.1",
+        "laravel/framework": "10.48.3",
         "laravel/jetstream": "^3",
         "laravel/octane": "2.3.4",
         "laravel/sanctum": "3.3.3",
