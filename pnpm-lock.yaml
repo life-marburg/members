@@ -14,8 +14,8 @@ devDependencies:
     specifier: 0.5.7
     version: 0.5.7(tailwindcss@3.4.3)
   '@tailwindcss/typography':
-    specifier: 0.5.10
-    version: 0.5.10(tailwindcss@3.4.3)
+    specifier: 0.5.12
+    version: 0.5.12(tailwindcss@3.4.3)
   alpinejs:
     specifier: 3.13.8
     version: 3.13.8
@@ -1327,8 +1327,8 @@ packages:
       tailwindcss: 3.4.3
     dev: true
 
-  /@tailwindcss/typography@0.5.10(tailwindcss@3.4.3):
-    resolution: {integrity: sha512-Pe8BuPJQJd3FfRnm6H0ulKIGoMEQS+Vq01R6M5aCrFB/ccR/shT+0kXLjouGC1gFLm9hopTFN+DMP0pfwRWzPw==}
+  /@tailwindcss/typography@0.5.12(tailwindcss@3.4.3):
+    resolution: {integrity: sha512-CNwpBpconcP7ppxmuq3qvaCxiRWnbhANpY/ruH4L5qs2GCiVDJXde/pjj2HWPV1+Q4G9+V/etrwUYopdcjAlyg==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
     dependencies:
