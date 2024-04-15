@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   friendly-challenge:
-    specifier: 0.9.14
-    version: 0.9.14
+    specifier: 0.9.15
+    version: 0.9.15
 
 devDependencies:
   '@tailwindcss/forms':
@@ -3010,8 +3010,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
-  /friendly-challenge@0.9.14:
-    resolution: {integrity: sha512-4ricn8iBqNFcOCjOxrysqovwNnnpbHeh9OwWBd1H15fQLv8ukQ/6pxOYEzE2VfyQAtgluYOWemHwpRTatpxrSA==}
+  /friendly-challenge@0.9.15:
+    resolution: {integrity: sha512-SAAXKgEQlFuMUbm72VXiXPTUxGDoWrC0m0Pw1GykaP3li6r0rWB6dUAoJtSi1/4Mt5gqC4sWJUWtg3Hi5eGXQQ==}
     dependencies:
       '@babel/runtime-corejs3': 7.21.0
       core-js: 3.29.0
