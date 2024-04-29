@@ -19,8 +19,8 @@ importers:
         specifier: 0.5.12
         version: 0.5.12(tailwindcss@3.4.3)
       alpinejs:
-        specifier: 3.13.9
-        version: 3.13.9
+        specifier: 3.13.10
+        version: 3.13.10
       chokidar:
         specifier: 3.6.0
         version: 3.6.0
@@ -888,8 +888,8 @@ packages:
   ajv@8.12.0:
     resolution: {integrity: sha512-sRu1kpcO9yLtYxBKvqfTeh9KzZEwO3STyX1HT+4CaDzC6HpTGYhIhPIzj9XuKU7KYDwnaeh5hcOwjy1QuJzBPA==}
 
-  alpinejs@3.13.9:
-    resolution: {integrity: sha512-BTEJ3fcUpqKlB+aFYSWGVEp8IP3vA96x7wUaNSdb5SJxV5i7s+/Bduxy9D6TokcqpW5MygsnG1eBEFfr4AnQSw==}
+  alpinejs@3.13.10:
+    resolution: {integrity: sha512-86RB307VWICex0vG15Eq0x058cNNsvS57ohrjN6n/TJAVSFV+zXOK/E34nNHDHc6Poq+yTNCLqEzPqEkRBTMRQ==}
 
   ansi-html-community@0.0.8:
     resolution: {integrity: sha512-1APHAyr3+PCamwNw3bXCPp4HFLONZt/yIH0sZp0/469KWNTEy+qN5jQ3GVX6DMZ1UXAi34yVwtTeaG/HpBuuzw==}
@@ -4168,7 +4168,7 @@ snapshots:
       require-from-string: 2.0.2
       uri-js: 4.4.1
 
-  alpinejs@3.13.9:
+  alpinejs@3.13.10:
     dependencies:
       '@vue/reactivity': 3.1.5
 
