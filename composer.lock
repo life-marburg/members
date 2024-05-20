@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9797464a2ce47c0f0e29453779bfe0a",
+    "content-hash": "baece261443c7d15ee8f77762b815bb1",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -3133,22 +3133,22 @@
         },
         {
             "name": "league/flysystem-webdav",
-            "version": "3.12.0",
+            "version": "3.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-webdav.git",
-                "reference": "8ad3eb4855d1ea76f4a28b7c28283df7400bd84c"
+                "reference": "c4cade2745e96751b32bef5217f144223f764ba0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-webdav/zipball/8ad3eb4855d1ea76f4a28b7c28283df7400bd84c",
-                "reference": "8ad3eb4855d1ea76f4a28b7c28283df7400bd84c",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-webdav/zipball/c4cade2745e96751b32bef5217f144223f764ba0",
+                "reference": "c4cade2745e96751b32bef5217f144223f764ba0",
                 "shasum": ""
             },
             "require": {
                 "league/flysystem": "^3.6.0",
                 "php": "^8.0.2",
-                "sabre/dav": "^4.3.1"
+                "sabre/dav": "^4.6.0"
             },
             "type": "library",
             "autoload": {
@@ -3175,8 +3175,7 @@
                 "filesystem"
             ],
             "support": {
-                "issues": "https://github.com/thephpleague/flysystem-webdav/issues",
-                "source": "https://github.com/thephpleague/flysystem-webdav/tree/3.12.0"
+                "source": "https://github.com/thephpleague/flysystem-webdav/tree/3.24.0"
             },
             "funding": [
                 {
@@ -3186,13 +3185,9 @@
                 {
                     "url": "https://github.com/frankdejonge",
                     "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/league/flysystem",
-                    "type": "tidelift"
                 }
             ],
-            "time": "2022-12-20T18:29:59+00:00"
+            "time": "2024-02-03T22:09:55+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -5447,16 +5442,16 @@
         },
         {
             "name": "sabre/dav",
-            "version": "4.4.0",
+            "version": "4.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sabre-io/dav.git",
-                "reference": "b65362abc926520eda2c57e219f022a6c288069d"
+                "reference": "554145304b4a026477d130928d16e626939b0b2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sabre-io/dav/zipball/b65362abc926520eda2c57e219f022a6c288069d",
-                "reference": "b65362abc926520eda2c57e219f022a6c288069d",
+                "url": "https://api.github.com/repos/sabre-io/dav/zipball/554145304b4a026477d130928d16e626939b0b2a",
+                "reference": "554145304b4a026477d130928d16e626939b0b2a",
                 "shasum": ""
             },
             "require": {
@@ -5479,11 +5474,11 @@
                 "sabre/xml": "^2.0.1"
             },
             "require-dev": {
-                "evert/phpdoc-md": "~0.1.0",
-                "friendsofphp/php-cs-fixer": "^2.17.1",
-                "monolog/monolog": "^1.18",
-                "phpstan/phpstan": "^0.12",
-                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.0"
+                "friendsofphp/php-cs-fixer": "^2.19",
+                "monolog/monolog": "^1.27 || ^2.0",
+                "phpstan/phpstan": "^0.12 || ^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.6"
             },
             "suggest": {
                 "ext-curl": "*",
@@ -5497,10 +5492,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Sabre\\DAV\\": "lib/DAV/",
-                    "Sabre\\CalDAV\\": "lib/CalDAV/",
-                    "Sabre\\DAVACL\\": "lib/DAVACL/",
-                    "Sabre\\CardDAV\\": "lib/CardDAV/"
+                    "Sabre\\": "lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -5529,7 +5521,7 @@
                 "issues": "https://github.com/sabre-io/dav/issues",
                 "source": "https://github.com/fruux/sabre-dav"
             },
-            "time": "2022-06-27T09:07:55+00:00"
+            "time": "2023-12-11T13:01:23+00:00"
         },
         {
             "name": "sabre/event",
@@ -5599,16 +5591,16 @@
         },
         {
             "name": "sabre/http",
-            "version": "5.1.6",
+            "version": "5.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sabre-io/http.git",
-                "reference": "9976ac34ced206bd6579b7b37b401de9fac98dae"
+                "reference": "f9f3d1fba8916fa2f4ec25636c4fedc26cb94e02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sabre-io/http/zipball/9976ac34ced206bd6579b7b37b401de9fac98dae",
-                "reference": "9976ac34ced206bd6579b7b37b401de9fac98dae",
+                "url": "https://api.github.com/repos/sabre-io/http/zipball/f9f3d1fba8916fa2f4ec25636c4fedc26cb94e02",
+                "reference": "f9f3d1fba8916fa2f4ec25636c4fedc26cb94e02",
                 "shasum": ""
             },
             "require": {
@@ -5658,29 +5650,32 @@
                 "issues": "https://github.com/sabre-io/http/issues",
                 "source": "https://github.com/fruux/sabre-http"
             },
-            "time": "2022-07-15T14:51:14+00:00"
+            "time": "2023-08-18T01:55:28+00:00"
         },
         {
             "name": "sabre/uri",
-            "version": "2.3.2",
+            "version": "2.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sabre-io/uri.git",
-                "reference": "eceb4a1b8b680b45e215574222d6ca00be541970"
+                "reference": "7e0e7dfd0b7e14346a27eabd66e843a6e7f1812b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sabre-io/uri/zipball/eceb4a1b8b680b45e215574222d6ca00be541970",
-                "reference": "eceb4a1b8b680b45e215574222d6ca00be541970",
+                "url": "https://api.github.com/repos/sabre-io/uri/zipball/7e0e7dfd0b7e14346a27eabd66e843a6e7f1812b",
+                "reference": "7e0e7dfd0b7e14346a27eabd66e843a6e7f1812b",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.4 || ^8.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.9",
-                "phpstan/phpstan": "^1.8",
-                "phpunit/phpunit": "^9.0"
+                "friendsofphp/php-cs-fixer": "^3.17",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-phpunit": "^1.3",
+                "phpstan/phpstan-strict-rules": "^1.5",
+                "phpunit/phpunit": "^9.6"
             },
             "type": "library",
             "autoload": {
@@ -5715,20 +5710,20 @@
                 "issues": "https://github.com/sabre-io/uri/issues",
                 "source": "https://github.com/fruux/sabre-uri"
             },
-            "time": "2022-09-19T11:58:52+00:00"
+            "time": "2023-06-09T06:54:04+00:00"
         },
         {
             "name": "sabre/vobject",
-            "version": "4.5.3",
+            "version": "4.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sabre-io/vobject.git",
-                "reference": "fe6d9183154ed6f2f913f2b568d3d51d8ae9b308"
+                "reference": "a6d53a3e5bec85ed3dd78868b7de0f5b4e12f772"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sabre-io/vobject/zipball/fe6d9183154ed6f2f913f2b568d3d51d8ae9b308",
-                "reference": "fe6d9183154ed6f2f913f2b568d3d51d8ae9b308",
+                "url": "https://api.github.com/repos/sabre-io/vobject/zipball/a6d53a3e5bec85ed3dd78868b7de0f5b4e12f772",
+                "reference": "a6d53a3e5bec85ed3dd78868b7de0f5b4e12f772",
                 "shasum": ""
             },
             "require": {
@@ -5819,20 +5814,20 @@
                 "issues": "https://github.com/sabre-io/vobject/issues",
                 "source": "https://github.com/fruux/sabre-vobject"
             },
-            "time": "2023-01-22T12:21:50+00:00"
+            "time": "2023-11-09T12:54:37+00:00"
         },
         {
             "name": "sabre/xml",
-            "version": "2.2.5",
+            "version": "2.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sabre-io/xml.git",
-                "reference": "a6af111850e7536d200d9637c34885cd3c77a86c"
+                "reference": "f1d53d55976bbd4cf3e640dda6ebc31120c71a4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sabre-io/xml/zipball/a6af111850e7536d200d9637c34885cd3c77a86c",
-                "reference": "a6af111850e7536d200d9637c34885cd3c77a86c",
+                "url": "https://api.github.com/repos/sabre-io/xml/zipball/f1d53d55976bbd4cf3e640dda6ebc31120c71a4e",
+                "reference": "f1d53d55976bbd4cf3e640dda6ebc31120c71a4e",
                 "shasum": ""
             },
             "require": {
@@ -5888,26 +5883,26 @@
                 "issues": "https://github.com/sabre-io/xml/issues",
                 "source": "https://github.com/fruux/sabre-xml"
             },
-            "time": "2021-11-04T06:37:27+00:00"
+            "time": "2024-04-18T10:15:43+00:00"
         },
         {
             "name": "singlequote/laravel-webdav",
-            "version": "1.0.2",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/singlequote/laravel-webdav.git",
-                "reference": "dff5aa4dcb821a729de6d70e4cea2694b819fd85"
+                "reference": "849b0470ed2b7f6c84acd29629c06d2828945927"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/singlequote/laravel-webdav/zipball/dff5aa4dcb821a729de6d70e4cea2694b819fd85",
-                "reference": "dff5aa4dcb821a729de6d70e4cea2694b819fd85",
+                "url": "https://api.github.com/repos/singlequote/laravel-webdav/zipball/849b0470ed2b7f6c84acd29629c06d2828945927",
+                "reference": "849b0470ed2b7f6c84acd29629c06d2828945927",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": ">=9",
-                "league/flysystem-webdav": "^3.0",
-                "php": "^8.0"
+                "laravel/framework": ">=10",
+                "league/flysystem-webdav": "^3.15",
+                "php": "^8.1"
             },
             "type": "library",
             "extra": {
@@ -5945,9 +5940,9 @@
             ],
             "support": {
                 "issues": "https://github.com/singlequote/laravel-webdav/issues",
-                "source": "https://github.com/singlequote/laravel-webdav/tree/1.0.2"
+                "source": "https://github.com/singlequote/laravel-webdav/tree/1.1.0"
             },
-            "time": "2022-04-05T12:13:53+00:00"
+            "time": "2023-08-22T06:59:26+00:00"
         },
         {
             "name": "spatie/invade",
