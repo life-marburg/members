@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f459b7a126a64d9720f3f49e7bedf011",
+    "content-hash": "51d6e95ab64ef8ece3df5a88e8015f97",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -2984,16 +2984,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.27.0",
+            "version": "3.28.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "4729745b1ab737908c7d055148c9a6b3e959832f"
+                "reference": "e611adab2b1ae2e3072fa72d62c62f52c2bf1f0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/4729745b1ab737908c7d055148c9a6b3e959832f",
-                "reference": "4729745b1ab737908c7d055148c9a6b3e959832f",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/e611adab2b1ae2e3072fa72d62c62f52c2bf1f0c",
+                "reference": "e611adab2b1ae2e3072fa72d62c62f52c2bf1f0c",
                 "shasum": ""
             },
             "require": {
@@ -3017,10 +3017,13 @@
                 "composer/semver": "^3.0",
                 "ext-fileinfo": "*",
                 "ext-ftp": "*",
+                "ext-mongodb": "^1.3",
                 "ext-zip": "*",
                 "friendsofphp/php-cs-fixer": "^3.5",
                 "google/cloud-storage": "^1.23",
+                "guzzlehttp/psr7": "^2.6",
                 "microsoft/azure-storage-blob": "^1.1",
+                "mongodb/mongodb": "^1.2",
                 "phpseclib/phpseclib": "^3.0.36",
                 "phpstan/phpstan": "^1.10",
                 "phpunit/phpunit": "^9.5.11|^10.0",
@@ -3058,32 +3061,22 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.27.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.28.0"
             },
-            "funding": [
-                {
-                    "url": "https://ecologi.com/frankdejonge",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/frankdejonge",
-                    "type": "github"
-                }
-            ],
-            "time": "2024-04-07T19:17:50+00:00"
+            "time": "2024-05-22T10:09:12+00:00"
         },
         {
             "name": "league/flysystem-local",
-            "version": "3.25.1",
+            "version": "3.28.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-local.git",
-                "reference": "61a6a90d6e999e4ddd9ce5adb356de0939060b92"
+                "reference": "13f22ea8be526ea58c2ddff9e158ef7c296e4f40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-local/zipball/61a6a90d6e999e4ddd9ce5adb356de0939060b92",
-                "reference": "61a6a90d6e999e4ddd9ce5adb356de0939060b92",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-local/zipball/13f22ea8be526ea58c2ddff9e158ef7c296e4f40",
+                "reference": "13f22ea8be526ea58c2ddff9e158ef7c296e4f40",
                 "shasum": ""
             },
             "require": {
@@ -3117,32 +3110,22 @@
                 "local"
             ],
             "support": {
-                "source": "https://github.com/thephpleague/flysystem-local/tree/3.25.1"
+                "source": "https://github.com/thephpleague/flysystem-local/tree/3.28.0"
             },
-            "funding": [
-                {
-                    "url": "https://ecologi.com/frankdejonge",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/frankdejonge",
-                    "type": "github"
-                }
-            ],
-            "time": "2024-03-15T19:58:44+00:00"
+            "time": "2024-05-06T20:05:52+00:00"
         },
         {
             "name": "league/flysystem-webdav",
-            "version": "3.24.0",
+            "version": "3.28.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-webdav.git",
-                "reference": "c4cade2745e96751b32bef5217f144223f764ba0"
+                "reference": "8c862a256522e90c945684204ba37bdc6861059a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-webdav/zipball/c4cade2745e96751b32bef5217f144223f764ba0",
-                "reference": "c4cade2745e96751b32bef5217f144223f764ba0",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-webdav/zipball/8c862a256522e90c945684204ba37bdc6861059a",
+                "reference": "8c862a256522e90c945684204ba37bdc6861059a",
                 "shasum": ""
             },
             "require": {
@@ -3175,19 +3158,9 @@
                 "filesystem"
             ],
             "support": {
-                "source": "https://github.com/thephpleague/flysystem-webdav/tree/3.24.0"
+                "source": "https://github.com/thephpleague/flysystem-webdav/tree/3.28.0"
             },
-            "funding": [
-                {
-                    "url": "https://ecologi.com/frankdejonge",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/frankdejonge",
-                    "type": "github"
-                }
-            ],
-            "time": "2024-02-03T22:09:55+00:00"
+            "time": "2024-05-06T20:05:52+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -5887,16 +5860,16 @@
         },
         {
             "name": "singlequote/laravel-webdav",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/singlequote/laravel-webdav.git",
-                "reference": "849b0470ed2b7f6c84acd29629c06d2828945927"
+                "reference": "07bb4f177fc61b65d7dd0aaa37779a82ff100681"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/singlequote/laravel-webdav/zipball/849b0470ed2b7f6c84acd29629c06d2828945927",
-                "reference": "849b0470ed2b7f6c84acd29629c06d2828945927",
+                "url": "https://api.github.com/repos/singlequote/laravel-webdav/zipball/07bb4f177fc61b65d7dd0aaa37779a82ff100681",
+                "reference": "07bb4f177fc61b65d7dd0aaa37779a82ff100681",
                 "shasum": ""
             },
             "require": {
@@ -5940,9 +5913,9 @@
             ],
             "support": {
                 "issues": "https://github.com/singlequote/laravel-webdav/issues",
-                "source": "https://github.com/singlequote/laravel-webdav/tree/1.1.0"
+                "source": "https://github.com/singlequote/laravel-webdav/tree/1.1.1"
             },
-            "time": "2023-08-22T06:59:26+00:00"
+            "time": "2024-06-07T12:41:19+00:00"
         },
         {
             "name": "spatie/invade",
