@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3ed207195885ea220125c6574a466b1c",
+    "content-hash": "5160dcec20e4d96c7b8cb27192d973c7",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -3292,16 +3292,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v2.12.7",
+            "version": "v2.12.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "cd168c6212ea13d13b82b3132485741f82d9fad9"
+                "reference": "7d657d0dd8761a981f7ac3cd8d71c3b724f3e0b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/cd168c6212ea13d13b82b3132485741f82d9fad9",
-                "reference": "cd168c6212ea13d13b82b3132485741f82d9fad9",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/7d657d0dd8761a981f7ac3cd8d71c3b724f3e0b8",
+                "reference": "7d657d0dd8761a981f7ac3cd8d71c3b724f3e0b8",
                 "shasum": ""
             },
             "require": {
@@ -3353,7 +3353,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v2.12.7"
+                "source": "https://github.com/livewire/livewire/tree/v2.12.8"
             },
             "funding": [
                 {
@@ -3361,7 +3361,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-07-03T15:52:04+00:00"
+            "time": "2024-07-13T19:58:46+00:00"
         },
         {
             "name": "maatwebsite/excel",
