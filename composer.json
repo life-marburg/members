@@ -17,7 +17,7 @@
         "spatie/laravel-permission": "5.11.1"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "3.0.0",
+        "barryvdh/laravel-ide-helper": "3.1.0",
         "doctrine/dbal": "^3.6",
         "fakerphp/faker": "1.23.1",
         "mockery/mockery": "1.6.12",
