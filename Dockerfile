@@ -4,7 +4,7 @@ WORKDIR /var/www
 COPY . ./
 RUN composer install --optimize-autoloader --ignore-platform-req=php --ignore-platform-req=ext-bcmath --ignore-platform-req=ext-gd
 
-FROM node:20-alpine AS build-frontend
+FROM node:22-alpine AS build-frontend
 
 WORKDIR /var/www
 
