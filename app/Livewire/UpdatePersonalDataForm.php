@@ -29,18 +29,14 @@ class UpdatePersonalDataForm extends UserEditComponent
         'state.mobile_phone' => 'Mobile Phone',
     ];
 
-    public function __construct($id = null)
-    {
-        parent::__construct($id);
-
-        foreach ($this->validationAttributes as $key => $value) {
-            $this->validationAttributes[$key] = __($value);
-        }
-    }
-
     public function mount()
     {
         parent::mount();
+
+        // Translate validation attributes (moved from constructor - Livewire 3 doesn't allow custom constructors)
+        foreach ($this->validationAttributes as $key => $value) {
+            $this->validationAttributes[$key] = __($value);
+        }
 
         $this->state = $this->user->personalData->toArray();
         $this->state['name'] = $this->user->name;
