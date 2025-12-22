@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\UserUpdateMeta;
+use App\Livewire\UserUpdateMeta;
 use App\Models\User;
 use App\Notifications\UserStatusChanged;
 use App\Rights;

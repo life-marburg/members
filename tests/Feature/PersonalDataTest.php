@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\UpdatePersonalDataForm;
+use App\Livewire\UpdatePersonalDataForm;
 use App\Models\User;
 use App\Notifications\UserIsWaitingForActivation;
 use App\Rights;

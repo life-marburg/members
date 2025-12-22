@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\AdminDeleteUserForm;
+use App\Livewire\AdminDeleteUserForm;
 use App\Models\User;
 use App\Rights;
 use Illuminate\Foundation\Testing\RefreshDatabase;

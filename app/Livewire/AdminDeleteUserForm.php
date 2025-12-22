@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\User;
 use App\Rights;
@@ -51,7 +51,7 @@ class AdminDeleteUserForm extends Component
 
         $this->password = '';
 
-        $this->dispatchBrowserEvent('confirming-delete-user');
+        $this->dispatch('confirming-delete-user');
 
         $this->confirmingUserDeletion = true;
     }

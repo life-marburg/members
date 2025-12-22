@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +26,7 @@ abstract class UserEditComponent extends Component
             $this->save();
         });
 
-        $this->emit('saved');
+        $this->dispatch('saved');
 
         if($this->redirectAfterSave !== '') {
             return redirect()->to(route($this->redirectAfterSave));

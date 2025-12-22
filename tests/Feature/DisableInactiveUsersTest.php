@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Console\Commands\DisableInactiveUsers;
-use App\Http\Livewire\UserUpdateMeta;
+use App\Livewire\UserUpdateMeta;
 use App\Models\User;
 use App\Notifications\AccountAlmostInactive;
 use Illuminate\Foundation\Testing\RefreshDatabase;

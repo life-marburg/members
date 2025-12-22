@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Page;
 use Livewire\Component;
@@ -19,7 +19,7 @@ class PageEdit extends Component
     {
         $this->page->content = $this->content;
         $this->page->save();
-        $this->emit('saved');
+        $this->dispatch('saved');
     }
 
     public function render()
