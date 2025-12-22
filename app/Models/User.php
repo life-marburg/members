@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Rights;
-use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,12 +15,11 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-use function Filament\get_asset_id;
 
 /**
  * @mixin IdeHelperUser
  */
-class User extends Authenticatable implements HasLocalePreference, FilamentUser
+class User extends Authenticatable implements HasLocalePreference
 {
     use HasApiTokens;
     use HasFactory;
@@ -110,11 +108,6 @@ class User extends Authenticatable implements HasLocalePreference, FilamentUser
     public function additionalEmails(): HasMany
     {
         return $this->hasMany(AdditionalEmails::class);
-    }
-
-    public function canAccessFilament(): bool
-    {
-        return $this->hasRole(Rights::R_ADMIN);
     }
 
     protected function allEmails(): Attribute

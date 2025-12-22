@@ -3,7 +3,6 @@
     "type": "project",
     "require": {
         "php": "8.2.*",
-        "filament/filament": "^2.0",
         "guzzlehttp/guzzle": "7.9.2",
         "laravel/framework": "10.48.29",
         "laravel/jetstream": "^3",
@@ -44,8 +43,7 @@
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi",
-            "@php artisan filament:upgrade"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
