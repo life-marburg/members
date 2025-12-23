@@ -787,5 +787,16 @@
     "Enter your password to confirm deletion": "Gib dein Passwort ein, um die Löschung zu bestätigen",
     "Your member export has completed. :count rows exported.": "Dein Mitgliederexport ist abgeschlossen. :count Zeilen exportiert.",
     "ZIP": "PLZ",
-    "Phone": "Telefon"
+    "Phone": "Telefon",
+    "Song": "Stück",
+    "Songs": "Stücke",
+    "Title": "Titel",
+    "Part": "Stimme",
+    "Part Number": "Stimmennummer",
+    "Variant": "Variante",
+    "Uploaded": "Hochgeladen",
+    "PDF File": "PDF-Datei",
+    "No sheets available for this instrument.": "Keine Noten für dieses Instrument verfügbar.",
+    "manage sheets": "Noten verwalten",
+    "Created": "Erstellt"
 }
