@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Storage;
 
 class SheetService
 {
-    private const SHEET_FOLDER = 'Life/Noten';
+    public const SHEET_FOLDER = 'Life/Noten';
     private const CACHE_KEY = 'sheet_files';
 
-    protected function getSheetStructureFromWebdav(): array
+    public function getSheetStructureFromWebdav(): array
     {
         $all = [];
         $files = Storage::disk('cloud')->allFiles(self::SHEET_FOLDER);
@@ -100,5 +100,53 @@ class SheetService
     public static function getSheetDownloadPath(string $sheet, string $instrumentFileName, string $variant): string
     {
         return '/' . self::SHEET_FOLDER . '/' . $sheet . '/' . $sheet . '.' . $instrumentFileName . '.' . $variant . '.pdf';
+    }
+
+    /**
+     * Parse a sheet filename into its components.
+     *
+     * Expected format: Song.Instrument.Part.Variant.pdf
+     *
+     * @return array{instrument: string, part_number: int|null, variant: string|null}|null
+     */
+    public function parseSheetFilename(string $filename): ?array
+    {
+        $parts = explode('.', $filename);
+
+        if (count($parts) < 4) {
+            return null;
+        }
+
+        $instrumentName = $parts[1];
+        $partNumber = is_numeric($parts[2]) ? (int) $parts[2] : null;
+        $variant = null;
+
+        if (isset($parts[3]) && $parts[3] !== 'pdf') {
+            $variant = $parts[3];
+        }
+
+        // Non-numeric part becomes variant
+        if (!is_numeric($parts[2])) {
+            $variant = $parts[2];
+            if (isset($parts[3]) && $parts[3] !== 'pdf') {
+                $variant .= ' ' . $parts[3];
+            }
+        }
+
+        return [
+            'instrument' => $instrumentName,
+            'part_number' => $partNumber,
+            'variant' => $variant,
+        ];
+    }
+
+    /**
+     * Find an instrument by its filename representation (file_title or alias).
+     */
+    public function findInstrumentByFilename(string $name): ?Instrument
+    {
+        return Instrument::all()->first(function (Instrument $instrument) use ($name) {
+            return in_array($name, $instrument->title_with_alias, true);
+        });
     }
 }

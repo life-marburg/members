@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Instrument;
 use App\Models\Sheet;
 use App\Models\Song;
+use App\Services\SheetService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,12 +16,15 @@ class MigrateSheetsFromWebdav extends Command
 
     protected $description = 'Migrate sheet files from WebDAV to local storage and database';
 
-    private const SHEET_FOLDER = 'Life/Noten';
-
     private int $migrated = 0;
     private int $skipped = 0;
     private int $errors = 0;
     private array $invalidFiles = [];
+
+    public function __construct(private SheetService $sheetService)
+    {
+        parent::__construct();
+    }
 
     public function handle(): int
     {
@@ -34,7 +37,7 @@ class MigrateSheetsFromWebdav extends Command
 
         $this->info('Fetching file list from WebDAV...');
 
-        $structure = $this->getSheetStructureFromWebdav();
+        $structure = $this->sheetService->getSheetStructureFromWebdav();
 
         $this->info('Found ' . count($structure) . ' songs');
 
@@ -65,22 +68,6 @@ class MigrateSheetsFromWebdav extends Command
         return Command::SUCCESS;
     }
 
-    private function getSheetStructureFromWebdav(): array
-    {
-        $all = [];
-        $files = Storage::disk('cloud')->allFiles(self::SHEET_FOLDER);
-
-        foreach ($files as $file) {
-            $file = str_replace(self::SHEET_FOLDER . '/', '', $file);
-            $parts = explode('/', $file);
-            if (count($parts) === 2) {
-                $all[$parts[0]][] = $parts[1];
-            }
-        }
-
-        return $all;
-    }
-
     private function migrateSong(string $songName, array $files, bool $dryRun, bool $skipExisting): void
     {
         $song = null;
@@ -96,41 +83,26 @@ class MigrateSheetsFromWebdav extends Command
 
     private function migrateFile(?Song $song, string $songName, string $filename, bool $dryRun, bool $skipExisting): void
     {
-        $fullPath = self::SHEET_FOLDER . '/' . $songName . '/' . $filename;
+        $fullPath = SheetService::SHEET_FOLDER . '/' . $songName . '/' . $filename;
 
-        // Parse filename: Song.Instrument.Stimme.Variant.pdf
-        $parts = explode('.', $filename);
+        $parsed = $this->sheetService->parseSheetFilename($filename);
 
-        if (count($parts) < 4) {
+        if ($parsed === null) {
             $this->invalidFiles[] = ['path' => $fullPath, 'reason' => 'invalid filename format'];
             $this->skipped++;
             return;
         }
 
-        $instrumentName = $parts[1];
-        $partNumber = is_numeric($parts[2]) ? (int) $parts[2] : null;
-        $variant = null;
-
-        if (isset($parts[3]) && $parts[3] !== 'pdf') {
-            $variant = $parts[3];
-        }
-
-        // Non-numeric part becomes variant
-        if (!is_numeric($parts[2])) {
-            $variant = $parts[2];
-            if (isset($parts[3]) && $parts[3] !== 'pdf') {
-                $variant .= ' ' . $parts[3];
-            }
-        }
-
-        // Find matching instrument
-        $instrument = $this->findInstrument($instrumentName);
+        $instrument = $this->sheetService->findInstrumentByFilename($parsed['instrument']);
 
         if (!$instrument) {
-            $this->invalidFiles[] = ['path' => $fullPath, 'reason' => "no instrument match for '$instrumentName'"];
+            $this->invalidFiles[] = ['path' => $fullPath, 'reason' => "no instrument match for '{$parsed['instrument']}'"];
             $this->skipped++;
             return;
         }
+
+        $partNumber = $parsed['part_number'];
+        $variant = $parsed['variant'];
 
         if ($dryRun) {
             $this->line("Would migrate: $filename -> Song: $songName, Instrument: {$instrument->title}, Part: $partNumber, Variant: $variant");
@@ -175,22 +147,5 @@ class MigrateSheetsFromWebdav extends Command
         ]);
 
         $this->migrated++;
-    }
-
-    private function findInstrument(string $name): ?Instrument
-    {
-        // Try exact match on file_title first
-        $instrument = Instrument::all()->first(function ($inst) use ($name) {
-            return $inst->file_title === $name;
-        });
-
-        if ($instrument) {
-            return $instrument;
-        }
-
-        // Try aliases
-        return Instrument::all()->first(function ($inst) use ($name) {
-            return in_array($name, $inst->aliases ?? []);
-        });
     }
 }
