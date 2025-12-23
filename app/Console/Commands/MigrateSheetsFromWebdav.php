@@ -7,6 +7,7 @@ use App\Models\Song;
 use App\Services\SheetService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class MigrateSheetsFromWebdav extends Command
 {
@@ -71,9 +72,10 @@ class MigrateSheetsFromWebdav extends Command
     private function migrateSong(string $songName, array $files, bool $dryRun, bool $skipExisting): void
     {
         $song = null;
+        $songTitle = Str::headline($songName);
 
         if (!$dryRun) {
-            $song = Song::firstOrCreate(['title' => $songName]);
+            $song = Song::firstOrCreate(['title' => $songTitle]);
         }
 
         foreach ($files as $filename) {
@@ -105,7 +107,8 @@ class MigrateSheetsFromWebdav extends Command
         $variant = $parsed['variant'];
 
         if ($dryRun) {
-            $this->line("Would migrate: $filename -> Song: $songName, Instrument: {$instrument->title}, Part: $partNumber, Variant: $variant");
+            $songTitle = Str::headline($songName);
+            $this->line("Would migrate: $filename -> Song: $songTitle, Instrument: {$instrument->title}, Part: $partNumber, Variant: $variant");
             $this->migrated++;
             return;
         }
