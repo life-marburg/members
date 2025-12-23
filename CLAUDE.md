@@ -32,6 +32,15 @@ yarn watch           # Watch mode
 yarn prod            # Production build
 ```
 
+## Writing plans
+
+If you're writing plans to plan an implementation, never commit them. They do not belong into version control.
+
+## Git commits
+
+- Use conventional commits when creating commits
+- NEVER use `git add -A` or `git commit -am`, always add only the changed files explicitley. Multiple changes might be happening at the same time, committing everything at once will mess up the commit history.
+
 ## Architecture Overview
 
 **Stack:** Laravel 12, Livewire 3, Jetstream 5, Filament 4, Tailwind CSS, Alpine.js
