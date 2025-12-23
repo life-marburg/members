@@ -40,6 +40,7 @@ If you're writing plans to plan an implementation, never commit them. They do no
 
 - Use conventional commits when creating commits
 - NEVER use `git add -A` or `git commit -am`, always add only the changed files explicitley. Multiple changes might be happening at the same time, committing everything at once will mess up the commit history.
+- NEVER discard unrelated changes that you did not do. These are always in-process changes made by someone else and will be committed separatly.
 
 ## Architecture Overview
 
