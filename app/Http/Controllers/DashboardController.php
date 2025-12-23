@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Page;
-use App\Rights;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -14,7 +12,6 @@ class DashboardController extends Controller
 
         return view('pages.dashboard', [
             'page' => $page,
-            'canEdit' => Auth::user()->hasPermissionTo(Rights::P_EDIT_PAGES),
         ]);
     }
 }

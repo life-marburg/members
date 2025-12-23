@@ -3,9 +3,9 @@
         <h3>{{ __('Welcome, :user', ['user' => \Illuminate\Support\Facades\Auth::user()->name]) }}</h3>
         {!! $page->content !!}
     </div>
-    @if($canEdit)
-        <x-link href="{{ route('pages.edit', ['page' => $page]) }}" class="block mt-2 text-gray-500 hover:underline">
+    @role(\App\Rights::R_ADMIN)
+        <a href="{{ route('filament.admin.resources.pages.edit', ['record' => $page]) }}" class="block mt-2 text-gray-500 hover:underline">
             {{ __('Edit') }}
-        </x-link>
-    @endif
+        </a>
+    @endrole
 </x-content>
