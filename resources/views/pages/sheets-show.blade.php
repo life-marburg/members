@@ -8,18 +8,16 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow sm:rounded-lg p-6">
-                @foreach($sheets as $sheet => $variants)
-                    <h2 class="font-display mb-2 mt-4 text-xl">{{ preg_replace('/([A-Z]|[0-9])/', ' $1', $sheet) }}</h2>
-                    @foreach($variants as $variant)
-                        <x-link
-                            href="{{ route('sheets.download', ['sheet' => $sheet, 'instrument' => $variant['instrument'], 'variant' => $variant['path']]) }}">
-                            {{ $variant['title'] }}
-                            @if($variant['instrument'] !== $instrument->file_title)
-                                - {{ \Illuminate\Support\Str::headline($variant['instrument']) }}
-                            @endif
+                @forelse($sheets as $songTitle => $songSheets)
+                    <h2 class="font-display mb-2 mt-4 text-xl">{{ $songTitle }}</h2>
+                    @foreach($songSheets as $sheet)
+                        <x-link href="{{ route('sheets.download', $sheet) }}">
+                            {{ $sheet->display_title }}
                         </x-link><br/>
                     @endforeach
-                @endforeach
+                @empty
+                    <p class="text-gray-500">{{ __('No sheets available for this instrument.') }}</p>
+                @endforelse
             </div>
         </div>
     </div>

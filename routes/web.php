@@ -37,7 +37,7 @@ Route::group([
         ->group(function () {
             Route::get('', [SheetController::class, 'index'])->name('index');
             Route::get('/{instrument}', [SheetController::class, 'show'])->name('show');
-            Route::get('/{sheet}/{instrument}/{variant}', [SheetController::class, 'download'])->name('download');
+            Route::get('/download/{sheet}', [SheetController::class, 'download'])->name('download');
         });
     Route::middleware(['can:' . Rights::P_EDIT_PAGES])->resource('pages', PageController::class);
 });

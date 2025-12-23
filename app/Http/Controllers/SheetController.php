@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Instrument;
 use App\Models\InstrumentGroup;
+use App\Models\Sheet;
 use App\Rights;
-use App\Services\SheetService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class SheetController extends Controller
 {
@@ -32,18 +31,26 @@ class SheetController extends Controller
         ]);
     }
 
-    public function show(SheetService $sheetService, Instrument $instrument)
+    public function show(Instrument $instrument)
     {
+        $sheets = Sheet::with('song')
+            ->where('instrument_id', $instrument->id)
+            ->get()
+            ->groupBy('song.title')
+            ->map(function ($songSheets) {
+                return $songSheets->sortBy('part_number')->values();
+            });
+
         return view('pages.sheets-show', [
             'instrument' => $instrument,
-            'sheets' => $sheetService->getSheetsForInstrument($instrument),
+            'sheets' => $sheets,
         ]);
     }
 
-    public function download(string $sheet, string $instrumentFileName, string $variant)
+    public function download(Sheet $sheet)
     {
-        $file = Storage::disk('cloud')->get(SheetService::getSheetDownloadPath($sheet, $instrumentFileName, $variant));
-        $name = $sheet . ' ' . Str::headline($instrumentFileName) . ' ' . $variant . '. Stimme.pdf';
+        $file = Storage::disk('sheets')->get($sheet->file_path);
+        $name = $sheet->song->title . ' ' . $sheet->instrument->title . ' ' . $sheet->display_title . '.pdf';
 
         return response($file, 200, [
             'Content-Type' => 'application/pdf',
