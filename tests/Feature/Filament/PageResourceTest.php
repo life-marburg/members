@@ -54,7 +54,7 @@ class PageResourceTest extends TestCase
 
     public function test_can_list_pages(): void
     {
-        Page::factory()->create(['path' => 'test-page']);
+        Page::factory()->create(['path' => '/test-page']);
 
         $this->actingAs($this->admin)
             ->get(PageResource::getUrl('index'))
@@ -65,7 +65,7 @@ class PageResourceTest extends TestCase
     public function test_can_edit_page(): void
     {
         $page = Page::factory()->create([
-            'path' => 'test-page',
+            'path' => '/test-page',
             'content' => '<p>Original content</p>',
         ]);
 
@@ -78,7 +78,7 @@ class PageResourceTest extends TestCase
     public function test_can_update_page_content(): void
     {
         $page = Page::factory()->create([
-            'path' => 'test-page',
+            'path' => '/test-page',
             'content' => '<p>Original content</p>',
         ]);
 
@@ -94,7 +94,7 @@ class PageResourceTest extends TestCase
 
         $this->assertDatabaseHas('pages', [
             'id' => $page->id,
-            'path' => 'test-page',
+            'path' => '/test-page',
             'content' => '<p>Updated content</p>',
         ]);
     }
@@ -102,7 +102,7 @@ class PageResourceTest extends TestCase
     public function test_path_cannot_be_changed(): void
     {
         $page = Page::factory()->create([
-            'path' => 'original-path',
+            'path' => '/original-path',
             'content' => '<p>Content</p>',
         ]);
 
@@ -119,7 +119,7 @@ class PageResourceTest extends TestCase
         // Path should remain unchanged
         $this->assertDatabaseHas('pages', [
             'id' => $page->id,
-            'path' => 'original-path',
+            'path' => '/original-path',
         ]);
     }
 }
