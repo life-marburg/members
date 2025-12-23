@@ -818,5 +818,9 @@
     "Show external link icon": "Symbol für externen Link anzeigen",
     "Target": "Ziel",
     "The text displayed in the navigation menu": "Der Text, der im Navigationsmenü angezeigt wird",
-    "The URL the link points to": "Die URL, auf die der Link verweist"
+    "The URL the link points to": "Die URL, auf die der Link verweist",
+    "Song Set": "Notenmappe",
+    "Song Sets": "Notenmappen",
+    "All Songs": "Alle Stücke",
+    "Position": "Position"
 }
