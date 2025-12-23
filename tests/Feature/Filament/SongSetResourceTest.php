@@ -107,4 +107,36 @@ class SongSetResourceTest extends TestCase
             ->get(SongSetResource::getUrl('index'))
             ->assertForbidden();
     }
+
+    public function test_can_create_song_set_with_is_new_flag(): void
+    {
+        Livewire::actingAs($this->admin)
+            ->test(CreateSongSet::class)
+            ->fillForm([
+                'title' => 'New Set',
+                'is_new' => true,
+            ])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        $this->assertDatabaseHas('song_sets', [
+            'title' => 'New Set',
+            'is_new' => true,
+        ]);
+    }
+
+    public function test_can_edit_song_set_is_new_flag(): void
+    {
+        $songSet = SongSet::factory()->create(['is_new' => false]);
+
+        Livewire::actingAs($this->admin)
+            ->test(EditSongSet::class, ['record' => $songSet->id])
+            ->fillForm([
+                'is_new' => true,
+            ])
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        $this->assertTrue((bool) $songSet->fresh()->is_new);
+    }
 }
