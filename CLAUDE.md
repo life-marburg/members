@@ -25,11 +25,10 @@ docker compose exec web ./vendor/bin/phpunit --filter test_method_name
 composer install
 composer update
 
-# Frontend assets (uses yarn)
-yarn install
-yarn dev             # Development build
-yarn watch           # Watch mode
-yarn prod            # Production build
+# Frontend assets (Vite + Tailwind CSS + Alpine.js)
+yarn install         # Install dependencies
+yarn dev             # Start Vite dev server with HMR (hot module replacement)
+yarn build           # Production build (outputs to public/build/)
 ```
 
 ## Writing plans
