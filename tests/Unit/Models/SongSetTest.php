@@ -55,4 +55,14 @@ class SongSetTest extends TestCase
 
         $this->assertEquals(5, $songSet->songs->first()->pivot->position);
     }
+
+    public function test_song_belongs_to_many_song_sets(): void
+    {
+        $song = Song::factory()->create();
+        $songSets = SongSet::factory()->count(2)->create();
+
+        $song->songSets()->attach($songSets->pluck('id'));
+
+        $this->assertCount(2, $song->songSets);
+    }
 }
