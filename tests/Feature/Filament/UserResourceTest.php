@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Notifications\UserStatusChanged;
 use App\Rights;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -154,5 +155,21 @@ class UserResourceTest extends TestCase
             ->callTableAction('sendPasswordReset', $user);
 
         Notification::assertSentTo($user, \Illuminate\Auth\Notifications\ResetPassword::class);
+    }
+
+    public function test_admin_can_set_user_password_directly(): void
+    {
+        $this->actingAs($this->admin);
+
+        $user = User::factory()->create(['status' => User::STATUS_UNLOCKED]);
+        $newPassword = 'NewSecurePassword123!';
+
+        Livewire::test(ListUsers::class)
+            ->callTableAction('setPassword', $user, [
+                'new_password' => $newPassword,
+                'new_password_confirmation' => $newPassword,
+            ]);
+
+        $this->assertTrue(Hash::check($newPassword, $user->fresh()->password));
     }
 }

@@ -16,7 +16,9 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 
 class UsersTable
@@ -112,6 +114,28 @@ class UsersTable
                         Password::broker()->sendResetLink(['email' => $record->email]);
                     })
                     ->successNotificationTitle(__('Password reset email sent')),
+                Action::make('setPassword')
+                    ->label(__('Set Password'))
+                    ->icon('heroicon-o-key')
+                    ->color('warning')
+                    ->form([
+                        TextInput::make('new_password')
+                            ->label(__('New Password'))
+                            ->password()
+                            ->required()
+                            ->minLength(8)
+                            ->confirmed(),
+                        TextInput::make('new_password_confirmation')
+                            ->label(__('Confirm Password'))
+                            ->password()
+                            ->required(),
+                    ])
+                    ->action(function (User $record, array $data): void {
+                        $record->update([
+                            'password' => Hash::make($data['new_password']),
+                        ]);
+                    })
+                    ->successNotificationTitle(__('Password updated')),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
