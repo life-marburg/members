@@ -3,7 +3,9 @@
 namespace App\Filament\Resources\Users\Pages;
 
 use App\Filament\Resources\Users\UserResource;
+use App\Filament\Resources\Users\Tables\UsersTable;
 use App\Rights;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Pages\EditRecord;
@@ -16,25 +18,28 @@ class EditUser extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make()
-                ->visible(fn (): bool => auth()->user()->can(Rights::P_DELETE_ACCOUNTS))
-                ->form([
-                    TextInput::make('password')
-                        ->label(__('Your Password'))
-                        ->password()
-                        ->required()
-                        ->helperText(__('Enter your password to confirm deletion')),
-                ])
-                ->action(function (array $data) {
-                    if (!Hash::check($data['password'], auth()->user()->password)) {
-                        $this->addError('mountedActionsData.0.password', 'Invalid password');
-                        $this->halt();
-                    }
+            ActionGroup::make([
+                ...UsersTable::userActions(),
+                DeleteAction::make()
+                    ->visible(fn (): bool => auth()->user()->can(Rights::P_DELETE_ACCOUNTS))
+                    ->form([
+                        TextInput::make('password')
+                            ->label(__('Your Password'))
+                            ->password()
+                            ->required()
+                            ->helperText(__('Enter your password to confirm deletion')),
+                    ])
+                    ->action(function (array $data) {
+                        if (!Hash::check($data['password'], auth()->user()->password)) {
+                            $this->addError('mountedActionsData.0.password', 'Invalid password');
+                            $this->halt();
+                        }
 
-                    $this->record->delete();
+                        $this->record->delete();
 
-                    return redirect()->to(UserResource::getUrl('index'));
-                }),
+                        return redirect()->to(UserResource::getUrl('index'));
+                    }),
+            ]),
         ];
     }
 
