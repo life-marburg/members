@@ -27,6 +27,18 @@ class UserResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Members';
 
+    public static function getNavigationBadge(): ?string
+    {
+        $count = static::getModel()::where('status', User::STATUS_NEW)->count();
+
+        return $count > 0 ? (string) $count : null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return UserForm::configure($schema);
