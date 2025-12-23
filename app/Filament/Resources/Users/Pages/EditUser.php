@@ -5,7 +5,9 @@ namespace App\Filament\Resources\Users\Pages;
 use App\Filament\Resources\Users\UserResource;
 use App\Rights;
 use Filament\Actions\DeleteAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\Facades\Hash;
 
 class EditUser extends EditRecord
 {
@@ -14,7 +16,25 @@ class EditUser extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            DeleteAction::make()
+                ->visible(fn (): bool => auth()->user()->can(Rights::P_DELETE_ACCOUNTS))
+                ->form([
+                    TextInput::make('password')
+                        ->label('Your Password')
+                        ->password()
+                        ->required()
+                        ->helperText('Enter your password to confirm deletion'),
+                ])
+                ->action(function (array $data) {
+                    if (!Hash::check($data['password'], auth()->user()->password)) {
+                        $this->addError('mountedActionsData.0.password', 'Invalid password');
+                        $this->halt();
+                    }
+
+                    $this->record->delete();
+
+                    return redirect()->to(UserResource::getUrl('index'));
+                }),
         ];
     }
 
