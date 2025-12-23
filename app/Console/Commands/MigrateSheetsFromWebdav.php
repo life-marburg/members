@@ -21,6 +21,7 @@ class MigrateSheetsFromWebdav extends Command
     private int $migrated = 0;
     private int $skipped = 0;
     private int $errors = 0;
+    private array $invalidFiles = [];
 
     public function handle(): int
     {
@@ -52,6 +53,14 @@ class MigrateSheetsFromWebdav extends Command
         $this->info("Migrated: {$this->migrated}");
         $this->info("Skipped: {$this->skipped}");
         $this->info("Errors: {$this->errors}");
+
+        if (count($this->invalidFiles) > 0) {
+            $this->newLine();
+            $this->warn("Invalid files that could not be processed:");
+            foreach ($this->invalidFiles as $file) {
+                $this->line("  - {$file['path']} ({$file['reason']})");
+            }
+        }
 
         return Command::SUCCESS;
     }
@@ -87,11 +96,13 @@ class MigrateSheetsFromWebdav extends Command
 
     private function migrateFile(?Song $song, string $songName, string $filename, bool $dryRun, bool $skipExisting): void
     {
+        $fullPath = self::SHEET_FOLDER . '/' . $songName . '/' . $filename;
+
         // Parse filename: Song.Instrument.Stimme.Variant.pdf
         $parts = explode('.', $filename);
 
         if (count($parts) < 4) {
-            $this->warn("Skipping invalid filename: $filename");
+            $this->invalidFiles[] = ['path' => $fullPath, 'reason' => 'invalid filename format'];
             $this->skipped++;
             return;
         }
@@ -116,7 +127,7 @@ class MigrateSheetsFromWebdav extends Command
         $instrument = $this->findInstrument($instrumentName);
 
         if (!$instrument) {
-            $this->warn("No instrument match for '$instrumentName' in file: $filename");
+            $this->invalidFiles[] = ['path' => $fullPath, 'reason' => "no instrument match for '$instrumentName'"];
             $this->skipped++;
             return;
         }
@@ -142,12 +153,10 @@ class MigrateSheetsFromWebdav extends Command
         }
 
         // Download file from WebDAV
-        $webdavPath = '/' . self::SHEET_FOLDER . '/' . $songName . '/' . $filename;
-
         try {
-            $content = Storage::disk('cloud')->get($webdavPath);
+            $content = Storage::disk('cloud')->get('/' . $fullPath);
         } catch (\Exception $e) {
-            $this->error("Failed to download: $webdavPath - " . $e->getMessage());
+            $this->invalidFiles[] = ['path' => $fullPath, 'reason' => 'download failed: ' . $e->getMessage()];
             $this->errors++;
             return;
         }
