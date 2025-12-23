@@ -34,7 +34,7 @@ yarn prod            # Production build
 
 ## Architecture Overview
 
-**Stack:** Laravel 12, Livewire 3, Jetstream 5, Tailwind CSS, Alpine.js
+**Stack:** Laravel 12, Livewire 3, Jetstream 5, Filament 4, Tailwind CSS, Alpine.js
 
 This is a members' area application for a music group (brass band/orchestra). Core functionality:
 - User registration with admin approval workflow
@@ -74,10 +74,33 @@ Music sheets stored in WebDAV at `/Life/Noten/`. `SheetService` handles:
 
 ### Key Directories
 
+- `app/Filament/` - Filament admin panel resources, pages, and widgets
 - `app/Livewire/` - Interactive components (MembersList, UpdatePersonalDataForm, etc.)
 - `app/Services/` - SheetService, FriendlycaptchaService, MailcowService
 - `app/Http/Middleware/` - Custom: MustHaveInstrument, MustHavePersonalData, CheckIfActive, TrackLastActiveAt
 - `resources/lang/` - i18n (German primary, English fallback)
+
+## Filament Admin Panel
+
+Access the admin panel at `/admin`. Requires user with `admin` role or `manage life members` permission.
+
+```bash
+# Generate Filament resources
+docker compose exec web php artisan make:filament-resource ModelName
+
+# Generate relation manager
+docker compose exec web php artisan make:filament-relation-manager ResourceName relationName titleColumn
+
+# Create admin user
+docker compose exec web php artisan make:filament-user
+```
+
+### Admin Panel Features
+- Member management (list, edit, delete)
+- Status management (activate, lock, unlock)
+- Instrument group assignment
+- Additional email management
+- Member export
 
 ## Testing
 
