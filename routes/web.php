@@ -2,14 +2,12 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InstrumentController;
-use App\Http\Controllers\PageController;
 use App\Http\Controllers\PersonalDataController;
 use App\Http\Controllers\SheetController;
 use App\Http\Middleware\CheckIfActive;
 use App\Http\Middleware\MustHaveInstrument;
 use App\Http\Middleware\MustHavePersonalData;
 use App\Models\User;
-use App\Rights;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -39,7 +37,6 @@ Route::group([
             Route::get('/{instrument}', [SheetController::class, 'show'])->name('show');
             Route::get('/download/{sheet}', [SheetController::class, 'download'])->name('download');
         });
-    Route::middleware(['can:' . Rights::P_EDIT_PAGES])->resource('pages', PageController::class);
 });
 
 Route::middleware(['auth:sanctum', 'verified'])
