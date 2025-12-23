@@ -1,1 +1,1 @@
-require('friendly-challenge/widget')
+import 'friendly-challenge/widget'
