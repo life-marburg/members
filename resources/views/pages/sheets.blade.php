@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow sm:rounded-lg p-6"
-                 x-data="songSearch({{ Js::from($songs->map(fn($s) => ['id' => $s->id, 'title' => $s->title])) }})">
+                 x-data="songSearch({{ \Illuminate\Support\Js::from($songs->map(fn($s) => ['id' => $s->id, 'title' => $s->title])) }})">
 
                 <div class="mb-4">
                     <input
