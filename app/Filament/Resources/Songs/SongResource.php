@@ -27,7 +27,7 @@ class SongResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return __('Sheets');
+        return __('Songs');
     }
 
     public static function getModelLabel(): string
