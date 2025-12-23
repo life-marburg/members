@@ -7,12 +7,9 @@
 
         <title>{{ (isset($pageTitle) ? $pageTitle . ' | ' : '') . config('app.name', 'Life') }}</title>
 
-        <!-- Styles -->
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <!-- Scripts and Styles -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
-
-        <!-- Scripts -->
-        <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans text-gray-900 antialiased">
         {{ $slot }}
