@@ -172,4 +172,40 @@ class UserResourceTest extends TestCase
 
         $this->assertTrue(Hash::check($newPassword, $user->fresh()->password));
     }
+
+    public function test_set_password_requires_confirmation_match(): void
+    {
+        $this->actingAs($this->admin);
+
+        $user = User::factory()->create(['status' => User::STATUS_UNLOCKED]);
+        $originalPasswordHash = $user->password;
+
+        Livewire::test(ListUsers::class)
+            ->callTableAction('setPassword', $user, [
+                'new_password' => 'NewSecurePassword123!',
+                'new_password_confirmation' => 'DifferentPassword456!',
+            ])
+            ->assertHasTableActionErrors(['new_password' => 'confirmed']);
+
+        // Password should not have changed
+        $this->assertEquals($originalPasswordHash, $user->fresh()->password);
+    }
+
+    public function test_set_password_requires_minimum_length(): void
+    {
+        $this->actingAs($this->admin);
+
+        $user = User::factory()->create(['status' => User::STATUS_UNLOCKED]);
+        $originalPasswordHash = $user->password;
+
+        Livewire::test(ListUsers::class)
+            ->callTableAction('setPassword', $user, [
+                'new_password' => 'short',
+                'new_password_confirmation' => 'short',
+            ])
+            ->assertHasTableActionErrors(['new_password' => 'min']);
+
+        // Password should not have changed
+        $this->assertEquals($originalPasswordHash, $user->fresh()->password);
+    }
 }
