@@ -21,9 +21,6 @@
                     <x-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                         {{ __('Profile') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('calendar') }}" :active="request()->routeIs('calendar')">
-                        {{ __('Calendar') }}
-                    </x-nav-link>
                     <x-nav-link href="https://life-marburg.de/" target="_blank">
                         {{ __('Back to Homepage') }}
                         <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -130,9 +127,6 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link href="{{ route('sheets.index') }}" :active="request()->routeIs('sheets.index') || request()->routeIs('sheets.show')">
                     {{ __('Sheets') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link href="{{ route('calendar') }}" :active="request()->routeIs('calendar')">
-                    {{ __('Calendar') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link href="https://life-marburg.de/" target="_blank" class="flex items-center">
                     {{ __('Back to Homepage') }}
