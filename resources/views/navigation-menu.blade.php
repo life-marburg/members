@@ -21,7 +21,7 @@
                     <x-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                         {{ __('Profile') }}
                     </x-nav-link>
-                    @foreach(\App\Models\ExternalLink::active()->ordered()->get() as $externalLink)
+                    @foreach(\App\Models\ExternalLink::getCachedActiveLinks() as $externalLink)
                         <x-nav-link href="{{ $externalLink->url }}" target="{{ $externalLink->target }}">
                             {{ __($externalLink->title) }}
                             @if($externalLink->show_external_icon)
@@ -132,7 +132,7 @@
                 <x-responsive-nav-link href="{{ route('sheets.index') }}" :active="request()->routeIs('sheets.index') || request()->routeIs('sheets.show')">
                     {{ __('Sheets') }}
                 </x-responsive-nav-link>
-                @foreach(\App\Models\ExternalLink::active()->ordered()->get() as $externalLink)
+                @foreach(\App\Models\ExternalLink::getCachedActiveLinks() as $externalLink)
                     <x-responsive-nav-link href="{{ $externalLink->url }}" target="{{ $externalLink->target }}" class="flex items-center">
                         {{ __($externalLink->title) }}
                         @if($externalLink->show_external_icon)

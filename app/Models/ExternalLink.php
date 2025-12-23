@@ -34,4 +34,22 @@ class ExternalLink extends Model
     {
         return $query->orderBy('position');
     }
+
+    protected static function booted(): void
+    {
+        static::saved(function () {
+            cache()->forget('external_links_active');
+        });
+
+        static::deleted(function () {
+            cache()->forget('external_links_active');
+        });
+    }
+
+    public static function getCachedActiveLinks()
+    {
+        return cache()->remember('external_links_active', 3600, function () {
+            return static::active()->ordered()->get();
+        });
+    }
 }
