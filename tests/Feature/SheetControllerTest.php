@@ -300,4 +300,26 @@ class SheetControllerTest extends TestCase
         $response->assertViewHas('songSets');
         $this->assertCount(2, $response->viewData('songSets'));
     }
+
+    public function test_index_passes_is_new_flag_with_songs(): void
+    {
+        $trumpet = InstrumentGroup::whereTitle('Trompete')->first();
+        $trumpetInstrument = $trumpet->instruments->first();
+
+        $user = User::factory()->create();
+        $user->instrumentGroups()->attach($trumpet->id);
+        $this->actingAs($user);
+
+        $song = Song::factory()->create(['title' => 'New Song', 'is_new' => true]);
+        Sheet::factory()->create([
+            'song_id' => $song->id,
+            'instrument_id' => $trumpetInstrument->id,
+        ]);
+
+        $response = $this->get(route('sheets.index'));
+
+        $response->assertSuccessful();
+        $viewSongs = $response->viewData('songs');
+        $this->assertEquals(1, $viewSongs->first()['is_new']);
+    }
 }
