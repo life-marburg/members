@@ -34,7 +34,7 @@ Route::group([
         ->name('sheets.')
         ->group(function () {
             Route::get('', [SheetController::class, 'index'])->name('index');
-            Route::get('/{instrument}', [SheetController::class, 'show'])->name('show');
+            Route::get('/{song}', [SheetController::class, 'show'])->name('show');
             Route::get('/download/{sheet}', [SheetController::class, 'download'])->name('download');
         });
 });

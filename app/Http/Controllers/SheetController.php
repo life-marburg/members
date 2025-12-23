@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Instrument;
 use App\Models\InstrumentGroup;
 use App\Models\Sheet;
+use App\Models\Song;
 use App\Rights;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -13,37 +13,45 @@ class SheetController extends Controller
 {
     public function index()
     {
-        $with = ['instruments' => function ($query) {
-            $query->orderBy('title');
-        }];
+        $user = Auth::user();
 
-        if (Auth::user()->hasPermissionTo(Rights::P_VIEW_ALL_INSTRUMENTS)) {
-            $groups = InstrumentGroup::with($with)->get();
+        if ($user->hasPermissionTo(Rights::P_VIEW_ALL_INSTRUMENTS)) {
+            $instrumentGroupIds = InstrumentGroup::pluck('id');
         } else {
-            $groups = Auth::user()
-                ->instrumentGroups()
-                ->with($with)
-                ->get();
+            $instrumentGroupIds = $user->instrumentGroups()->pluck('id');
         }
 
-        return view('pages.sheets', [
-            'groups' => $groups->sortBy('title'),
-        ]);
+        $songs = Song::whereHas('sheets.instrument', function ($query) use ($instrumentGroupIds) {
+            $query->whereIn('instrument_group_id', $instrumentGroupIds);
+        })
+            ->orderBy('title')
+            ->get();
+
+        return view('pages.sheets', ['songs' => $songs]);
     }
 
-    public function show(Instrument $instrument)
+    public function show(Song $song)
     {
-        $sheets = Sheet::with('song')
-            ->where('instrument_id', $instrument->id)
+        $user = Auth::user();
+
+        if ($user->hasPermissionTo(Rights::P_VIEW_ALL_INSTRUMENTS)) {
+            $instrumentGroupIds = InstrumentGroup::pluck('id');
+        } else {
+            $instrumentGroupIds = $user->instrumentGroups()->pluck('id');
+        }
+
+        $sheets = $song->sheets()
+            ->whereHas('instrument', function ($query) use ($instrumentGroupIds) {
+                $query->whereIn('instrument_group_id', $instrumentGroupIds);
+            })
+            ->with(['instrument.instrumentGroup'])
             ->get()
-            ->groupBy('song.title')
-            ->map(function ($songSheets) {
-                return $songSheets->sortBy('part_number')->values();
-            });
+            ->groupBy('instrument.instrumentGroup.title')
+            ->map(fn ($group) => $group->groupBy('instrument.title'));
 
         return view('pages.sheets-show', [
-            'instrument' => $instrument,
-            'sheets' => $sheets,
+            'song' => $song,
+            'sheetsByGroup' => $sheets,
         ]);
     }
 
