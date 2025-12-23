@@ -55,8 +55,7 @@ class PageResource extends Resource
         return $schema
             ->components([
                 Placeholder::make('path')
-                    ->label(__('Path'))
-                    ->content(fn ($record) => '/' . $record->path),
+                    ->label(__('Path')),
                 RichEditor::make('content')
                     ->label(__('Content'))
                     ->required()
@@ -73,8 +72,7 @@ class PageResource extends Resource
                 TextColumn::make('path')
                     ->label(__('Path'))
                     ->searchable()
-                    ->sortable()
-                    ->formatStateUsing(fn (string $state): string => '/' . $state),
+                    ->sortable(),
                 TextColumn::make('updated_at')
                     ->label(__('Last Modified'))
                     ->dateTime()
