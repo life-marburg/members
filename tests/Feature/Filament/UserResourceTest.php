@@ -142,4 +142,17 @@ class UserResourceTest extends TestCase
             ->get('/admin')
             ->assertOk();
     }
+
+    public function test_admin_can_send_password_reset_email(): void
+    {
+        Notification::fake();
+        $this->actingAs($this->admin);
+
+        $user = User::factory()->create(['status' => User::STATUS_UNLOCKED]);
+
+        Livewire::test(ListUsers::class)
+            ->callTableAction('sendPasswordReset', $user);
+
+        Notification::assertSentTo($user, \Illuminate\Auth\Notifications\ResetPassword::class);
+    }
 }
