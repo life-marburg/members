@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use App\Filament\Exports\UserExporter;
 use App\Models\User;
 use App\Notifications\UserStatusChanged;
 use App\Rights;
@@ -10,6 +11,7 @@ use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -68,6 +70,10 @@ class UsersTable
                         User::STATUS_UNLOCKED => 'Active',
                         User::STATUS_LOCKED => 'Locked',
                     ]),
+            ])
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(UserExporter::class),
             ])
             ->recordActions([
                 EditAction::make(),
