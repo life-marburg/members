@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Rights;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,7 +21,7 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * @mixin IdeHelperUser
  */
-class User extends Authenticatable implements HasLocalePreference
+class User extends Authenticatable implements HasLocalePreference, FilamentUser
 {
     use HasApiTokens;
     use HasFactory;
@@ -136,5 +138,15 @@ class User extends Authenticatable implements HasLocalePreference
         return Attribute::make(
             get: fn() => $this->can(Rights::P_VIEW_ALL_INSTRUMENTS),
         );
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        if ($panel->getId() === 'admin') {
+            return $this->hasRole(Rights::R_ADMIN) ||
+                   $this->hasPermissionTo(Rights::P_MANAGE_MEMBERS);
+        }
+
+        return false;
     }
 }
