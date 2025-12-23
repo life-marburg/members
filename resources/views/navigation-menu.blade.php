@@ -29,7 +29,7 @@
                         </svg>
                     </x-nav-link>
                     @can(\App\Rights::P_MANAGE_MEMBERS)
-                        <x-nav-link href="{{ route('members.index') }}" :active="request()->routeIs('members.index')">
+                        <x-nav-link href="/admin" :active="request()->is('admin*')">
                             {{ __('Manage Members') }}
                         </x-nav-link>
                     @endcan
@@ -136,7 +136,7 @@
                     </svg>
                 </x-responsive-nav-link>
                 @can(\App\Rights::P_MANAGE_MEMBERS)
-                    <x-responsive-nav-link href="{{ route('members.index') }}" :active="request()->routeIs('members.index')">
+                    <x-responsive-nav-link href="/admin" :active="request()->is('admin*')">
                         {{ __('Manage Members') }}
                     </x-responsive-nav-link>
                 @endcan

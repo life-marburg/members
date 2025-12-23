@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InstrumentController;
-use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PersonalDataController;
 use App\Http\Controllers\SheetController;
@@ -41,7 +40,6 @@ Route::group([
             Route::get('/{sheet}/{instrument}/{variant}', [SheetController::class, 'download'])->name('download');
         });
     Route::middleware(['can:' . Rights::P_EDIT_PAGES])->resource('pages', PageController::class);
-    Route::middleware(['can:' . Rights::P_MANAGE_MEMBERS])->resource('members', MemberController::class);
 });
 
 Route::middleware(['auth:sanctum', 'verified'])
