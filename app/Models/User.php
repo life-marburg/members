@@ -44,6 +44,8 @@ class User extends Authenticatable implements HasLocalePreference, FilamentUser
         'email',
         'password',
         'last_active_at',
+        'status',
+        'disable_after_days',
     ];
 
     /**
