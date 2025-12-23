@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\InstrumentGroup;
 use App\Models\Sheet;
 use App\Models\Song;
+use App\Models\SongSet;
 use App\Rights;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -24,10 +25,22 @@ class SheetController extends Controller
         $songs = Song::whereHas('sheets.instrument', function ($query) use ($instrumentGroupIds) {
             $query->whereIn('instrument_group_id', $instrumentGroupIds);
         })
+            ->with('songSets')
             ->orderBy('title')
-            ->get();
+            ->get()
+            ->map(fn ($song) => [
+                'id' => $song->id,
+                'title' => $song->title,
+                'sets' => $song->songSets->map(fn ($set) => [
+                    'id' => $set->id,
+                    'position' => $set->pivot->position,
+                ])->toArray(),
+            ]);
 
-        return view('pages.sheets', ['songs' => $songs]);
+        return view('pages.sheets', [
+            'songs' => $songs,
+            'songSets' => SongSet::orderBy('title')->get(),
+        ]);
     }
 
     public function show(Song $song)

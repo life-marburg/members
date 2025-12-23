@@ -6,6 +6,7 @@ use App\Models\Instrument;
 use App\Models\InstrumentGroup;
 use App\Models\Sheet;
 use App\Models\Song;
+use App\Models\SongSet;
 use App\Models\User;
 use App\Rights;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -247,5 +248,56 @@ class SheetControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'application/pdf');
+    }
+
+    public function test_index_passes_songs_with_set_memberships(): void
+    {
+        $trumpet = InstrumentGroup::whereTitle('Trompete')->first();
+        $trumpetInstrument = $trumpet->instruments->first();
+
+        $user = User::factory()->create();
+        $user->instrumentGroups()->attach($trumpet->id);
+        $this->actingAs($user);
+
+        $song = Song::factory()->create(['title' => 'Test Song']);
+        Sheet::factory()->create([
+            'song_id' => $song->id,
+            'instrument_id' => $trumpetInstrument->id,
+        ]);
+
+        $songSet = SongSet::factory()->create(['title' => 'Concert']);
+        $songSet->songs()->attach($song->id, ['position' => 5]);
+
+        $response = $this->get(route('sheets.index'));
+
+        $response->assertSuccessful();
+        $response->assertViewHas('songs');
+
+        $viewSongs = $response->viewData('songs');
+        $this->assertCount(1, $viewSongs);
+
+        // Song should have sets data with position
+        $viewSong = $viewSongs->first();
+        $this->assertArrayHasKey('sets', $viewSong);
+        $this->assertCount(1, $viewSong['sets']);
+        $this->assertEquals($songSet->id, $viewSong['sets'][0]['id']);
+        $this->assertEquals(5, $viewSong['sets'][0]['position']);
+    }
+
+    public function test_index_passes_available_sets_to_view(): void
+    {
+        $trumpet = InstrumentGroup::whereTitle('Trompete')->first();
+        $user = User::factory()->create();
+        $user->instrumentGroups()->attach($trumpet->id);
+        $this->actingAs($user);
+
+        SongSet::factory()->create(['title' => 'Concert A']);
+        SongSet::factory()->create(['title' => 'Concert B']);
+
+        $response = $this->get(route('sheets.index'));
+
+        $response->assertSuccessful();
+        $response->assertViewHas('songSets');
+        $this->assertCount(2, $response->viewData('songSets'));
     }
 }
