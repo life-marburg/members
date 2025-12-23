@@ -31,6 +31,7 @@ class SheetController extends Controller
             ->map(fn ($song) => [
                 'id' => $song->id,
                 'title' => $song->title,
+                'is_new' => $song->is_new,
                 'sets' => $song->songSets->map(fn ($set) => [
                     'id' => $set->id,
                     'position' => $set->pivot->position,
