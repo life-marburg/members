@@ -803,5 +803,18 @@
     "PDF File": "PDF-Datei",
     "No sheets available for this instrument.": "Keine Noten für dieses Instrument verfügbar.",
     "manage sheets": "Noten verwalten",
-    "Created": "Erstellt"
+    "Created": "Erstellt",
+    "Display an icon indicating this opens externally": "Ein Symbol anzeigen, das angibt, dass dies extern geöffnet wird",
+    "External Link": "Externer Link",
+    "External Links": "Externe Links",
+    "Icon": "Symbol",
+    "Link Details": "Link-Details",
+    "Lower numbers appear first": "Kleinere Zahlen werden zuerst angezeigt",
+    "New tab": "Neuer Tab",
+    "Only active links are shown in the navigation": "Nur aktive Links werden in der Navigation angezeigt",
+    "Same tab": "Gleicher Tab",
+    "Show external link icon": "Symbol für externen Link anzeigen",
+    "Target": "Ziel",
+    "The text displayed in the navigation menu": "Der Text, der im Navigationsmenü angezeigt wird",
+    "The URL the link points to": "Die URL, auf die der Link verweist"
 }
