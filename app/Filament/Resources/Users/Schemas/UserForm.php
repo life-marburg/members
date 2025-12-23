@@ -18,7 +18,7 @@ class UserForm
     {
         return $schema
             ->components([
-                Section::make('Account Information')
+                Section::make(__('Account Information'))
                     ->schema([
                         TextInput::make('name')
                             ->required()
@@ -30,7 +30,7 @@ class UserForm
                             ->maxLength(255),
                     ]),
 
-                Section::make('Personal Data')
+                Section::make(__('Personal Data'))
                     ->relationship('personalData')
                     ->schema([
                         TextInput::make('street')
@@ -57,22 +57,22 @@ class UserForm
                             ]),
                     ]),
 
-                Section::make('Status & Permissions')
+                Section::make(__('Status & Permissions'))
                     ->schema([
                         Select::make('status')
                             ->options([
-                                User::STATUS_NEW => 'New',
-                                User::STATUS_UNLOCKED => 'Active',
-                                User::STATUS_LOCKED => 'Locked',
+                                User::STATUS_NEW => __('New'),
+                                User::STATUS_UNLOCKED => __('Active'),
+                                User::STATUS_LOCKED => __('Locked'),
                             ])
                             ->required(),
                         Select::make('instrumentGroups')
                             ->relationship('instrumentGroups', 'title')
                             ->multiple()
                             ->preload()
-                            ->label('Instrument Groups'),
+                            ->label(__('Instrument Groups')),
                         Toggle::make('is_admin')
-                            ->label('Administrator')
+                            ->label(__('Administrator'))
                             ->dehydrated(false)
                             ->afterStateHydrated(function (Toggle $component, ?User $record) {
                                 if ($record) {
@@ -81,7 +81,7 @@ class UserForm
                             })
                             ->live(),
                         Toggle::make('can_view_all_instruments')
-                            ->label('Can View All Instrument Sheets')
+                            ->label(__('Can View All Instrument Sheets'))
                             ->dehydrated(false)
                             ->afterStateHydrated(function (Toggle $component, ?User $record) {
                                 if ($record) {
@@ -90,11 +90,11 @@ class UserForm
                             })
                             ->visible(fn (Get $get): bool => !$get('is_admin')),
                         Select::make('disable_after_days')
-                            ->label('Disable After Inactivity')
+                            ->label(__('Disable After Inactivity'))
                             ->options([
-                                '' => 'Never',
-                                14 => 'After 14 days',
-                                90 => 'After 90 days',
+                                '' => __('Never'),
+                                14 => __('After 14 days'),
+                                90 => __('After 90 days'),
                             ])
                             ->visible(fn (Get $get): bool => !$get('is_admin')),
                     ]),

@@ -17,7 +17,10 @@ class AdditionalEmailsRelationManager extends RelationManager
 {
     protected static string $relationship = 'additionalEmails';
 
-    protected static ?string $title = 'Additional Emails';
+    public static function getTitle($ownerRecord, string $pageClass): string
+    {
+        return __('Additional Emails');
+    }
 
     public function form(Schema $schema): Schema
     {

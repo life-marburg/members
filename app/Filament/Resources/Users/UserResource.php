@@ -21,11 +21,20 @@ class UserResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
-    protected static ?string $navigationLabel = 'Members';
+    public static function getNavigationLabel(): string
+    {
+        return __('Members');
+    }
 
-    protected static ?string $modelLabel = 'Member';
+    public static function getModelLabel(): string
+    {
+        return __('Member');
+    }
 
-    protected static ?string $pluralModelLabel = 'Members';
+    public static function getPluralModelLabel(): string
+    {
+        return __('Members');
+    }
 
     public static function getNavigationBadge(): ?string
     {

@@ -20,10 +20,10 @@ class EditUser extends EditRecord
                 ->visible(fn (): bool => auth()->user()->can(Rights::P_DELETE_ACCOUNTS))
                 ->form([
                     TextInput::make('password')
-                        ->label('Your Password')
+                        ->label(__('Your Password'))
                         ->password()
                         ->required()
-                        ->helperText('Enter your password to confirm deletion'),
+                        ->helperText(__('Enter your password to confirm deletion')),
                 ])
                 ->action(function (array $data) {
                     if (!Hash::check($data['password'], auth()->user()->password)) {

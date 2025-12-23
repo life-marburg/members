@@ -34,19 +34,19 @@ class UsersTable
                 TextColumn::make('instrumentGroups.title')
                     ->badge()
                     ->separator(', ')
-                    ->label('Instruments'),
+                    ->label(__('Instruments')),
                 TextColumn::make('personalData.city')
-                    ->label('City')
+                    ->label(__('City'))
                     ->sortable(),
                 TextColumn::make('personalData.mobile_phone')
-                    ->label('Mobile'),
+                    ->label(__('Mobile')),
                 TextColumn::make('status')
                     ->badge()
                     ->formatStateUsing(fn (int $state): string => match ($state) {
-                        User::STATUS_NEW => 'New',
-                        User::STATUS_UNLOCKED => 'Active',
-                        User::STATUS_LOCKED => 'Locked',
-                        default => 'Unknown',
+                        User::STATUS_NEW => __('New'),
+                        User::STATUS_UNLOCKED => __('Active'),
+                        User::STATUS_LOCKED => __('Locked'),
+                        default => __('Unknown'),
                     })
                     ->color(fn (int $state): string => match ($state) {
                         User::STATUS_NEW => 'warning',
@@ -55,7 +55,7 @@ class UsersTable
                         default => 'gray',
                     }),
                 IconColumn::make('is_admin')
-                    ->label('Admin')
+                    ->label(__('Admin'))
                     ->boolean()
                     ->getStateUsing(fn (User $record): bool => $record->hasRole(Rights::R_ADMIN)),
                 TextColumn::make('created_at')
@@ -66,9 +66,9 @@ class UsersTable
             ->filters([
                 SelectFilter::make('status')
                     ->options([
-                        User::STATUS_NEW => 'New',
-                        User::STATUS_UNLOCKED => 'Active',
-                        User::STATUS_LOCKED => 'Locked',
+                        User::STATUS_NEW => __('New'),
+                        User::STATUS_UNLOCKED => __('Active'),
+                        User::STATUS_LOCKED => __('Locked'),
                     ]),
             ])
             ->headerActions([
@@ -78,7 +78,7 @@ class UsersTable
             ->recordActions([
                 EditAction::make(),
                 Action::make('activate')
-                    ->label('Activate')
+                    ->label(__('Activate'))
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
                     ->requiresConfirmation()
@@ -88,14 +88,14 @@ class UsersTable
                         $record->notify(new UserStatusChanged());
                     }),
                 Action::make('lock')
-                    ->label('Lock')
+                    ->label(__('Lock'))
                     ->icon('heroicon-o-lock-closed')
                     ->color('danger')
                     ->requiresConfirmation()
                     ->visible(fn (User $record): bool => $record->status === User::STATUS_UNLOCKED)
                     ->action(fn (User $record) => $record->update(['status' => User::STATUS_LOCKED])),
                 Action::make('unlock')
-                    ->label('Unlock')
+                    ->label(__('Unlock'))
                     ->icon('heroicon-o-lock-open')
                     ->color('success')
                     ->requiresConfirmation()
@@ -105,7 +105,7 @@ class UsersTable
             ->toolbarActions([
                 BulkActionGroup::make([
                     BulkAction::make('activate')
-                        ->label('Activate Selected')
+                        ->label(__('Activate Selected'))
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
                         ->requiresConfirmation()
@@ -114,7 +114,7 @@ class UsersTable
                             $user->notify(new UserStatusChanged());
                         })),
                     BulkAction::make('lock')
-                        ->label('Lock Selected')
+                        ->label(__('Lock Selected'))
                         ->icon('heroicon-o-lock-closed')
                         ->color('danger')
                         ->requiresConfirmation()

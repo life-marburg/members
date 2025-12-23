@@ -14,7 +14,10 @@ class InstrumentGroupsRelationManager extends RelationManager
 {
     protected static string $relationship = 'instrumentGroups';
 
-    protected static ?string $title = 'Instrument Groups';
+    public static function getTitle($ownerRecord, string $pageClass): string
+    {
+        return __('Instrument Groups');
+    }
 
     public function table(Table $table): Table
     {
@@ -22,10 +25,10 @@ class InstrumentGroupsRelationManager extends RelationManager
             ->recordTitleAttribute('title')
             ->columns([
                 TextColumn::make('title')
-                    ->label('Group'),
+                    ->label(__('Group')),
                 TextColumn::make('instruments.title')
                     ->badge()
-                    ->label('Instruments'),
+                    ->label(__('Instruments')),
             ])
             ->headerActions([
                 AttachAction::make()
