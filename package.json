@@ -18,6 +18,7 @@
         "tailwindcss": "3.4.17"
     },
     "dependencies": {
-        "friendly-challenge": "0.9.18"
+        "friendly-challenge": "0.9.18",
+        "fuse.js": "^7.1.0"
     }
 }
