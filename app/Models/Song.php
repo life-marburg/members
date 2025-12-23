@@ -11,7 +11,7 @@ class Song extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title'];
+    protected $fillable = ['title', 'is_new'];
 
     public function sheets(): HasMany
     {
