@@ -31,4 +31,5 @@ COPY . ./
 COPY --from=build-frontend /var/www/public /app/public
 COPY --from=build-php /var/www/vendor /app/vendor
 COPY --from=build-php /var/www/bootstrap /app/bootstrap
-RUN php artisan storage:link
+RUN mkdir -p storage/framework/{cache/data,sessions,views,testing} storage/logs && \
+    php artisan storage:link

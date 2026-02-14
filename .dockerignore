@@ -12,8 +12,8 @@ pint.json
 docker-compose.yml
 docker-compose.production.yml
 Dockerfile.dev
-storage/logs/
-storage/framework/cache/
+storage/logs/*
+storage/framework/cache/data/
 storage/framework/sessions/
-storage/framework/views/
+storage/framework/testing/
 storage/app/sheets/
