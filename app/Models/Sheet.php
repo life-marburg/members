@@ -38,10 +38,10 @@ class Sheet extends Model
             return $this->variant;
         }
 
-        $title = $this->part_number . '. Stimme';
+        $title = $this->part_number.'. Stimme';
 
         if ($this->variant) {
-            $title .= ' ' . $this->variant;
+            $title .= ' '.$this->variant;
         }
 
         return $title;

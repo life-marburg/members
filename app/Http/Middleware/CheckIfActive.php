@@ -11,7 +11,7 @@ class CheckIfActive
 {
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->status !== User::STATUS_UNLOCKED) {
+        if (Auth::user()->status !== User::STATUS_UNLOCKED) {
             return redirect(route('not-yet-active'));
         }
 

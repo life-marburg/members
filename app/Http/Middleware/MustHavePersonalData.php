@@ -10,7 +10,7 @@ class MustHavePersonalData
 {
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::user()->hasPersonalData()) {
+        if (! Auth::user()->hasPersonalData()) {
             return redirect(route('set-personal-data.form'));
         }
 

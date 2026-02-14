@@ -13,18 +13,18 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class UsersExport implements FromCollection, WithHeadings, WithStyles, WithEvents, ShouldAutoSize
+class UsersExport implements FromCollection, ShouldAutoSize, WithEvents, WithHeadings, WithStyles
 {
     public function collection(): Collection
     {
         return User::with(['personalData', 'instrumentGroups', 'additionalEmails'])
             ->orderBy('users.name')
             ->get()
-            ->map(fn(User $user) => [
+            ->map(fn (User $user) => [
                 $user->id,
                 $user->name,
                 $user->email,
-                join(', ', $user->additionalEmails->map(fn($e) => $e->email)->toArray()),
+                implode(', ', $user->additionalEmails->map(fn ($e) => $e->email)->toArray()),
                 $user->personalData->street,
                 $user->personalData->city,
                 $user->personalData->zip,
@@ -64,7 +64,7 @@ class UsersExport implements FromCollection, WithHeadings, WithStyles, WithEvent
                 $alphabet = $event->sheet->getHighestDataColumn();
                 $totalRow = $event->sheet->getHighestDataRow();
                 $startCell = '1';
-                $cellRange = 'A' . $startCell . ':' . $alphabet . $totalRow;
+                $cellRange = 'A'.$startCell.':'.$alphabet.$totalRow;
 
                 $event->sheet->getStyle($cellRange)->applyFromArray([
                     'borders' => [

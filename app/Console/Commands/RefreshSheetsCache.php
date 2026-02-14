@@ -8,6 +8,7 @@ use Illuminate\Console\Command;
 class RefreshSheetsCache extends Command
 {
     protected $signature = 'sheets:refresh';
+
     protected $description = 'Refresh the sheets from webdav';
 
     protected SheetService $sheetService;

@@ -13,7 +13,7 @@ class PageFactory extends Factory
     {
         return [
             'path' => $this->faker->slug(2),
-            'content' => '<p>' . $this->faker->paragraph() . '</p>',
+            'content' => '<p>'.$this->faker->paragraph().'</p>',
         ];
     }
 }

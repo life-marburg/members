@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\AdditionalEmails;
-use App\Models\User;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 use Laravel\Jetstream\Http\Livewire\UpdateProfileInformationForm as LaravelUpdateProfileInformationForm;
 
@@ -13,6 +12,7 @@ class UpdateProfileInformationForm extends LaravelUpdateProfileInformationForm
     {
         return view('livewire.update-profile-information-form');
     }
+
     public function mount()
     {
         parent::mount();
@@ -31,7 +31,7 @@ class UpdateProfileInformationForm extends LaravelUpdateProfileInformationForm
             $newAdditionalEmails[] = $mail->toArray();
         }
 
-//        dd($newAdditionalEmails->());
+        //        dd($newAdditionalEmails->());
 
         $this->state['additional_emails'] = $newAdditionalEmails;
 

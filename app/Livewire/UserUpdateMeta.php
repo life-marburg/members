@@ -5,7 +5,6 @@ namespace App\Livewire;
 use App\Models\User;
 use App\Notifications\UserStatusChanged;
 use App\Rights;
-use Illuminate\Support\Facades\DB;
 
 class UserUpdateMeta extends UserEditComponent
 {
@@ -19,7 +18,7 @@ class UserUpdateMeta extends UserEditComponent
         parent::mount();
 
         $this->state['status'] = $this->user->status;
-        $this->state['instrument_groups'] = $this->user->instrumentGroups->map(fn($i) => $i->id)->toArray();
+        $this->state['instrument_groups'] = $this->user->instrumentGroups->map(fn ($i) => $i->id)->toArray();
         $this->state['is_admin'] = $this->user->hasRole(Rights::R_ADMIN);
         $this->state['disable_after'] = $this->user->disable_after_days;
         $this->state['can_view_all_instruments'] = $this->user->hasPermissionTo(Rights::P_VIEW_ALL_INSTRUMENTS);
@@ -33,9 +32,9 @@ class UserUpdateMeta extends UserEditComponent
         $this->user->personalData->save();
         $this->user->disable_after_days = $this->state['disable_after'] === 'null' ? null : $this->state['disable_after'];
 
-        $status = (int)$this->state['status'];
+        $status = (int) $this->state['status'];
         if ($this->user->status != $status && $status === User::STATUS_UNLOCKED) {
-            $this->user->notify(new UserStatusChanged());
+            $this->user->notify(new UserStatusChanged);
         }
 
         if ($this->user->hasRole(Rights::R_ADMIN) !== boolval($this->state['is_admin'])) {
@@ -48,7 +47,7 @@ class UserUpdateMeta extends UserEditComponent
             }
         }
 
-        if (!$this->user->hasRole(Rights::R_ADMIN) &&
+        if (! $this->user->hasRole(Rights::R_ADMIN) &&
             $this->user->hasPermissionTo(Rights::P_VIEW_ALL_INSTRUMENTS) !== boolval($this->state['can_view_all_instruments'])) {
             if ($this->state['can_view_all_instruments']) {
                 $this->user->givePermissionTo(Rights::P_VIEW_ALL_INSTRUMENTS);

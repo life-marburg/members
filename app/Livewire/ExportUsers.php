@@ -15,6 +15,6 @@ class ExportUsers extends Component
 
     public function export()
     {
-        return Excel::download(new UsersExport(), 'Mitglieder_' . now() . '.xlsx');
+        return Excel::download(new UsersExport, 'Mitglieder_'.now().'.xlsx');
     }
 }

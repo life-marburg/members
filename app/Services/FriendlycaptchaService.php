@@ -11,7 +11,7 @@ class FriendlycaptchaService
 
     public static function verify(string $solution): bool
     {
-        $client = new Client();
+        $client = new Client;
 
         try {
             $res = $client->request('POST', self::API_URL, [
@@ -22,7 +22,8 @@ class FriendlycaptchaService
                 ],
             ]);
         } catch (\Exception $e) {
-            Log::error('Could not verify captcha: ' . $e->getMessage());
+            Log::error('Could not verify captcha: '.$e->getMessage());
+
             return true;
         }
 

@@ -63,7 +63,7 @@ class SheetsRelationManager extends RelationManager
                         FileUpload::make('file_path')
                             ->label(__('PDF File'))
                             ->disk('sheets')
-                            ->directory(fn ($livewire) => 'song-' . $livewire->ownerRecord->id)
+                            ->directory(fn ($livewire) => 'song-'.$livewire->ownerRecord->id)
                             ->acceptedFileTypes(['application/pdf'])
                             ->required(),
                     ]),

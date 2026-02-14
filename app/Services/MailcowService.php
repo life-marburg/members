@@ -6,8 +6,5 @@ class MailcowService
 {
     const PUBLIC_EMAIL_ALIAS_ID = null;
 
-    public function getEmailAddressesInAlias()
-    {
-
-    }
+    public function getEmailAddressesInAlias() {}
 }

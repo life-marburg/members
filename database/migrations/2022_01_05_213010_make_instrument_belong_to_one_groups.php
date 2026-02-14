@@ -20,7 +20,7 @@ class MakeInstrumentBelongToOneGroups extends Migration
 
         $rels = DB::table('instrument_groups_instrument')
             ->get()
-            ->mapWithKeys(fn($item, $key) => [$item->instrument_id => $item->instrument_group_id])
+            ->mapWithKeys(fn ($item, $key) => [$item->instrument_id => $item->instrument_group_id])
             ->toArray();
         $instruments = DB::table('instruments')->get();
 
@@ -41,7 +41,5 @@ class MakeInstrumentBelongToOneGroups extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-    }
+    public function down() {}
 }

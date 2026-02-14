@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Users\Pages;
 
-use App\Filament\Resources\Users\UserResource;
 use App\Filament\Resources\Users\Tables\UsersTable;
+use App\Filament\Resources\Users\UserResource;
 use App\Rights;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
@@ -30,7 +30,7 @@ class EditUser extends EditRecord
                             ->helperText(__('Enter your password to confirm deletion')),
                     ])
                     ->action(function (array $data) {
-                        if (!Hash::check($data['password'], auth()->user()->password)) {
+                        if (! Hash::check($data['password'], auth()->user()->password)) {
                             $this->addError('mountedActionsData.0.password', 'Invalid password');
                             $this->halt();
                         }

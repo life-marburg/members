@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 class SheetService
 {
     public const SHEET_FOLDER = 'Life/Noten';
+
     private const CACHE_KEY = 'sheet_files';
 
     public function getSheetStructureFromWebdav(): array
@@ -18,7 +19,7 @@ class SheetService
         $files = Storage::disk('cloud')->allFiles(self::SHEET_FOLDER);
 
         foreach ($files as $file) {
-            $file = str_replace(self::SHEET_FOLDER . '/', '', $file);
+            $file = str_replace(self::SHEET_FOLDER.'/', '', $file);
             $parts = explode('/', $file);
             if (count($parts) === 2) {
                 $all[$parts[0]][] = $parts[1];
@@ -30,7 +31,7 @@ class SheetService
 
     protected function getSongFileStructure(): array
     {
-        return Cache::rememberForever(self::CACHE_KEY, fn() => $this->getSheetStructureFromWebdav());
+        return Cache::rememberForever(self::CACHE_KEY, fn () => $this->getSheetStructureFromWebdav());
     }
 
     public function refreshSheetsCache()
@@ -51,7 +52,7 @@ class SheetService
                 $all = [];
                 foreach ($item as $it) {
                     foreach ($instrument->title_with_alias as $title) {
-                        if (str_contains($it, '.' . $title . '.')) {
+                        if (str_contains($it, '.'.$title.'.')) {
                             $all[] = $it;
                         }
                     }
@@ -69,17 +70,17 @@ class SheetService
                         continue;
                     }
 
-                    $title = $parts[2] . '. ';
+                    $title = $parts[2].'. ';
                     $variant = $parts[2];
-                    if (!is_numeric($parts[2])) {
-                        $title = $parts[2] . ' ';
+                    if (! is_numeric($parts[2])) {
+                        $title = $parts[2].' ';
                     }
 
                     $title .= 'Stimme';
 
                     if (isset($parts[3]) && $parts[3] !== 'pdf') {
-                        $title .= ' ' . $parts[3];
-                        $variant .= '.' . $parts[3];
+                        $title .= ' '.$parts[3];
+                        $variant .= '.'.$parts[3];
                     }
 
                     $all[] = [
@@ -90,6 +91,7 @@ class SheetService
                 }
 
                 asort($all);
+
                 return $all;
             })
             ->filter(function ($item) {
@@ -99,7 +101,7 @@ class SheetService
 
     public static function getSheetDownloadPath(string $sheet, string $instrumentFileName, string $variant): string
     {
-        return '/' . self::SHEET_FOLDER . '/' . $sheet . '/' . $sheet . '.' . $instrumentFileName . '.' . $variant . '.pdf';
+        return '/'.self::SHEET_FOLDER.'/'.$sheet.'/'.$sheet.'.'.$instrumentFileName.'.'.$variant.'.pdf';
     }
 
     /**
@@ -126,10 +128,10 @@ class SheetService
         }
 
         // Non-numeric part becomes variant
-        if (!is_numeric($parts[2])) {
+        if (! is_numeric($parts[2])) {
             $variant = $parts[2];
             if (isset($parts[3]) && $parts[3] !== 'pdf') {
-                $variant .= ' ' . $parts[3];
+                $variant .= ' '.$parts[3];
             }
         }
 

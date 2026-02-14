@@ -15,7 +15,7 @@ class SheetFactory extends Factory
             'instrument_id' => Instrument::inRandomOrder()->first()->id ?? 1,
             'part_number' => $this->faker->numberBetween(1, 4),
             'variant' => null,
-            'file_path' => 'sheets/' . $this->faker->uuid() . '.pdf',
+            'file_path' => 'sheets/'.$this->faker->uuid().'.pdf',
         ];
     }
 

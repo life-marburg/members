@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Instrument;
-use App\Models\InstrumentGroup;
 use App\Services\SheetService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery\MockInterface;

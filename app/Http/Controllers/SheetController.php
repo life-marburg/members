@@ -72,11 +72,11 @@ class SheetController extends Controller
     public function download(Sheet $sheet)
     {
         $file = Storage::disk('sheets')->get($sheet->file_path);
-        $name = $sheet->song->title . ' ' . $sheet->instrument->title . ' ' . $sheet->display_title . '.pdf';
+        $name = $sheet->song->title.' '.$sheet->instrument->title.' '.$sheet->display_title.'.pdf';
 
         return response($file, 200, [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="' . $name . '"',
+            'Content-Disposition' => 'attachment; filename="'.$name.'"',
         ]);
     }
 }

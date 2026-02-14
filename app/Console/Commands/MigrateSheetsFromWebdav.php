@@ -18,8 +18,11 @@ class MigrateSheetsFromWebdav extends Command
     protected $description = 'Migrate sheet files from WebDAV to local storage and database';
 
     private int $migrated = 0;
+
     private int $skipped = 0;
+
     private int $errors = 0;
+
     private array $invalidFiles = [];
 
     public function __construct(private SheetService $sheetService)
@@ -40,7 +43,7 @@ class MigrateSheetsFromWebdav extends Command
 
         $structure = $this->sheetService->getSheetStructureFromWebdav();
 
-        $this->info('Found ' . count($structure) . ' songs');
+        $this->info('Found '.count($structure).' songs');
 
         $bar = $this->output->createProgressBar(count($structure));
         $bar->start();
@@ -53,14 +56,14 @@ class MigrateSheetsFromWebdav extends Command
         $bar->finish();
         $this->newLine(2);
 
-        $this->info("Migration complete!");
+        $this->info('Migration complete!');
         $this->info("Migrated: {$this->migrated}");
         $this->info("Skipped: {$this->skipped}");
         $this->info("Errors: {$this->errors}");
 
         if (count($this->invalidFiles) > 0) {
             $this->newLine();
-            $this->warn("Invalid files that could not be processed:");
+            $this->warn('Invalid files that could not be processed:');
             foreach ($this->invalidFiles as $file) {
                 $this->line("  - {$file['path']} ({$file['reason']})");
             }
@@ -74,7 +77,7 @@ class MigrateSheetsFromWebdav extends Command
         $song = null;
         $songTitle = Str::headline($songName);
 
-        if (!$dryRun) {
+        if (! $dryRun) {
             $song = Song::firstOrCreate(['title' => $songTitle]);
         }
 
@@ -85,21 +88,23 @@ class MigrateSheetsFromWebdav extends Command
 
     private function migrateFile(?Song $song, string $songName, string $filename, bool $dryRun, bool $skipExisting): void
     {
-        $fullPath = SheetService::SHEET_FOLDER . '/' . $songName . '/' . $filename;
+        $fullPath = SheetService::SHEET_FOLDER.'/'.$songName.'/'.$filename;
 
         $parsed = $this->sheetService->parseSheetFilename($filename);
 
         if ($parsed === null) {
             $this->invalidFiles[] = ['path' => $fullPath, 'reason' => 'invalid filename format'];
             $this->skipped++;
+
             return;
         }
 
         $instrument = $this->sheetService->findInstrumentByFilename($parsed['instrument']);
 
-        if (!$instrument) {
+        if (! $instrument) {
             $this->invalidFiles[] = ['path' => $fullPath, 'reason' => "no instrument match for '{$parsed['instrument']}'"];
             $this->skipped++;
+
             return;
         }
 
@@ -110,6 +115,7 @@ class MigrateSheetsFromWebdav extends Command
             $songTitle = Str::headline($songName);
             $this->line("Would migrate: $filename -> Song: $songTitle, Instrument: {$instrument->title}, Part: $partNumber, Variant: $variant");
             $this->migrated++;
+
             return;
         }
 
@@ -123,21 +129,23 @@ class MigrateSheetsFromWebdav extends Command
 
             if ($exists) {
                 $this->skipped++;
+
                 return;
             }
         }
 
         // Download file from WebDAV
         try {
-            $content = Storage::disk('cloud')->get('/' . $fullPath);
+            $content = Storage::disk('cloud')->get('/'.$fullPath);
         } catch (\Exception $e) {
-            $this->invalidFiles[] = ['path' => $fullPath, 'reason' => 'download failed: ' . $e->getMessage()];
+            $this->invalidFiles[] = ['path' => $fullPath, 'reason' => 'download failed: '.$e->getMessage()];
             $this->errors++;
+
             return;
         }
 
         // Save to local storage
-        $localPath = 'song-' . $song->id . '/' . $filename;
+        $localPath = 'song-'.$song->id.'/'.$filename;
         Storage::disk('sheets')->put($localPath, $content);
 
         // Create database record

@@ -4,10 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\InstrumentGroup;
 use App\Models\User;
-use App\Notifications\UserIsWaitingForActivation;
-use App\Rights;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class InstrumentTest extends TestCase
@@ -75,7 +72,7 @@ class InstrumentTest extends TestCase
 
         $response = $this->get(route('set-instrument.form'));
         foreach ($instrumentGroups as $instrumentGroup) {
-            if($instrumentGroup->is_user_selectable) {
+            if ($instrumentGroup->is_user_selectable) {
                 $response->assertSee($instrumentGroup->title);
             } else {
                 $response->assertDontSee($instrumentGroup->title);

@@ -14,7 +14,5 @@ return new class extends Migration
         $adminRole->givePermissionTo($permission);
     }
 
-    public function down(): void
-    {
-    }
+    public function down(): void {}
 };

@@ -11,15 +11,13 @@ class MustHaveInstrument
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::user();
 
-        if($user->instrumentGroups->count() === 0) {
+        if ($user->instrumentGroups->count() === 0) {
             return redirect(route('set-instrument.form'));
         }
 

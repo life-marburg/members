@@ -88,7 +88,7 @@ class UserForm
                                     $component->state($record->hasPermissionTo(Rights::P_VIEW_ALL_INSTRUMENTS));
                                 }
                             })
-                            ->visible(fn (Get $get): bool => !$get('is_admin')),
+                            ->visible(fn (Get $get): bool => ! $get('is_admin')),
                         Select::make('disable_after_days')
                             ->label(__('Disable After Inactivity'))
                             ->options([
@@ -96,7 +96,7 @@ class UserForm
                                 14 => __('After 14 days'),
                                 90 => __('After 90 days'),
                             ])
-                            ->visible(fn (Get $get): bool => !$get('is_admin')),
+                            ->visible(fn (Get $get): bool => ! $get('is_admin')),
                     ]),
             ]);
     }

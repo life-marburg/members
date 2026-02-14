@@ -16,6 +16,7 @@ class PersonalDataTest extends TestCase
     use RefreshDatabase;
 
     private User $admin1;
+
     private User $admin2;
 
     protected function setUp(): void
@@ -37,7 +38,7 @@ class PersonalDataTest extends TestCase
         Livewire::test(UpdatePersonalDataForm::class, [
             'user' => $user,
             'notifyAdmin' => true,
-            'redirectAfterSave' => 'dashboard'
+            'redirectAfterSave' => 'dashboard',
         ])
             ->set('state', [
                 'name' => 'Lorem Ipsum',

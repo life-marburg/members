@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Models;
 
-use App\Models\Sheet;
 use App\Models\Song;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

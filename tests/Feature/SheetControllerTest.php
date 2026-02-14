@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Instrument;
 use App\Models\InstrumentGroup;
 use App\Models\Sheet;
 use App\Models\Song;

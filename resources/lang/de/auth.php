@@ -12,7 +12,7 @@
 */
 
 return [
-    'failed'   => 'Diese Kombination aus Zugangsdaten kennen wir leider nicht.',
+    'failed' => 'Diese Kombination aus Zugangsdaten kennen wir leider nicht.',
     'password' => 'Das eingegebene Passwort ist falsch.',
     'throttle' => 'Zu viele Loginversuche. Versuche es bitte in :seconds Sekunden nochmal.',
 ];

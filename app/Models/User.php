@@ -21,17 +21,19 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * @mixin IdeHelperUser
  */
-class User extends Authenticatable implements HasLocalePreference, FilamentUser
+class User extends Authenticatable implements FilamentUser, HasLocalePreference
 {
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
+    use HasRoles;
     use Notifiable;
     use TwoFactorAuthenticatable;
-    use HasRoles;
 
     public const STATUS_NEW = 0;
+
     public const STATUS_UNLOCKED = 1;
+
     public const STATUS_LOCKED = 2;
 
     /**
@@ -117,28 +119,28 @@ class User extends Authenticatable implements HasLocalePreference, FilamentUser
     protected function allEmails(): Attribute
     {
         return Attribute::make(
-            get: fn() => join(', ', [$this->email, ...$this->additionalEmails->map(fn($e) => $e->email)])
+            get: fn () => implode(', ', [$this->email, ...$this->additionalEmails->map(fn ($e) => $e->email)])
         );
     }
 
     protected function fullAddress(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->personalData->street . ', ' . $this->personalData->zip . ' ' . $this->personalData->city
+            get: fn () => $this->personalData->street.', '.$this->personalData->zip.' '.$this->personalData->city
         );
     }
 
     protected function isAdmin(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->hasRole(Rights::R_ADMIN),
+            get: fn () => $this->hasRole(Rights::R_ADMIN),
         );
     }
 
     protected function canViewAllSheets(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->can(Rights::P_VIEW_ALL_INSTRUMENTS),
+            get: fn () => $this->can(Rights::P_VIEW_ALL_INSTRUMENTS),
         );
     }
 

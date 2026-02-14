@@ -11,7 +11,7 @@ class DeleteUser implements DeletesUsers
     /**
      * Delete the given user.
      *
-     * @param User $user
+     * @param  User  $user
      * @return void
      */
     public function delete($user)

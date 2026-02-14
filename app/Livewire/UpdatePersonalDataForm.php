@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Role;
 class UpdatePersonalDataForm extends UserEditComponent
 {
     public bool $hasFormShell = true;
+
     public bool $notifyAdmin = false;
 
     protected array $rules = [
@@ -60,7 +61,7 @@ class UpdatePersonalDataForm extends UserEditComponent
         $this->user->name = $this->state['name'];
         $this->user->save();
 
-        if($this->notifyAdmin) {
+        if ($this->notifyAdmin) {
             /** @var User[] $admins */
             $admins = Role::findByName(Rights::R_ADMIN, 'web')->users()->get();
             foreach ($admins as $admin) {
