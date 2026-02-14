@@ -21,7 +21,7 @@ COPY . ./
 
 RUN pnpm run prod && rm -rf node_modules
 
-FROM kolaente/laravel:8.2-octane-prod
+FROM kolaente/laravel:8.3-octane-prod
 
 COPY . ./
 COPY --from=build-frontend /var/www/public /var/www/public

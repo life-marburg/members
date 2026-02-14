@@ -1,6 +1,6 @@
 services:
     web:
-        image: kolaente/laravel:8.2-octane-dev
+        image: kolaente/laravel:8.3-octane-dev
         depends_on:
             - db
         environment:
