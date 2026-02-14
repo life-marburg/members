@@ -2,7 +2,7 @@ FROM composer:2 AS build-php
 
 WORKDIR /var/www
 COPY . ./
-RUN composer install --optimize-autoloader --ignore-platform-req=php --ignore-platform-req=ext-bcmath --ignore-platform-req=ext-gd --ignore-platform-req=ext-intl
+RUN composer install --optimize-autoloader --no-scripts --ignore-platform-req=php --ignore-platform-req=ext-bcmath --ignore-platform-req=ext-gd --ignore-platform-req=ext-intl
 
 FROM node:22-alpine AS build-frontend
 
@@ -19,7 +19,7 @@ RUN corepack enable && \
 COPY --from=build-php /var/www/vendor /var/www/vendor
 COPY . ./
 
-RUN pnpm run prod && rm -rf node_modules
+RUN pnpm run build && rm -rf node_modules
 
 FROM ghcr.io/kolaente/laravel-docker:8.3-octane-frankenphp
 
