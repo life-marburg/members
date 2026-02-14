@@ -804,7 +804,6 @@
     "Variant": "Variante",
     "Uploaded": "Hochgeladen",
     "PDF File": "PDF-Datei",
-    "No sheets available for this instrument.": "Keine Noten für dieses Instrument verfügbar.",
     "manage sheets": "Noten verwalten",
     "Created": "Erstellt",
     "Display an icon indicating this opens externally": "Ein Symbol anzeigen, das angibt, dass dies extern geöffnet wird",
@@ -823,5 +822,11 @@
     "Song Set": "Notenmappe",
     "Song Sets": "Notenmappen",
     "All Songs": "Alle Stücke",
-    "Position": "Position"
+    "Position": "Position",
+    "Back to song list": "Zurück zur Stückliste",
+    "Instrument": "Instrument",
+    "No sheets available.": "Keine Noten verfügbar.",
+    "No sheets available for your instruments.": "Keine Noten für deine Instrumente verfügbar.",
+    "Status": "Status",
+    "URL": "URL"
 }
