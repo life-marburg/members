@@ -1,6 +1,9 @@
 services:
     web:
-        image: kolaente/laravel:8.3-octane-dev
+        image: life-members:dev
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
         depends_on:
             - db
         environment:
@@ -8,7 +11,7 @@ services:
         ports:
             - 8000:80
         volumes:
-            - .:/var/www/
+            - .:/app
 
     db:
         image: mariadb:11.6.2

@@ -21,10 +21,14 @@ COPY . ./
 
 RUN pnpm run prod && rm -rf node_modules
 
-FROM kolaente/laravel:8.3-octane-prod
+FROM ghcr.io/kolaente/laravel-docker:8.3-octane-frankenphp
+
+RUN apt-get update && apt-get install -y mariadb-client && \
+  docker-php-ext-install pdo pdo_mysql && \
+  rm -rf /var/lib/apt/lists/*
 
 COPY . ./
-COPY --from=build-frontend /var/www/public /var/www/public
-COPY --from=build-php /var/www/vendor /var/www/vendor
-COPY --from=build-php /var/www/bootstrap /var/www/bootstrap
+COPY --from=build-frontend /var/www/public /app/public
+COPY --from=build-php /var/www/vendor /app/vendor
+COPY --from=build-php /var/www/bootstrap /app/bootstrap
 RUN php artisan storage:link
