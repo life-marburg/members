@@ -12,8 +12,8 @@ class PersonalDataFactory extends Factory
             'street' => $this->faker->streetAddress,
             'city' => $this->faker->city,
             'zip' => $this->faker->postcode,
-            'phone' => $this->faker->phoneNumber,
-            'mobile_phone' => $this->faker->phoneNumber,
+            'phone' => $this->faker->e164PhoneNumber,
+            'mobile_phone' => $this->faker->e164PhoneNumber,
         ];
     }
 }
