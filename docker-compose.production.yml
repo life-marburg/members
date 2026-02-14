@@ -1,0 +1,80 @@
+# Production deployment with automatic TLS via FrankenPHP/Caddy.
+#
+# Usage:
+#   1. Create a .env file with your production values (see below)
+#   2. docker compose -f docker-compose.production.yml up -d
+#
+# Required environment variables (set in .env or shell):
+#   APP_KEY          - Laravel app key (generate with: docker run --rm ghcr.io/kolaente/life-members:latest php artisan key:generate --show)
+#   APP_URL          - Full URL with https:// prefix (e.g. https://members.example.com)
+#   SERVER_NAME      - Domain name for TLS certificate (e.g. members.example.com)
+#   DB_PASSWORD      - MariaDB password
+#
+# TLS is automatic: when APP_URL starts with https://, FrankenPHP/Caddy
+# provisions Let's Encrypt certificates. Ports 80 and 443 must be reachable
+# from the internet for ACME challenges.
+
+services:
+  web:
+    image: ghcr.io/kolaente/life-members:latest
+    environment:
+      APP_URL: ${APP_URL}
+      APP_KEY: ${APP_KEY}
+      APP_ENV: production
+      APP_DEBUG: "false"
+      SERVER_NAME: ${SERVER_NAME}
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_DATABASE: ${DB_DATABASE:-life}
+      DB_USERNAME: ${DB_USERNAME:-life}
+      DB_PASSWORD: ${DB_PASSWORD}
+      SESSION_DRIVER: ${SESSION_DRIVER:-database}
+      CACHE_STORE: ${CACHE_STORE:-file}
+      QUEUE_CONNECTION: ${QUEUE_CONNECTION:-sync}
+      REDIS_HOST: redis
+      MAIL_MAILER: ${MAIL_MAILER:-smtp}
+      MAIL_HOST: ${MAIL_HOST:-}
+      MAIL_PORT: ${MAIL_PORT:-587}
+      MAIL_USERNAME: ${MAIL_USERNAME:-}
+      MAIL_PASSWORD: ${MAIL_PASSWORD:-}
+      MAIL_ENCRYPTION: ${MAIL_ENCRYPTION:-tls}
+      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS:-}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME:-Life Members}
+      WEBDAV_CLOUD_USER: ${WEBDAV_CLOUD_USER:-}
+      WEBDAV_CLOUD_PASSWORD: ${WEBDAV_CLOUD_PASSWORD:-}
+      MAILCOW_API_KEY: ${MAILCOW_API_KEY:-}
+      CAPTCHA_ENABLE: ${CAPTCHA_ENABLE:-false}
+      CAPTCHA_SITEKEY: ${CAPTCHA_SITEKEY:-}
+      CAPTCHA_SECRET: ${CAPTCHA_SECRET:-}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - caddy_data:/data
+      - app_storage:/app/storage
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+
+  db:
+    image: mariadb:11.6.2
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-life}
+      MYSQL_USER: ${DB_USERNAME:-life}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-${DB_PASSWORD}}
+    restart: unless-stopped
+
+  redis:
+    image: redis
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  db_data:
+  app_storage:
