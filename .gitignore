@@ -21,3 +21,14 @@ public/css/app.css
 _ide_helper_models.php
 .direnv
 /docs/plans/
+
+# Devenv
+.devenv*
+devenv.local.nix
+devenv.local.yaml
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
