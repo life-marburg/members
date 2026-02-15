@@ -34,7 +34,7 @@
                     @endforeach
                     @can(\App\Rights::P_MANAGE_MEMBERS)
                         <x-nav-link href="/admin" :active="request()->is('admin*')">
-                            {{ __('Manage Members') }}
+                            {{ __('Admin') }}
                         </x-nav-link>
                     @endcan
                 </div>
