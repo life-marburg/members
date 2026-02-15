@@ -147,7 +147,7 @@ class User extends Authenticatable implements FilamentUser, HasLocalePreference
     public function canAccessPanel(Panel $panel): bool
     {
         if ($panel->getId() === 'admin') {
-            return $this->hasRole(Rights::R_ADMIN) ||
+            return $this->is_admin ||
                    $this->hasPermissionTo(Rights::P_MANAGE_MEMBERS);
         }
 
