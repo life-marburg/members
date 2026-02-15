@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life — Der Mitgliederbereich f&uuml;r deinen Musikverein</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ========================================
+       RESET & BASE
+       ======================================== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --red: #f40028;
+      --black: #000000;
+      --white: #ffffff;
+      --off-white: #f5f5f5;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'IBM Plex Sans', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--black);
+      background: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ========================================
+       UTILITY
+       ======================================== */
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .container--narrow {
+      max-width: 960px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    /* ========================================
+       REVEAL ANIMATIONS
+       ======================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ========================================
+       TYPOGRAPHY
+       ======================================== */
+    .headline-xl {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 10vw, 10rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .headline-lg {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 7vw, 7rem);
+      line-height: 0.92;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .headline-md {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 4rem);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .headline-sm {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .body-lg {
+      font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .body-md {
+      font-size: 1rem;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    .label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* ========================================
+       BUTTONS
+       ======================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 2.25rem;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn--primary {
+      background: var(--red);
+      color: var(--white);
+      border-color: var(--red);
+    }
+
+    .btn--primary:hover {
+      background: var(--black);
+      border-color: var(--black);
+      transform: translateY(-2px);
+    }
+
+    .btn--outline {
+      background: transparent;
+      color: var(--black);
+      border-color: var(--black);
+    }
+
+    .btn--outline:hover {
+      background: var(--black);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .btn--outline-white {
+      background: transparent;
+      color: var(--white);
+      border-color: var(--white);
+    }
+
+    .btn--outline-white:hover {
+      background: var(--white);
+      color: var(--black);
+      transform: translateY(-2px);
+    }
+
+    .btn--white {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+    }
+
+    .btn--white:hover {
+      background: transparent;
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .btn-arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .btn:hover .btn-arrow {
+      transform: translateX(4px);
+    }
+
+    /* ========================================
+       NAVIGATION
+       ======================================== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.25rem 0;
+      transition: background 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .nav.is-scrolled {
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 0.75rem 0;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+    }
+
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav__logo {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--black);
+      line-height: 1;
+    }
+
+    .nav__logo span {
+      color: var(--red);
+    }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav__link {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--black);
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nav__link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--red);
+      transition: width 0.3s ease;
+    }
+
+    .nav__link:hover::after {
+      width: 100%;
+    }
+
+    .nav__cta {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--red);
+      padding: 0.6rem 1.5rem;
+      transition: background 0.3s ease;
+    }
+
+    .nav__cta:hover {
+      background: var(--black);
+    }
+
+    .nav__mobile-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .nav__mobile-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--black);
+      transition: all 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      .nav__links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1.5rem;
+        border-bottom: 2px solid var(--black);
+      }
+
+      .nav__links.is-open {
+        display: flex;
+      }
+
+      .nav__mobile-toggle {
+        display: flex;
+      }
+    }
+
+    /* ========================================
+       DIVIDER
+       ======================================== */
+    .divider {
+      width: 100%;
+      height: 2px;
+      background: var(--black);
+    }
+
+    .divider--red {
+      background: var(--red);
+    }
+
+    .divider--thin {
+      height: 1px;
+      opacity: 0.15;
+    }
+
+    /* ========================================
+       HERO SECTION
+       ======================================== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      padding-top: 6rem;
+      padding-bottom: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        #000000 0%,
+        #1a0008 25%,
+        #3d0012 50%,
+        #f40028 85%,
+        #ff1a3d 100%
+      );
+      z-index: 0;
+    }
+
+    .hero__bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 120px,
+          rgba(255, 255, 255, 0.03) 120px,
+          rgba(255, 255, 255, 0.03) 121px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 120px,
+          rgba(255, 255, 255, 0.03) 120px,
+          rgba(255, 255, 255, 0.03) 121px
+        );
+    }
+
+    .hero__noise {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      z-index: 1;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    .hero__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+    }
+
+    .hero__label {
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero__title {
+      color: var(--white);
+      margin-bottom: 2rem;
+    }
+
+    .hero__title em {
+      font-style: normal;
+      color: var(--red);
+      -webkit-text-stroke: 1px var(--red);
+    }
+
+    .hero__right {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .hero__description {
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 480px;
+    }
+
+    .hero__actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero__stats {
+      display: flex;
+      gap: 3rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .hero__stat-number {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .hero__stat-label {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      margin-top: 0.25rem;
+    }
+
+    .hero__scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: float 2s ease-in-out infinite;
+    }
+
+    .hero__scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    @media (max-width: 900px) {
+      .hero__grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .hero {
+        align-items: center;
+        padding-top: 8rem;
+      }
+
+      .hero__stats {
+        gap: 2rem;
+      }
+    }
+
+    /* ========================================
+       MARQUEE
+       ======================================== */
+    .marquee {
+      overflow: hidden;
+      background: var(--black);
+      padding: 1rem 0;
+    }
+
+    .marquee__track {
+      display: flex;
+      gap: 3rem;
+      animation: marquee 25s linear infinite;
+      width: max-content;
+    }
+
+    .marquee__item {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .marquee__dot {
+      color: var(--red);
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ========================================
+       FEATURES SECTION
+       ======================================== */
+    .features {
+      padding: 8rem 0;
+    }
+
+    .features__header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 5rem;
+      align-items: end;
+    }
+
+    .features__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .feature-card {
+      padding: 3rem 2.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .feature-card:hover {
+      background: var(--black);
+      color: var(--white);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-card:hover .feature-card__number {
+      -webkit-text-stroke-color: var(--red);
+      color: transparent;
+    }
+
+    .feature-card:hover .feature-card__line {
+      background: var(--red);
+    }
+
+    .feature-card__number {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 5vw, 5.5rem);
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 2px rgba(0, 0, 0, 0.1);
+      transition: all 0.4s ease;
+      margin-bottom: 2rem;
+    }
+
+    .feature-card__title {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card__line {
+      width: 40px;
+      height: 3px;
+      background: var(--red);
+      margin-bottom: 1.25rem;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card__text {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      opacity: 0.75;
+      font-weight: 300;
+    }
+
+    @media (max-width: 900px) {
+      .features__header {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .features__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (min-width: 901px) and (max-width: 1100px) {
+      .features__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* ========================================
+       MANIFESTO SECTION (Warum Life?)
+       ======================================== */
+    .manifesto {
+      background: var(--black);
+      color: var(--white);
+      padding: 8rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .manifesto__accent {
+      position: absolute;
+      top: -10%;
+      right: -5%;
+      font-family: var(--font-display);
+      font-size: clamp(15rem, 30vw, 35rem);
+      color: rgba(244, 0, 40, 0.06);
+      line-height: 0.8;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .manifesto__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .manifesto__left {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .manifesto__label {
+      color: var(--red);
+    }
+
+    .manifesto__title span {
+      color: var(--red);
+    }
+
+    .manifesto__right {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      padding-top: 1rem;
+    }
+
+    .manifesto__statement {
+      padding-left: 2rem;
+      border-left: 3px solid var(--red);
+    }
+
+    .manifesto__statement p {
+      font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+      line-height: 1.7;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .manifesto__points {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .manifesto__point {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+
+    .manifesto__point-marker {
+      width: 8px;
+      height: 8px;
+      min-width: 8px;
+      background: var(--red);
+      margin-top: 0.5rem;
+    }
+
+    .manifesto__point p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 300;
+    }
+
+    .manifesto__point strong {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    @media (max-width: 900px) {
+      .manifesto__grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+    }
+
+    /* ========================================
+       HOW IT WORKS
+       ======================================== */
+    .how-it-works {
+      padding: 8rem 0;
+    }
+
+    .how-it-works__header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 5rem;
+    }
+
+    .how-it-works__header .label {
+      color: var(--red);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .how-it-works__steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+
+    .how-it-works__steps::before {
+      content: '';
+      position: absolute;
+      top: 3.25rem;
+      left: 12.5%;
+      right: 12.5%;
+      height: 2px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--red) 0px,
+        var(--red) 8px,
+        transparent 8px,
+        transparent 16px
+      );
+    }
+
+    .step {
+      text-align: center;
+      padding: 0 1.5rem;
+      position: relative;
+    }
+
+    .step__number {
+      width: 4rem;
+      height: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      background: var(--white);
+      border: 2px solid var(--black);
+      margin: 0 auto 2rem;
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s ease;
+    }
+
+    .step:hover .step__number {
+      background: var(--red);
+      border-color: var(--red);
+      color: var(--white);
+    }
+
+    .step__title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .step__text {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      opacity: 0.65;
+      font-weight: 300;
+    }
+
+    @media (max-width: 900px) {
+      .how-it-works__steps {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+      }
+
+      .how-it-works__steps::before {
+        display: none;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .how-it-works__steps {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ========================================
+       SHOWCASE / VISUAL BREAK
+       ======================================== */
+    .showcase {
+      position: relative;
+      height: 50vh;
+      min-height: 360px;
+      overflow: hidden;
+    }
+
+    .showcase__bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        #f40028 0%,
+        #b8001e 40%,
+        #3d0012 80%,
+        #000000 100%
+      );
+    }
+
+    .showcase__grid-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 79px,
+          rgba(255, 255, 255, 0.06) 79px,
+          rgba(255, 255, 255, 0.06) 80px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 79px,
+          rgba(255, 255, 255, 0.06) 79px,
+          rgba(255, 255, 255, 0.06) 80px
+        );
+    }
+
+    .showcase__content {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .showcase__text {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 9rem);
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      line-height: 0.9;
+      text-align: center;
+      opacity: 0.12;
+    }
+
+    /* ========================================
+       CTA BANNER
+       ======================================== */
+    .cta-banner {
+      padding: 7rem 0;
+      background: var(--off-white);
+      position: relative;
+    }
+
+    .cta-banner__inner {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .cta-banner__label {
+      color: var(--red);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .cta-banner__title {
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-banner__text {
+      margin-bottom: 2.5rem;
+      opacity: 0.7;
+      max-width: 520px;
+    }
+
+    .cta-banner__actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .cta-banner__visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cta-banner__shape {
+      width: 100%;
+      aspect-ratio: 1;
+      max-width: 380px;
+      background: var(--black);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cta-banner__shape-text {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 12vw, 10rem);
+      color: var(--red);
+      letter-spacing: 0.05em;
+    }
+
+    .cta-banner__shape::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border: 2px solid var(--red);
+    }
+
+    @media (max-width: 900px) {
+      .cta-banner__inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .cta-banner__visual {
+        order: -1;
+      }
+
+      .cta-banner__shape {
+        max-width: 250px;
+      }
+    }
+
+    /* ========================================
+       FOOTER
+       ======================================== */
+    .footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 5rem 0 2rem;
+    }
+
+    .footer__top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer__brand-name {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .footer__brand-name span {
+      color: var(--red);
+    }
+
+    .footer__brand-desc {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.5);
+      max-width: 320px;
+      font-weight: 300;
+    }
+
+    .footer__col-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .footer__links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .footer__links a {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.5);
+      transition: color 0.3s ease;
+      font-weight: 300;
+    }
+
+    .footer__links a:hover {
+      color: var(--red);
+    }
+
+    .footer__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 2rem;
+    }
+
+    .footer__copyright {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.35);
+      font-weight: 300;
+    }
+
+    .footer__bottom-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer__bottom-links a {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.35);
+      transition: color 0.3s ease;
+      font-weight: 300;
+    }
+
+    .footer__bottom-links a:hover {
+      color: var(--white);
+    }
+
+    @media (max-width: 768px) {
+      .footer__top {
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+      }
+
+      .footer__bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .footer__top {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       NAVIGATION
+       ========================================== -->
+  <nav class="nav" id="nav">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="#" class="nav__logo">Li<span>f</span>e</a>
+        <ul class="nav__links" id="navLinks">
+          <li><a href="#features" class="nav__link">Funktionen</a></li>
+          <li><a href="#warum" class="nav__link">Warum Life</a></li>
+          <li><a href="#ablauf" class="nav__link">So geht's</a></li>
+          <li><a href="#kontakt" class="nav__link">Kontakt</a></li>
+          <li><a href="#start" class="nav__cta">Registrieren</a></li>
+        </ul>
+        <button class="nav__mobile-toggle" id="navToggle" aria-label="Navigation &ouml;ffnen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==========================================
+       HERO SECTION
+       ========================================== -->
+  <section class="hero" id="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__noise"></div>
+    <div class="hero__content container">
+      <div class="hero__grid">
+        <div class="hero__left">
+          <p class="label hero__label reveal">Mitgliederbereich f&uuml;r Blasmusikvereine</p>
+          <h1 class="headline-xl hero__title reveal reveal-delay-1">
+            Dein<br>Verein.<br><em>Digital.</em>
+          </h1>
+        </div>
+        <div class="hero__right">
+          <p class="body-lg hero__description reveal reveal-delay-2">
+            Life ist die zentrale Plattform f&uuml;r deinen Musikverein &mdash; Mitgliederverwaltung,
+            Noten-Bibliothek und St&uuml;cke-Sets. Alles an einem Ort, von jedem Ger&auml;t.
+          </p>
+          <div class="hero__actions reveal reveal-delay-3">
+            <a href="#start" class="btn btn--white">
+              Jetzt registrieren
+              <span class="btn-arrow">&rarr;</span>
+            </a>
+            <a href="#features" class="btn btn--outline-white">Mehr erfahren</a>
+          </div>
+          <div class="hero__stats reveal reveal-delay-4">
+            <div>
+              <div class="hero__stat-number">100%</div>
+              <div class="hero__stat-label">Kostenlos</div>
+            </div>
+            <div>
+              <div class="hero__stat-number">24/7</div>
+              <div class="hero__stat-label">Verf&uuml;gbar</div>
+            </div>
+            <div>
+              <div class="hero__stat-number">&infin;</div>
+              <div class="hero__stat-label">Noten</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero__scroll-indicator">
+      <span>Scroll</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       MARQUEE
+       ========================================== -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span class="marquee__item">Noten-Bibliothek <span class="marquee__dot">&bull;</span></span>
+      <span class="marquee__item">Mitgliederverwaltung <span class="marquee__dot">&bull;</span></span>
+      <span class="marquee__item">St&uuml;cke-Sets <span class="marquee__dot">&bull;</span></span>
+      <span class="marquee__item">Instrumenten-Zuordnung <span class="marquee__dot">&bull;</span></span>
+      <span class="marquee__item">Responsive Design <span class="marquee__dot">&bull;</span></span>
+      <span class="marquee__item">Admin-Bereich <span class="marquee__dot">&bull;</span></span>
+      <span class="marquee__item">Noten-Bibliothek <span class="marquee__dot">&bull;</span></span>
+      <span class="marquee__item">Mitgliederverwaltung <span class="marquee__dot">&bull;</span></span>
+      <span class="marquee__item">St&uuml;cke-Sets <span class="marquee__dot">&bull;</span></span>
+      <span class="marquee__item">Instrumenten-Zuordnung <span class="marquee__dot">&bull;</span></span>
+      <span class="marquee__item">Responsive Design <span class="marquee__dot">&bull;</span></span>
+      <span class="marquee__item">Admin-Bereich <span class="marquee__dot">&bull;</span></span>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       FEATURES SECTION
+       ========================================== -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="features__header">
+        <div class="reveal">
+          <p class="label" style="color: var(--red); margin-bottom: 1rem;">Was Life bietet</p>
+          <h2 class="headline-lg">Sechs Gr&uuml;nde,<br>die &uuml;berzeugen.</h2>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <p class="body-lg" style="opacity: 0.65;">
+            Life wurde speziell f&uuml;r die Anforderungen von Blasmusikvereinen entwickelt.
+            Jede Funktion l&ouml;st ein echtes Problem &mdash; kein Feature-Bloat, sondern durchdachte Werkzeuge.
+          </p>
+        </div>
+      </div>
+
+      <div class="features__grid">
+        <!-- Feature 01 -->
+        <div class="feature-card reveal">
+          <div class="feature-card__number">01</div>
+          <h3 class="feature-card__title">Noten-Bibliothek</h3>
+          <div class="feature-card__line"></div>
+          <p class="feature-card__text">
+            Deine gesamte Notensammlung digital verf&uuml;gbar. Automatisch nach Instrument
+            gefiltert &mdash; jedes Mitglied sieht nur die Stimmen, die es braucht. Schluss mit
+            dem Suchen in Ordnern und Schubladen.
+          </p>
+        </div>
+
+        <!-- Feature 02 -->
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="feature-card__number">02</div>
+          <h3 class="feature-card__title">St&uuml;cke-Sets</h3>
+          <div class="feature-card__line"></div>
+          <p class="feature-card__text">
+            Stelle Sammlungen f&uuml;r Auftritte, Proben oder Festzelte zusammen.
+            Ein Klick &mdash; alle Noten f&uuml;r den n&auml;chsten Auftritt gebundelt. Kein
+            einzelnes Zusammensuchen mehr vor der Probe.
+          </p>
+        </div>
+
+        <!-- Feature 03 -->
+        <div class="feature-card reveal reveal-delay-2">
+          <div class="feature-card__number">03</div>
+          <h3 class="feature-card__title">Mitgliederverwaltung</h3>
+          <div class="feature-card__line"></div>
+          <p class="feature-card__text">
+            &Uuml;bersichtliche Verwaltung aller Vereinsmitglieder mit Admin-Genehmigung.
+            Neues Mitglied registriert sich, der Vorstand aktiviert das Konto. Einfach,
+            sicher und ohne Papierformulare.
+          </p>
+        </div>
+
+        <!-- Feature 04 -->
+        <div class="feature-card reveal">
+          <div class="feature-card__number">04</div>
+          <h3 class="feature-card__title">Instrumenten-Zuordnung</h3>
+          <div class="feature-card__line"></div>
+          <p class="feature-card__text">
+            Jedes Mitglied hinterlegt sein Instrument. Life nutzt diese Zuordnung,
+            um automatisch die passenden Stimmen anzuzeigen. Wer Trompete spielt,
+            sieht Trompetennoten &mdash; nicht mehr und nicht weniger.
+          </p>
+        </div>
+
+        <!-- Feature 05 -->
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="feature-card__number">05</div>
+          <h3 class="feature-card__title">Pers&ouml;nliches Profil</h3>
+          <div class="feature-card__line"></div>
+          <p class="feature-card__text">
+            Kontaktdaten, Instrument und pers&ouml;nliche Einstellungen. Jedes Mitglied
+            verwaltet sein Profil selbst. Der Vorstand hat trotzdem den &Uuml;berblick
+            &uuml;ber aktuelle Adressen und Telefonnummern.
+          </p>
+        </div>
+
+        <!-- Feature 06 -->
+        <div class="feature-card reveal reveal-delay-2">
+          <div class="feature-card__number">06</div>
+          <h3 class="feature-card__title">Mobil Optimiert</h3>
+          <div class="feature-card__line"></div>
+          <p class="feature-card__text">
+            Responsive Design f&uuml;r Smartphone, Tablet und Desktop. Noten auf dem
+            Tablet in der Probe abrufen oder Mitgliederlisten auf dem Handy
+            checken &mdash; Life funktioniert &uuml;berall.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       VISUAL SHOWCASE DIVIDER
+       ========================================== -->
+  <div class="showcase">
+    <div class="showcase__bg"></div>
+    <div class="showcase__grid-overlay"></div>
+    <div class="showcase__content">
+      <div class="showcase__text">Musik<br>verbindet</div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MANIFESTO — WARUM LIFE?
+       ========================================== -->
+  <section class="manifesto" id="warum">
+    <div class="manifesto__accent" aria-hidden="true">?</div>
+    <div class="container">
+      <div class="manifesto__grid">
+        <div class="manifesto__left">
+          <p class="label manifesto__label reveal">Manifest</p>
+          <h2 class="headline-lg reveal reveal-delay-1">
+            Warum<br><span>Life?</span>
+          </h2>
+        </div>
+
+        <div class="manifesto__right">
+          <div class="manifesto__statement reveal">
+            <p>
+              In jedem Musikverein steckt ein enormer Organisationsaufwand. Noten werden kopiert,
+              Mappen werden gef&uuml;llt, Listen werden gef&uuml;hrt &mdash; und am Ende liegt
+              trotzdem irgendwo ein Zettel falsch. Wir glauben: Die Zeit, die f&uuml;r
+              Verwaltung draufgeht, geh&ouml;rt der Musik.
+            </p>
+          </div>
+
+          <div class="manifesto__points reveal reveal-delay-1">
+            <div class="manifesto__point">
+              <div class="manifesto__point-marker"></div>
+              <p>
+                <strong>Weniger Verwaltung, mehr Musik.</strong>
+                Life &uuml;bernimmt die organisatorischen Aufgaben, damit sich dein Verein
+                auf das konzentrieren kann, was z&auml;hlt: gemeinsam musizieren.
+              </p>
+            </div>
+
+            <div class="manifesto__point">
+              <div class="manifesto__point-marker"></div>
+              <p>
+                <strong>Digital, aber unkompliziert.</strong>
+                Kein IT-Studium n&ouml;tig. Life ist so einfach wie eine WhatsApp-Nachricht &mdash;
+                aber so leistungsf&auml;hig wie eine professionelle Vereinssoftware.
+              </p>
+            </div>
+
+            <div class="manifesto__point">
+              <div class="manifesto__point-marker"></div>
+              <p>
+                <strong>Gebaut von Musikern, f&uuml;r Musiker.</strong>
+                Wir kennen den Alltag in einem Blasmusikverein. Jede Funktion in Life entstand
+                aus einem echten Bed&uuml;rfnis &mdash; nicht aus einem Produkt-Meeting.
+              </p>
+            </div>
+
+            <div class="manifesto__point">
+              <div class="manifesto__point-marker"></div>
+              <p>
+                <strong>Immer dabei, immer aktuell.</strong>
+                Ob auf dem Weg zur Probe oder auf der Marschmusik &mdash; Life ist immer griffbereit
+                auf deinem Handy. Aktuelle Noten, aktuelle Kontakte, aktueller Stand.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       HOW IT WORKS
+       ========================================== -->
+  <section class="how-it-works" id="ablauf">
+    <div class="container">
+      <div class="how-it-works__header">
+        <span class="label reveal">In vier Schritten startklar</span>
+        <h2 class="headline-lg reveal reveal-delay-1" style="margin-top: 1rem;">So einfach<br>geht's.</h2>
+      </div>
+
+      <div class="how-it-works__steps">
+        <div class="step reveal">
+          <div class="step__number">1</div>
+          <h3 class="step__title">Registrieren</h3>
+          <p class="step__text">
+            Erstelle dein Konto in unter einer Minute. Name, E-Mail,
+            Passwort &mdash; fertig. Keine komplizierten Formulare.
+          </p>
+        </div>
+
+        <div class="step reveal reveal-delay-1">
+          <div class="step__number">2</div>
+          <h3 class="step__title">Freischalten</h3>
+          <p class="step__text">
+            Der Vorstand pr&uuml;ft deine Registrierung und schaltet dich
+            frei. So bleiben die Vereinsdaten gesch&uuml;tzt.
+          </p>
+        </div>
+
+        <div class="step reveal reveal-delay-2">
+          <div class="step__number">3</div>
+          <h3 class="step__title">Profil einrichten</h3>
+          <p class="step__text">
+            W&auml;hle dein Instrument und hinterlege deine Kontaktdaten.
+            Life passt die Notenanzeige automatisch an.
+          </p>
+        </div>
+
+        <div class="step reveal reveal-delay-3">
+          <div class="step__number">4</div>
+          <h3 class="step__title">Loslegen</h3>
+          <p class="step__text">
+            Greife sofort auf deine Noten zu, sieh die Mitgliederliste ein
+            und starte mit deinem Verein digital durch.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       CTA BANNER
+       ========================================== -->
+  <section class="cta-banner" id="start">
+    <div class="container">
+      <div class="cta-banner__inner">
+        <div>
+          <span class="label cta-banner__label reveal">Bereit f&uuml;r den n&auml;chsten Schritt?</span>
+          <h2 class="headline-lg cta-banner__title reveal reveal-delay-1">
+            Dein Verein<br>verdient Life.
+          </h2>
+          <p class="body-lg cta-banner__text reveal reveal-delay-2">
+            Starte jetzt und bring deinen Musikverein ins digitale Zeitalter.
+            Kostenlos, unkompliziert und sofort einsatzbereit. Deine Mitglieder
+            werden es dir danken.
+          </p>
+          <div class="cta-banner__actions reveal reveal-delay-3">
+            <a href="#" class="btn btn--primary">
+              Jetzt registrieren
+              <span class="btn-arrow">&rarr;</span>
+            </a>
+            <a href="#" class="btn btn--outline">Mehr erfahren</a>
+          </div>
+        </div>
+        <div class="cta-banner__visual reveal reveal-delay-2">
+          <div class="cta-banner__shape">
+            <span class="cta-banner__shape-text">LIFE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer class="footer" id="kontakt">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__brand-name">Li<span>f</span>e</div>
+          <p class="footer__brand-desc">
+            Der digitale Mitgliederbereich f&uuml;r Blasmusikvereine.
+            Entwickelt mit Leidenschaft f&uuml;r die Blasmusik.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer__col-title">Produkt</h4>
+          <ul class="footer__links">
+            <li><a href="#features">Funktionen</a></li>
+            <li><a href="#ablauf">So geht's</a></li>
+            <li><a href="#warum">Warum Life</a></li>
+            <li><a href="#">Preise</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer__col-title">Verein</h4>
+          <ul class="footer__links">
+            <li><a href="#">&Uuml;ber uns</a></li>
+            <li><a href="#">Kontakt</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Presse</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer__col-title">Rechtliches</h4>
+          <ul class="footer__links">
+            <li><a href="#">Datenschutz</a></li>
+            <li><a href="#">Impressum</a></li>
+            <li><a href="#">AGB</a></li>
+            <li><a href="#">Cookie-Einstellungen</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copyright">&copy; 2026 Life. Alle Rechte vorbehalten.</p>
+        <ul class="footer__bottom-links">
+          <li><a href="#">Datenschutz</a></li>
+          <li><a href="#">Impressum</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       SCRIPTS
+       ========================================== -->
+  <script>
+    /* ========================================
+       Intersection Observer — Scroll Reveal
+       ======================================== */
+    (function () {
+      const revealElements = document.querySelectorAll('.reveal');
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: 0.12,
+            rootMargin: '0px 0px -60px 0px',
+          }
+        );
+
+        revealElements.forEach((el) => observer.observe(el));
+      } else {
+        // Fallback: show everything immediately
+        revealElements.forEach((el) => el.classList.add('is-visible'));
+      }
+    })();
+
+    /* ========================================
+       Sticky Nav — background on scroll
+       ======================================== */
+    (function () {
+      const nav = document.getElementById('nav');
+      let lastScroll = 0;
+
+      window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+
+        if (currentScroll > 60) {
+          nav.classList.add('is-scrolled');
+        } else {
+          nav.classList.remove('is-scrolled');
+        }
+
+        lastScroll = currentScroll;
+      }, { passive: true });
+    })();
+
+    /* ========================================
+       Mobile Nav Toggle
+       ======================================== */
+    (function () {
+      const toggle = document.getElementById('navToggle');
+      const links = document.getElementById('navLinks');
+
+      toggle.addEventListener('click', () => {
+        links.classList.toggle('is-open');
+      });
+
+      // Close when clicking a link
+      links.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          links.classList.remove('is-open');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life - Der digitale Vereinsraum für deinen Blasmusikverein</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --red: #f40028;
+      --red-dark: #c80020;
+      --red-light: #ff3350;
+      --cream: #faf6f1;
+      --cream-dark: #f0e8dc;
+      --walnut: #3d2b1f;
+      --walnut-light: #5a4234;
+      --gold: #c9a84c;
+      --gold-light: #ddc06a;
+      --gold-dark: #a8893a;
+      --paper: #f5efe6;
+      --ink: #2a1f16;
+      --muted: #7a6b5d;
+      --line: #e0d5c7;
+
+      --font-heading: 'Playfair Display', Georgia, serif;
+      --font-body: 'Source Sans 3', 'Segoe UI', sans-serif;
+      --font-accent: 'Caveat', cursive;
+
+      --shadow-sm: 0 2px 8px rgba(61, 43, 31, 0.08);
+      --shadow-md: 0 4px 20px rgba(61, 43, 31, 0.12);
+      --shadow-lg: 0 8px 40px rgba(61, 43, 31, 0.16);
+      --radius: 12px;
+      --radius-lg: 20px;
+      --radius-pill: 999px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background-color: var(--cream);
+      line-height: 1.7;
+      overflow-x: hidden;
+      /* Parchment texture via CSS gradient */
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 50px,
+          rgba(61, 43, 31, 0.015) 50px,
+          rgba(61, 43, 31, 0.015) 51px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 50px,
+          rgba(61, 43, 31, 0.01) 50px,
+          rgba(61, 43, 31, 0.01) 51px
+        ),
+        radial-gradient(ellipse at 20% 50%, rgba(201, 168, 76, 0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(244, 0, 40, 0.03) 0%, transparent 50%);
+    }
+
+    /* ===== Floating Music Notes ===== */
+    .floating-notes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .floating-note {
+      position: absolute;
+      font-size: 1.5rem;
+      color: rgba(201, 168, 76, 0.15);
+      animation: floatUp linear infinite;
+      will-change: transform;
+    }
+
+    .floating-note:nth-child(1) { left: 5%; font-size: 1.8rem; animation-duration: 18s; animation-delay: 0s; }
+    .floating-note:nth-child(2) { left: 15%; font-size: 1.2rem; animation-duration: 22s; animation-delay: 3s; }
+    .floating-note:nth-child(3) { left: 28%; font-size: 2rem; animation-duration: 16s; animation-delay: 7s; }
+    .floating-note:nth-child(4) { left: 42%; font-size: 1.4rem; animation-duration: 25s; animation-delay: 2s; }
+    .floating-note:nth-child(5) { left: 55%; font-size: 1.6rem; animation-duration: 20s; animation-delay: 5s; }
+    .floating-note:nth-child(6) { left: 68%; font-size: 1.1rem; animation-duration: 23s; animation-delay: 8s; }
+    .floating-note:nth-child(7) { left: 78%; font-size: 1.9rem; animation-duration: 17s; animation-delay: 1s; }
+    .floating-note:nth-child(8) { left: 88%; font-size: 1.3rem; animation-duration: 21s; animation-delay: 6s; }
+    .floating-note:nth-child(9) { left: 35%; font-size: 1.7rem; animation-duration: 19s; animation-delay: 10s; }
+    .floating-note:nth-child(10) { left: 92%; font-size: 1.5rem; animation-duration: 24s; animation-delay: 4s; }
+    .floating-note:nth-child(11) { left: 10%; font-size: 1.0rem; animation-duration: 26s; animation-delay: 12s; }
+    .floating-note:nth-child(12) { left: 60%; font-size: 2.1rem; animation-duration: 15s; animation-delay: 9s; }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
+      }
+      5% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* ===== Reveal Animation ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.15s; }
+    .reveal-delay-2 { transition-delay: 0.3s; }
+    .reveal-delay-3 { transition-delay: 0.45s; }
+    .reveal-delay-4 { transition-delay: 0.6s; }
+
+    /* ===== Container ===== */
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== Navigation ===== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 0;
+      transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+    }
+
+    .nav.scrolled {
+      background: rgba(250, 246, 241, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: var(--shadow-sm);
+      padding: 10px 0;
+    }
+
+    .nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--walnut);
+    }
+
+    .nav-logo-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.2rem;
+      box-shadow: 0 2px 8px rgba(244, 0, 40, 0.3);
+    }
+
+    .nav-logo-text {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--walnut-light);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--red);
+      border-radius: 1px;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--red);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      background: var(--red) !important;
+      color: white !important;
+      padding: 10px 24px;
+      border-radius: var(--radius-pill);
+      font-weight: 600 !important;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s !important;
+      box-shadow: 0 2px 12px rgba(244, 0, 40, 0.25);
+    }
+
+    .nav-cta::after {
+      display: none !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--red-dark) !important;
+      color: white !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(244, 0, 40, 0.35) !important;
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 26px;
+      height: 2.5px;
+      background: var(--walnut);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 0 80px;
+      overflow: hidden;
+    }
+
+    .hero-bg-clef {
+      position: absolute;
+      right: -80px;
+      top: 50%;
+      transform: translateY(-50%) rotate(-8deg);
+      font-size: min(50vw, 500px);
+      color: rgba(201, 168, 76, 0.07);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    .hero-bg-notes {
+      position: absolute;
+      left: -40px;
+      bottom: 60px;
+      font-size: 6rem;
+      color: rgba(244, 0, 40, 0.04);
+      letter-spacing: 20px;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero .container {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-content {
+      max-width: 560px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(201, 168, 76, 0.12);
+      color: var(--gold-dark);
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-accent);
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      border: 1px solid rgba(201, 168, 76, 0.2);
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--walnut);
+      margin-bottom: 8px;
+    }
+
+    .hero h1 .highlight {
+      color: var(--red);
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero h1 .highlight::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: rgba(244, 0, 40, 0.12);
+      border-radius: 4px;
+      z-index: -1;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-accent);
+      font-size: 1.6rem;
+      color: var(--gold);
+      margin-bottom: 20px;
+      transform: rotate(-1.5deg);
+      display: inline-block;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: white;
+      box-shadow: 0 4px 16px rgba(244, 0, 40, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--red-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(244, 0, 40, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--walnut);
+      border: 2px solid var(--line);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold-dark);
+      transform: translateY(-2px);
+    }
+
+    /* Hero visual / illustration area */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-card {
+      position: relative;
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-lg);
+      transform: rotate(2deg);
+      max-width: 420px;
+      width: 100%;
+      border: 1px solid var(--line);
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 20px;
+      right: 20px;
+      height: 8px;
+      background: var(--red);
+      border-radius: 4px 4px 0 0;
+    }
+
+    .hero-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-card-avatar {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      color: white;
+      font-size: 1.1rem;
+    }
+
+    .hero-card-name {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--walnut);
+    }
+
+    .hero-card-role {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .hero-card-instrument {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(201, 168, 76, 0.1);
+      color: var(--gold-dark);
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .hero-card-sheets {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .hero-card-sheet {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--cream);
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      color: var(--walnut);
+    }
+
+    .hero-card-sheet-icon {
+      color: var(--red);
+      font-size: 1.1rem;
+    }
+
+    .hero-sticker {
+      position: absolute;
+      bottom: -20px;
+      right: -16px;
+      background: var(--gold);
+      color: white;
+      font-family: var(--font-accent);
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 12px 20px;
+      border-radius: var(--radius-pill);
+      transform: rotate(6deg);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ===== Section Styles ===== */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-label {
+      font-family: var(--font-accent);
+      font-size: 1.25rem;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      color: var(--walnut);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .section-desc {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 600px;
+      margin-bottom: 48px;
+    }
+
+    .section-desc.centered {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    /* ===== Features Section ===== */
+    .features {
+      padding: 100px 0;
+      background:
+        linear-gradient(180deg, var(--cream) 0%, var(--paper) 50%, var(--cream) 100%);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      border: 1px solid var(--line);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--red));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px) rotate(-0.5deg);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .feature-card:hover::after {
+      opacity: 1;
+    }
+
+    .feature-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    .feature-icon.red {
+      background: rgba(244, 0, 40, 0.08);
+      color: var(--red);
+    }
+
+    .feature-icon.gold {
+      background: rgba(201, 168, 76, 0.12);
+      color: var(--gold);
+    }
+
+    .feature-icon.walnut {
+      background: rgba(61, 43, 31, 0.08);
+      color: var(--walnut);
+    }
+
+    .feature-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--walnut);
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ===== Journey Section ===== */
+    .journey {
+      padding: 100px 0;
+    }
+
+    .journey-steps {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0;
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .journey-step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      padding: 0 16px;
+    }
+
+    .journey-step-number {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: white;
+      position: relative;
+      z-index: 2;
+    }
+
+    .journey-step:nth-child(1) .journey-step-number {
+      background: var(--gold);
+      box-shadow: 0 4px 16px rgba(201, 168, 76, 0.35);
+    }
+
+    .journey-step:nth-child(2) .journey-step-number {
+      background: var(--red);
+      box-shadow: 0 4px 16px rgba(244, 0, 40, 0.3);
+    }
+
+    .journey-step:nth-child(3) .journey-step-number {
+      background: var(--walnut);
+      box-shadow: 0 4px 16px rgba(61, 43, 31, 0.3);
+    }
+
+    .journey-arrow {
+      flex: 0 0 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 20px;
+      color: var(--line);
+      font-size: 1.5rem;
+    }
+
+    .journey-arrow svg {
+      width: 40px;
+      height: 24px;
+      stroke: var(--gold);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .journey-step h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--walnut);
+      margin-bottom: 8px;
+    }
+
+    .journey-step p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .journey-step-accent {
+      font-family: var(--font-accent);
+      font-size: 1rem;
+      color: var(--gold);
+      display: block;
+      margin-top: 6px;
+    }
+
+    /* ===== Testimonials Section ===== */
+    .testimonials {
+      padding: 100px 0;
+      background:
+        linear-gradient(180deg, var(--cream) 0%, var(--cream-dark) 50%, var(--cream) 100%);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .testimonial-card {
+      position: relative;
+      padding: 32px 28px 28px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      /* Music paper lines */
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          transparent,
+          transparent 30px,
+          rgba(201, 168, 76, 0.1) 30px,
+          rgba(201, 168, 76, 0.1) 31px
+        ),
+        white;
+      background-position: 0 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .testimonial-card:nth-child(odd) {
+      transform: rotate(-1deg);
+    }
+
+    .testimonial-card:nth-child(even) {
+      transform: rotate(0.8deg);
+    }
+
+    .testimonial-card:hover {
+      transform: rotate(0deg) translateY(-4px);
+    }
+
+    .testimonial-quote-mark {
+      font-family: var(--font-heading);
+      font-size: 3.5rem;
+      line-height: 1;
+      color: var(--red);
+      opacity: 0.25;
+      position: absolute;
+      top: 12px;
+      left: 20px;
+    }
+
+    .testimonial-text {
+      font-size: 1rem;
+      color: var(--walnut);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: white;
+    }
+
+    .testimonial-card:nth-child(1) .testimonial-avatar { background: var(--gold); }
+    .testimonial-card:nth-child(2) .testimonial-avatar { background: var(--red); }
+    .testimonial-card:nth-child(3) .testimonial-avatar { background: var(--walnut); }
+    .testimonial-card:nth-child(4) .testimonial-avatar { background: var(--gold-dark); }
+
+    .testimonial-name {
+      font-weight: 600;
+      color: var(--walnut);
+      font-size: 0.95rem;
+    }
+
+    .testimonial-role {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* ===== Stats Section ===== */
+    .stats {
+      padding: 80px 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: var(--font-heading);
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--red);
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .stat-accent {
+      font-family: var(--font-accent);
+      font-size: 1.1rem;
+      color: var(--gold);
+    }
+
+    /* ===== CTA Section ===== */
+    .cta-section {
+      padding: 100px 0;
+    }
+
+    .cta-box {
+      position: relative;
+      background: var(--walnut);
+      border-radius: var(--radius-lg);
+      padding: 72px 60px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .cta-box::before {
+      content: '♫ ♪ ♩ 𝄞 ♬ ♪ ♫ ♩';
+      position: absolute;
+      top: 20px;
+      left: 0;
+      right: 0;
+      font-size: 2rem;
+      letter-spacing: 30px;
+      color: rgba(255, 255, 255, 0.04);
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .cta-box::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      right: -60px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: rgba(244, 0, 40, 0.15);
+      pointer-events: none;
+    }
+
+    .cta-accent {
+      font-family: var(--font-accent);
+      font-size: 1.4rem;
+      color: var(--gold-light);
+      margin-bottom: 12px;
+      display: block;
+      transform: rotate(-2deg);
+    }
+
+    .cta-box h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      color: white;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-box p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 36px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-box .btn-primary {
+      background: var(--red);
+      font-size: 1.1rem;
+      padding: 16px 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-box .btn-primary:hover {
+      background: var(--red-light);
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      padding: 60px 0 32px;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand {
+      max-width: 280px;
+    }
+
+    .footer-brand .nav-logo {
+      margin-bottom: 16px;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .footer-col h4 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--walnut);
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 10px;
+    }
+
+    .footer-col a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover {
+      color: var(--red);
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-bottom-links a {
+      text-decoration: none;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    .footer-bottom-links a:hover {
+      color: var(--red);
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 1024px) {
+      .hero .container {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .hero-visual {
+        order: -1;
+      }
+
+      .hero-card {
+        max-width: 360px;
+        transform: rotate(1deg);
+      }
+
+      .hero-bg-clef {
+        font-size: 40vw;
+        right: -60px;
+        opacity: 0.6;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+
+      .footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(250, 246, 241, 0.98);
+        backdrop-filter: blur(12px);
+        flex-direction: column;
+        padding: 24px;
+        gap: 16px;
+        box-shadow: var(--shadow-md);
+        border-bottom-left-radius: var(--radius);
+        border-bottom-right-radius: var(--radius);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-toggle {
+        display: flex;
+      }
+
+      .nav-toggle.open span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      .nav-toggle.open span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .nav-toggle.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 100px 0 60px;
+        text-align: center;
+      }
+
+      .hero-content {
+        max-width: 100%;
+      }
+
+      .hero p {
+        max-width: 100%;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .hero-subtitle {
+        transform: rotate(0deg);
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        max-width: 440px;
+        margin: 0 auto;
+      }
+
+      .journey-steps {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .journey-arrow {
+        transform: rotate(90deg);
+        flex: 0 0 40px;
+        padding-top: 0;
+      }
+
+      .journey-step {
+        padding: 0;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+      }
+
+      .testimonial-card:nth-child(odd),
+      .testimonial-card:nth-child(even) {
+        transform: rotate(0deg);
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+
+      .cta-box {
+        padding: 48px 28px;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero-card {
+        max-width: 100%;
+        padding: 24px 20px;
+      }
+
+      .hero-sticker {
+        bottom: -14px;
+        right: -8px;
+        font-size: 0.95rem;
+        padding: 10px 16px;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        font-size: 0.95rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .stat-number {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Music Notes Background -->
+  <div class="floating-notes" aria-hidden="true">
+    <span class="floating-note">&#9833;</span>
+    <span class="floating-note">&#9834;</span>
+    <span class="floating-note">&#9835;</span>
+    <span class="floating-note">&#9836;</span>
+    <span class="floating-note">&#119070;</span>
+    <span class="floating-note">&#9834;</span>
+    <span class="floating-note">&#9835;</span>
+    <span class="floating-note">&#9833;</span>
+    <span class="floating-note">&#9836;</span>
+    <span class="floating-note">&#119070;</span>
+    <span class="floating-note">&#9835;</span>
+    <span class="floating-note">&#9834;</span>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="container">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">L</div>
+        <span class="nav-logo-text">Life</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#features">Funktionen</a></li>
+        <li><a href="#journey">So funktioniert's</a></li>
+        <li><a href="#testimonials">Stimmen</a></li>
+        <li><a href="#cta" class="nav-cta">Loslegen</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Navigation umschalten">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-clef" aria-hidden="true">&#119070;</div>
+    <div class="hero-bg-notes" aria-hidden="true">&#9835; &#9833; &#9836;</div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge reveal">&#9835; Für Blasmusikvereine</div>
+        <h1 class="reveal reveal-delay-1">
+          Euer Verein.<br>
+          <span class="highlight">Euer Klang.</span><br>
+          Eure Plattform.
+        </h1>
+        <span class="hero-subtitle reveal reveal-delay-2">Alles an einem Ort &mdash; wunderbar einfach.</span>
+        <p class="reveal reveal-delay-3">
+          Life bringt Ordnung in euren Blasmusikverein. Mitgliederverwaltung, Noten-Bibliothek und
+          Kommunikation &mdash; vereint in einem warmen, einladenden digitalen Zuhause f&uuml;r eure Musikgemeinschaft.
+        </p>
+        <div class="hero-buttons reveal reveal-delay-4">
+          <a href="#cta" class="btn btn-primary">Entdecke Life</a>
+          <a href="#features" class="btn btn-secondary">Mehr erfahren</a>
+        </div>
+      </div>
+      <div class="hero-visual reveal">
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div class="hero-card-avatar">MK</div>
+            <div>
+              <div class="hero-card-name">Maria Koller</div>
+              <div class="hero-card-role">Mitglied seit 2019</div>
+            </div>
+          </div>
+          <div class="hero-card-instrument">&#119070; Klarinette B</div>
+          <div class="hero-card-sheets">
+            <div class="hero-card-sheet">
+              <span class="hero-card-sheet-icon">&#9835;</span>
+              <span>Festmarsch.Klarinette_B.1.pdf</span>
+            </div>
+            <div class="hero-card-sheet">
+              <span class="hero-card-sheet-icon">&#9835;</span>
+              <span>Bohemian_Rhapsody.Kl_B.pdf</span>
+            </div>
+            <div class="hero-card-sheet">
+              <span class="hero-card-sheet-icon">&#9835;</span>
+              <span>Polka.Klarinette_B.2.pdf</span>
+            </div>
+          </div>
+          <div class="hero-sticker">&#9834; 12 Noten verf&uuml;gbar</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-label reveal">Was Life ausmacht</span>
+        <h2 class="section-title reveal reveal-delay-1">Alles, was euer Verein braucht</h2>
+        <p class="section-desc centered reveal reveal-delay-2">
+          Von der Notenverwaltung bis zur Mitgliederorganisation &mdash; Life wurde von Musikerinnen und Musikern
+          f&uuml;r Musikerinnen und Musiker entwickelt.
+        </p>
+      </div>
+      <div class="features-grid">
+
+        <div class="feature-card reveal">
+          <div class="feature-icon red">&#119070;</div>
+          <h3>Noten-Bibliothek</h3>
+          <p>
+            Eure gesamte Notensammlung, digital und &uuml;bersichtlich. Jedes Mitglied sieht automatisch
+            nur die Noten f&uuml;r sein Instrument &mdash; kein Suchen, kein Durcheinander. Einfach &ouml;ffnen
+            und losspielen.
+          </p>
+        </div>
+
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="feature-icon gold">&#9835;</div>
+          <h3>St&uuml;cke-Sets</h3>
+          <p>
+            Stellt Sammlungen zusammen f&uuml;r Konzerte, Auftritte oder Proben. Alle St&uuml;cke eines
+            Auftritts gebündelt an einem Ort &mdash; so hat jeder genau das, was gebraucht wird.
+          </p>
+        </div>
+
+        <div class="feature-card reveal reveal-delay-2">
+          <div class="feature-icon walnut">&#9834;</div>
+          <h3>Mitgliederverwaltung</h3>
+          <p>
+            Behaltet den &Uuml;berblick &uuml;ber alle Mitglieder. Neue Registrierungen werden durch den
+            Vorstand freigeschaltet. Kontaktdaten, Instrumente und Status &mdash; alles an einem Ort.
+          </p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon gold">&#9833;</div>
+          <h3>Pers&ouml;nliches Profil</h3>
+          <p>
+            Jedes Mitglied pflegt sein eigenes Profil mit Kontaktdaten, Instrumentenzuordnung und
+            pers&ouml;nlichen Einstellungen. So bleibt alles aktuell und griffbereit.
+          </p>
+        </div>
+
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="feature-icon red">&#9836;</div>
+          <h3>Instrumenten-Zuordnung</h3>
+          <p>
+            Ob Trompete, Fl&uuml;gelhorn oder Tuba &mdash; jedes Mitglied wird seinem Instrument zugeordnet.
+            Die Noten-Bibliothek filtert automatisch die passenden Stimmen heraus.
+          </p>
+        </div>
+
+        <div class="feature-card reveal reveal-delay-2">
+          <div class="feature-icon walnut">&#128241;</div>
+          <h3>Mobil &amp; Responsive</h3>
+          <p>
+            Ob am Laptop zu Hause oder am Handy bei der Probe &mdash; Life passt sich jedem Bildschirm an.
+            Eure Noten und Vereinsdaten sind immer dabei, &uuml;berall abrufbar.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Journey Section -->
+  <section class="journey" id="journey">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-label reveal">In drei Schritten dabei</span>
+        <h2 class="section-title reveal reveal-delay-1">So einfach geht's</h2>
+        <p class="section-desc centered reveal reveal-delay-2">
+          Vom ersten Klick bis zu euren Noten &mdash; der Weg in eure digitale Vereinswelt ist unkompliziert und schnell.
+        </p>
+      </div>
+
+      <div class="journey-steps">
+        <div class="journey-step reveal">
+          <div class="journey-step-number">1</div>
+          <h3>Registrieren</h3>
+          <p>Erstellt euer pers&ouml;nliches Konto mit eurer E-Mail-Adresse und w&auml;hlt euer Instrument.</p>
+          <span class="journey-step-accent">Schnell &amp; einfach</span>
+        </div>
+
+        <div class="journey-arrow reveal reveal-delay-1" aria-hidden="true">
+          <svg viewBox="0 0 40 24">
+            <path d="M2 12 L32 12" stroke-linecap="round"/>
+            <path d="M26 6 L34 12 L26 18" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <div class="journey-step reveal reveal-delay-2">
+          <div class="journey-step-number">2</div>
+          <h3>Freischalten</h3>
+          <p>Euer Vorstand pr&uuml;ft und aktiviert euer Konto &mdash; so bleibt der Vereinsbereich gesch&uuml;tzt.</p>
+          <span class="journey-step-accent">Sicher &amp; vertrauensvoll</span>
+        </div>
+
+        <div class="journey-arrow reveal reveal-delay-3" aria-hidden="true">
+          <svg viewBox="0 0 40 24">
+            <path d="M2 12 L32 12" stroke-linecap="round"/>
+            <path d="M26 6 L34 12 L26 18" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <div class="journey-step reveal reveal-delay-4">
+          <div class="journey-step-number">3</div>
+          <h3>Noten entdecken</h3>
+          <p>Greift sofort auf eure Noten zu &mdash; gefiltert nach eurem Instrument, bereit zum &Uuml;ben und Spielen.</p>
+          <span class="journey-step-accent">Musik machen!</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item reveal">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Datenschutz-konform</div>
+          <div class="stat-accent">DSGVO</div>
+        </div>
+        <div class="stat-item reveal reveal-delay-1">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Zugriff auf eure Noten</div>
+          <div class="stat-accent">Immer verf&uuml;gbar</div>
+        </div>
+        <div class="stat-item reveal reveal-delay-2">
+          <div class="stat-number">&infin;</div>
+          <div class="stat-label">Notenbl&auml;tter speichern</div>
+          <div class="stat-accent">Keine Grenzen</div>
+        </div>
+        <div class="stat-item reveal reveal-delay-3">
+          <div class="stat-number">&lt;1s</div>
+          <div class="stat-label">Ladezeit pro Seite</div>
+          <div class="stat-accent">Blitzschnell</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-label reveal">Stimmen aus dem Verein</span>
+        <h2 class="section-title reveal reveal-delay-1">Was unsere Mitglieder sagen</h2>
+        <p class="section-desc centered reveal reveal-delay-2">
+          Echte Musikerinnen und Musiker, echte Begeisterung &mdash; so erleben Vereine die Arbeit mit Life.
+        </p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <div class="testimonial-quote-mark">&ldquo;</div>
+          <p class="testimonial-text">
+            Endlich muss ich nicht mehr in Papierbergen nach meinen Noten suchen. Ich &ouml;ffne Life,
+            und alle meine Trompeten-Stimmen sind sofort da. Das hat unsere Probenarbeit komplett ver&auml;ndert.
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">TH</div>
+            <div>
+              <div class="testimonial-name">Thomas Huber</div>
+              <div class="testimonial-role">1. Trompete, Musikverein Waldblick</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-1">
+          <div class="testimonial-quote-mark">&ldquo;</div>
+          <p class="testimonial-text">
+            Als Obfrau habe ich jetzt den perfekten &Uuml;berblick &uuml;ber alle Mitglieder. Neue Anmeldungen
+            freischalten, Instrumente zuordnen &mdash; alles geht mit wenigen Klicks. Life spart uns enorm viel Zeit.
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">SB</div>
+            <div>
+              <div class="testimonial-name">Sabine Berger</div>
+              <div class="testimonial-role">Obfrau, Blaskapelle Sonnenberg</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal">
+          <div class="testimonial-quote-mark">&ldquo;</div>
+          <p class="testimonial-text">
+            Die St&uuml;cke-Sets sind genial. Vor jedem Konzert stelle ich die Setlist zusammen, und jeder hat
+            automatisch seine Stimmen bereit. Kein Zettelchaos mehr am Notenpult!
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">FM</div>
+            <div>
+              <div class="testimonial-name">Florian M&uuml;ller</div>
+              <div class="testimonial-role">Kapellmeister, Musikkapelle Bergtal</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-1">
+          <div class="testimonial-quote-mark">&ldquo;</div>
+          <p class="testimonial-text">
+            Ich bin nicht so technikaffin, aber Life ist so einfach zu bedienen, dass sogar ich begeistert bin.
+            Auf meinem Handy bei der Probe schnell die Noten nachschauen &mdash; das funktioniert einwandfrei.
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">EW</div>
+            <div>
+              <div class="testimonial-name">Elisabeth Wagner</div>
+              <div class="testimonial-role">Tenorhorn, Stadtkapelle Gr&uuml;nau</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section" id="cta">
+    <div class="container">
+      <div class="cta-box reveal">
+        <span class="cta-accent">Bereit f&uuml;r den n&auml;chsten Takt?</span>
+        <h2>Werde Teil unserer Gemeinschaft</h2>
+        <p>
+          Bringt euren Verein in die digitale Welt &mdash; einfach, warm und menschlich.
+          Life wartet auf euch.
+        </p>
+        <a href="#" class="btn btn-primary">Jetzt starten &#9835;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="nav-logo">
+            <div class="nav-logo-icon">L</div>
+            <span class="nav-logo-text">Life</span>
+          </a>
+          <p>
+            Der digitale Vereinsraum f&uuml;r Blasmusikvereine. Gemeinsam Musik erleben,
+            einfach organisiert &mdash; mit Herz und Handwerk.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Produkt</h4>
+          <ul>
+            <li><a href="#features">Funktionen</a></li>
+            <li><a href="#journey">So funktioniert's</a></li>
+            <li><a href="#testimonials">Stimmen</a></li>
+            <li><a href="#">Preise</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Verein</h4>
+          <ul>
+            <li><a href="#">&Uuml;ber uns</a></li>
+            <li><a href="#">Kontakt</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Hilfe &amp; FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Rechtliches</h4>
+          <ul>
+            <li><a href="#">Datenschutz</a></li>
+            <li><a href="#">Impressum</a></li>
+            <li><a href="#">AGB</a></li>
+            <li><a href="#">Cookie-Richtlinie</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Life. Mit &#9825; f&uuml;r die Blasmusik gemacht.</span>
+        <div class="footer-bottom-links">
+          <a href="#">Datenschutz</a>
+          <a href="#">Impressum</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Navigation Scroll Effect =====
+    const nav = document.getElementById('nav');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+      lastScroll = currentScroll;
+    }, { passive: true });
+
+    // ===== Mobile Navigation Toggle =====
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+
+    // Close mobile nav when a link is clicked
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('open');
+        navLinks.classList.remove('open');
+      });
+    });
+
+    // ===== Scroll Reveal with Intersection Observer =====
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // ===== Smooth scroll for anchor links (fallback for older browsers) =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        const target = document.querySelector(targetId);
+        if (target) {
+          e.preventDefault();
+          const navHeight = nav.offsetHeight;
+          const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
