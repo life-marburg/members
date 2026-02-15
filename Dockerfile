@@ -31,7 +31,6 @@ COPY . ./
 COPY --from=build-frontend /var/www/public /app/public
 COPY --from=build-php /var/www/vendor /app/vendor
 COPY --from=build-php /var/www/bootstrap /app/bootstrap
-COPY --from=build-php /var/www/public/css/filament /app/public/css/filament
-COPY --from=build-php /var/www/public/js/filament /app/public/js/filament
 RUN mkdir -p storage/framework/{cache/data,sessions,views,testing} storage/logs && \
-    php artisan storage:link
+    php artisan storage:link && \
+    php artisan filament:assets
