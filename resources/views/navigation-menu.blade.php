@@ -145,7 +145,7 @@
                 @endforeach
                 @can(\App\Rights::P_MANAGE_MEMBERS)
                     <x-responsive-nav-link href="/admin" :active="request()->is('admin*')">
-                        {{ __('Manage Members') }}
+                        {{ __('Admin') }}
                     </x-responsive-nav-link>
                 @endcan
                 <!-- Account Management -->
