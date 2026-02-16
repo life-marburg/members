@@ -48,6 +48,12 @@ return [
             'visibility' => 'private',
         ],
 
+        'shared' => [
+            'driver' => 'local',
+            'root' => storage_path('app/shared'),
+            'visibility' => 'private',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
