@@ -49,7 +49,7 @@ class FileControllerTest extends TestCase
     {
         Storage::disk('shared')->put('docs/guide.pdf', 'pdf content');
 
-        $response = $this->actingAs($this->user)->get(route('files.browse', 'docs'));
+        $response = $this->actingAs($this->user)->get(route('files.index', 'docs'));
 
         $response->assertOk();
         $response->assertSee('guide.pdf');
@@ -69,7 +69,7 @@ class FileControllerTest extends TestCase
     {
         Storage::disk('shared')->put('secret.txt', 'secret');
 
-        $response = $this->actingAs($this->user)->get(route('files.browse', '../'));
+        $response = $this->actingAs($this->user)->get(route('files.index', '../'));
 
         $response->assertNotFound();
     }

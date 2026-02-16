@@ -18,7 +18,7 @@
                         @if ($loop->last)
                             <span class="text-gray-800 font-medium">{{ $crumb['name'] }}</span>
                         @else
-                            <a href="{{ $crumb['path'] === null ? route('files.index') : route('files.browse', $crumb['path']) }}"
+                            <a href="{{ $crumb['path'] === null ? route('files.index') : route('files.index', $crumb['path']) }}"
                                class="text-blue-600 hover:underline">
                                 {{ $crumb['name'] }}
                             </a>
@@ -28,7 +28,7 @@
 
                 {{-- Folders --}}
                 @foreach ($folders as $folder)
-                    <a href="{{ route('files.browse', $folder['path']) }}"
+                    <a href="{{ route('files.index', $folder['path']) }}"
                        class="flex items-center gap-2 py-2 hover:text-blue-600">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
@@ -59,7 +59,7 @@
 
                 @if ($currentPath !== '')
                     <div class="mt-6">
-                        <x-link href="{{ count($breadcrumbs) > 2 ? route('files.browse', $breadcrumbs[count($breadcrumbs) - 2]['path']) : route('files.index') }}">
+                        <x-link href="{{ count($breadcrumbs) > 2 ? route('files.index', $breadcrumbs[count($breadcrumbs) - 2]['path']) : route('files.index') }}">
                             {{ __('Back') }}
                         </x-link>
                     </div>

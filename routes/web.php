@@ -46,8 +46,6 @@ Route::group([
                 ->name('download');
             Route::get('/{path?}', [FileController::class, 'index'])
                 ->where('path', '.*')
-                ->name('browse');
-            Route::get('', [FileController::class, 'index'])
                 ->name('index');
         });
 });
