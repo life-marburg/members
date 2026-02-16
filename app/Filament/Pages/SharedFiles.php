@@ -10,4 +10,9 @@ class SharedFiles extends FileSystem
     {
         return false;
     }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return null;
+    }
 }
