@@ -37,7 +37,7 @@ class AdminPanelProvider extends PanelProvider
                 FileManagerPlugin::make()
                     ->withoutFileManager()
                     ->withoutSchemaExample()
-                    ->fileSystem()
+                    ->withoutFileSystem()
                     ->fileSystemPageSidebar(true)
                     ->fileSystemNavigation(
                         icon: 'heroicon-o-folder-open',
