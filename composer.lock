@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "13269fca5001a2b2deb4265b2bfdb3d3",
+    "content-hash": "8cd40161ab33fd4e19ddb633a03626c5",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -4541,6 +4541,76 @@
                 }
             ],
             "time": "2025-03-24T10:02:05+00:00"
+        },
+        {
+            "name": "mwguerra/filemanager",
+            "version": "v0.1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mwguerra/filemanager.git",
+                "reference": "b2f9a0d6f49b6fa86bfcadf82c09f157fe4292f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mwguerra/filemanager/zipball/b2f9a0d6f49b6fa86bfcadf82c09f157fe4292f6",
+                "reference": "b2f9a0d6f49b6fa86bfcadf82c09f157fe4292f6",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^4.0",
+                "illuminate/contracts": "^11.0|^12.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.16"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^9.0|^10.0",
+                "pestphp/pest": "^3.0",
+                "pestphp/pest-plugin-laravel": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MWGuerra\\FileManager\\FileManagerServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MWGuerra\\FileManager\\": "src/",
+                    "MWGuerra\\FileManager\\Database\\Seeders\\": "database/seeders/",
+                    "MWGuerra\\FileManager\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marcelo W. Guerra",
+                    "email": "contact@mwguerra.com",
+                    "homepage": "https://mwguerra.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A full-featured file manager package for Laravel and Filament v4 with dual operating modes, drag-and-drop uploads, S3/MinIO support, and comprehensive security features.",
+            "homepage": "https://github.com/mwguerra/filemanager",
+            "keywords": [
+                "filament",
+                "file-manager",
+                "laravel",
+                "media-library",
+                "minio",
+                "s3",
+                "storage",
+                "upload"
+            ],
+            "support": {
+                "issues": "https://github.com/mwguerra/filemanager/issues",
+                "source": "https://github.com/mwguerra/filemanager"
+            },
+            "time": "2025-12-09T18:27:32+00:00"
         },
         {
             "name": "nesbot/carbon",

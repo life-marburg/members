@@ -18,6 +18,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use MWGuerra\FileManager\FileManagerPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -31,6 +32,17 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('Life Members Admin')
             ->colors([
                 'primary' => Color::Blue,
+            ])
+            ->plugins([
+                FileManagerPlugin::make()
+                    ->fileManager(false)
+                    ->fileSystem()
+                    ->disk('shared')
+                    ->fileSystemPageSidebar(true)
+                    ->fileSystemNavigation(
+                        icon: 'heroicon-o-folder-open',
+                        label: 'Files',
+                    ),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
