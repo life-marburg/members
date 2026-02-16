@@ -828,5 +828,8 @@
     "No sheets available.": "Keine Noten verfügbar.",
     "No sheets available for your instruments.": "Keine Noten für deine Instrumente verfügbar.",
     "Status": "Status",
-    "URL": "URL"
+    "URL": "URL",
+    "Files": "Dateien",
+    "No files available.": "Keine Dateien vorhanden.",
+    "Back": "Zurück"
 }
