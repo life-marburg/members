@@ -24,9 +24,7 @@ class FileControllerTest extends TestCase
         ]);
 
         // Satisfy middleware: user needs instrument + personal data
-        $this->user->instrumentGroups()->attach(
-            \App\Models\InstrumentGroup::factory()->create()
-        );
+        $this->user->instrumentGroups()->attach(1);
         $this->user->personalData()->create([
             'street' => 'Test St 1',
             'city' => 'Test City',

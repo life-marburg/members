@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InstrumentController;
 use App\Http\Controllers\PersonalDataController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\SheetController;
 use App\Http\Middleware\CheckIfActive;
 use App\Http\Middleware\MustHaveInstrument;
@@ -36,6 +37,18 @@ Route::group([
             Route::get('', [SheetController::class, 'index'])->name('index');
             Route::get('/{song}', [SheetController::class, 'show'])->name('show');
             Route::get('/download/{sheet}', [SheetController::class, 'download'])->name('download');
+        });
+    Route::prefix('/files')
+        ->name('files.')
+        ->group(function () {
+            Route::get('/download/{path}', [FileController::class, 'download'])
+                ->where('path', '.*')
+                ->name('download');
+            Route::get('/{path?}', [FileController::class, 'index'])
+                ->where('path', '.*')
+                ->name('browse');
+            Route::get('', [FileController::class, 'index'])
+                ->name('index');
         });
 });
 

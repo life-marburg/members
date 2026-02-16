@@ -19,7 +19,7 @@ return [
     |   Best for managing cloud storage (S3, etc.) or local file systems.
     |
     */
-    'mode' => 'database', // 'database' or 'storage'
+    'mode' => 'storage', // 'database' or 'storage'
 
     /*
     |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ return [
     |
     */
     'storage_mode' => [
-        'disk' => env('FILEMANAGER_DISK', env('FILESYSTEM_DISK', 'public')),
+        'disk' => env('FILEMANAGER_DISK', 'shared'),
         'root' => env('FILEMANAGER_ROOT', ''),
         'show_hidden' => env('FILEMANAGER_SHOW_HIDDEN', false),
         // For S3/MinIO: URL expiration time in minutes for signed URLs

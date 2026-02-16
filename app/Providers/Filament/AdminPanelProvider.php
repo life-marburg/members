@@ -35,9 +35,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FileManagerPlugin::make()
-                    ->fileManager(false)
+                    ->withoutFileManager()
+                    ->withoutSchemaExample()
                     ->fileSystem()
-                    ->disk('shared')
                     ->fileSystemPageSidebar(true)
                     ->fileSystemNavigation(
                         icon: 'heroicon-o-folder-open',
