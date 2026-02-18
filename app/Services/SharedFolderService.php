@@ -66,7 +66,7 @@ class SharedFolderService
         $path = trim($path, '/');
         $userGroupIds = $user->groups()->pluck('groups.id');
 
-        return SharedFolder::where('path', 'like', $path . '/%')
+        return SharedFolder::where('path', 'like', $path.'/%')
             ->whereIn('group_id', $userGroupIds)
             ->exists();
     }
@@ -78,7 +78,7 @@ class SharedFolderService
      */
     public function filterAccessiblePaths(User $user, string $parentPath, array $childPaths): array
     {
-        return array_values(array_filter($childPaths, function ($childPath) use ($user, $parentPath) {
+        return array_values(array_filter($childPaths, function ($childPath) use ($user) {
             // If this child has its own share records, check those specifically
             $childShares = SharedFolder::where('path', trim($childPath, '/'))->get();
 
