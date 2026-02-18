@@ -104,7 +104,7 @@ class FileControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    public function test_download_with_share_access_redirects_to_signed_url(): void
+    public function test_download_with_share_access(): void
     {
         Storage::disk('shared')->put('docs/readme.txt', 'hello world');
 
@@ -116,7 +116,7 @@ class FileControllerTest extends TestCase
             ->assertRedirect();
     }
 
-    public function test_signed_download_route_serves_file(): void
+    public function test_download_route_serves_file(): void
     {
         Storage::disk('shared')->put('docs/readme.txt', 'hello world');
 
@@ -130,7 +130,7 @@ class FileControllerTest extends TestCase
         $response->assertDownload('readme.txt');
     }
 
-    public function test_signed_download_route_requires_valid_signature(): void
+    public function test_download_route_requires_valid_signature(): void
     {
         Storage::disk('shared')->put('docs/readme.txt', 'hello world');
 
@@ -142,11 +142,10 @@ class FileControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-    public function test_signed_download_route_checks_share_access(): void
+    public function test_download_route_checks_share_access(): void
     {
         Storage::disk('shared')->put('secret/readme.txt', 'hello world');
 
-        // No share record for this path
         $url = URL::signedRoute('files.download', ['path' => 'secret/readme.txt']);
 
         $response = $this->actingAs($this->user)->get($url);
