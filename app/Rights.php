@@ -14,5 +14,7 @@ interface Rights
 
     public const P_MANAGE_SHEETS = 'manage sheets';
 
+    public const P_MANAGE_GROUPS = 'manage groups';
+
     public const R_ADMIN = 'admin';
 }
