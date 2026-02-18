@@ -93,29 +93,6 @@ class FileControllerTest extends TestCase
             ->assertDontSee('private');
     }
 
-    public function test_download_requires_share_access(): void
-    {
-        Storage::disk('shared')->put('docs/readme.txt', 'hello world');
-
-        // No share record -- should be blocked
-        Livewire::actingAs($this->user)
-            ->test(FileBrowser::class)
-            ->call('download', 'docs/readme.txt')
-            ->assertForbidden();
-    }
-
-    public function test_download_with_share_access(): void
-    {
-        Storage::disk('shared')->put('docs/readme.txt', 'hello world');
-
-        SharedFolder::create(['path' => 'docs', 'group_id' => $this->group->id]);
-
-        Livewire::actingAs($this->user)
-            ->test(FileBrowser::class)
-            ->call('download', 'docs/readme.txt')
-            ->assertRedirect();
-    }
-
     public function test_download_route_serves_file(): void
     {
         Storage::disk('shared')->put('docs/readme.txt', 'hello world');
@@ -153,22 +130,24 @@ class FileControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-    public function test_path_traversal_blocked(): void
+    public function test_download_route_blocks_path_traversal(): void
     {
         Storage::disk('shared')->put('secret.txt', 'secret');
 
-        Livewire::actingAs($this->user)
-            ->test(FileBrowser::class)
-            ->call('download', '../secret.txt')
-            ->assertNotFound();
+        $url = URL::signedRoute('files.download', ['path' => '../secret.txt']);
+
+        $response = $this->actingAs($this->user)->get($url);
+
+        $response->assertNotFound();
     }
 
-    public function test_download_nonexistent_file_returns_404(): void
+    public function test_download_route_nonexistent_file_returns_404(): void
     {
-        Livewire::actingAs($this->user)
-            ->test(FileBrowser::class)
-            ->call('download', 'nope.txt')
-            ->assertNotFound();
+        $url = URL::signedRoute('files.download', ['path' => 'nope.txt']);
+
+        $response = $this->actingAs($this->user)->get($url);
+
+        $response->assertNotFound();
     }
 
     public function test_unauthenticated_user_redirected(): void
