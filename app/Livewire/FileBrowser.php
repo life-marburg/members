@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use App\Services\SharedFolderService;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Storage;
 use League\Flysystem\PathTraversalDetected;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
@@ -105,7 +105,10 @@ class FileBrowser extends Component
                 abort(403);
             }
 
-            return $this->redirect(URL::signedRoute('files.download', ['path' => $path]));
+            return response()->download(
+                Storage::disk('shared')->path($path),
+                basename($path),
+            );
         } catch (PathTraversalDetected) {
             abort(404);
         }
