@@ -33,7 +33,7 @@ class FileBrowser extends Component
     {
         $breadcrumbs = $this->getAdapter()->getBreadcrumbs($this->currentPath ?: null);
 
-        if (!empty($breadcrumbs) && ($breadcrumbs[0]['name'] ?? '') === 'Root') {
+        if (! empty($breadcrumbs) && ($breadcrumbs[0]['name'] ?? '') === 'Root') {
             $breadcrumbs[0]['name'] = __('Root');
         }
 
@@ -51,7 +51,7 @@ class FileBrowser extends Component
         try {
             $adapter = $this->getAdapter();
 
-            if (!$adapter->isPathSafe($path) || !$adapter->exists($path)) {
+            if (! $adapter->isPathSafe($path) || ! $adapter->exists($path)) {
                 abort(404);
             }
 

@@ -41,7 +41,7 @@ class SharedFiles extends FileSystem
     {
         $breadcrumbs = parent::getBreadcrumbsProperty();
 
-        if (!empty($breadcrumbs) && ($breadcrumbs[0]['name'] ?? '') === 'Root') {
+        if (! empty($breadcrumbs) && ($breadcrumbs[0]['name'] ?? '') === 'Root') {
             $breadcrumbs[0]['name'] = __('Root');
         }
 
