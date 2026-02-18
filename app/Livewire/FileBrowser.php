@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Illuminate\Support\Facades\Storage;
+use League\Flysystem\PathTraversalDetected;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
@@ -47,13 +48,17 @@ class FileBrowser extends Component
 
     public function download(string $path)
     {
-        $adapter = $this->getAdapter();
+        try {
+            $adapter = $this->getAdapter();
 
-        if (!$adapter->isPathSafe($path) || !$adapter->exists($path)) {
+            if (!$adapter->isPathSafe($path) || !$adapter->exists($path)) {
+                abort(404);
+            }
+
+            return Storage::disk('shared')->download($path);
+        } catch (PathTraversalDetected) {
             abort(404);
         }
-
-        return Storage::disk('shared')->download($path);
     }
 
     public function render()
