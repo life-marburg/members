@@ -26,8 +26,8 @@ jobs:
         run: composer install --no-progress --prefer-dist --optimize-autoloader
       - name: setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          run_install: true
+      - name: install frontend dependencies
+        run: pnpm install
       - name: build frontend
         run: pnpm build
       - name: Generate Application Key
