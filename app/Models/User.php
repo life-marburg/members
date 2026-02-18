@@ -111,6 +111,11 @@ class User extends Authenticatable implements FilamentUser, HasLocalePreference
             $this->personalData->mobile_phone !== null;
     }
 
+    public function groups(): BelongsToMany
+    {
+        return $this->belongsToMany(Group::class);
+    }
+
     public function additionalEmails(): HasMany
     {
         return $this->hasMany(AdditionalEmails::class);
