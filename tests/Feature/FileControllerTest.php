@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Livewire\FileBrowser;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 class FileControllerTest extends TestCase
@@ -49,7 +51,7 @@ class FileControllerTest extends TestCase
     {
         Storage::disk('shared')->put('docs/guide.pdf', 'pdf content');
 
-        $response = $this->actingAs($this->user)->get(route('files.index', 'docs'));
+        $response = $this->actingAs($this->user)->get(route('files.index', ['path' => 'docs']));
 
         $response->assertOk();
         $response->assertSee('guide.pdf');
@@ -59,26 +61,28 @@ class FileControllerTest extends TestCase
     {
         Storage::disk('shared')->put('readme.txt', 'hello world');
 
-        $response = $this->actingAs($this->user)->get(route('files.download', 'readme.txt'));
-
-        $response->assertOk();
-        $response->assertHeader('Content-Disposition');
+        Livewire::actingAs($this->user)
+            ->test(FileBrowser::class)
+            ->call('download', 'readme.txt')
+            ->assertFileDownloaded('readme.txt');
     }
 
     public function test_path_traversal_blocked(): void
     {
         Storage::disk('shared')->put('secret.txt', 'secret');
 
-        $response = $this->actingAs($this->user)->get(route('files.index', '../'));
-
-        $response->assertNotFound();
+        Livewire::actingAs($this->user)
+            ->test(FileBrowser::class)
+            ->call('download', '../secret.txt')
+            ->assertNotFound();
     }
 
     public function test_download_nonexistent_file_returns_404(): void
     {
-        $response = $this->actingAs($this->user)->get(route('files.download', 'nope.txt'));
-
-        $response->assertNotFound();
+        Livewire::actingAs($this->user)
+            ->test(FileBrowser::class)
+            ->call('download', 'nope.txt')
+            ->assertNotFound();
     }
 
     public function test_unauthenticated_user_redirected(): void
