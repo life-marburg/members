@@ -50,6 +50,28 @@ class SharedFolderService
     }
 
     /**
+     * Check if a user can navigate to a given path.
+     *
+     * Unlike canAccess(), this also allows navigation to folders that
+     * aren't directly shared but contain shared subfolders. This enables
+     * users to reach deeply nested shared folders through their parents.
+     */
+    public function canNavigate(User $user, string $path): bool
+    {
+        if ($this->canAccess($user, $path)) {
+            return true;
+        }
+
+        // Check if any shared subfolders exist under this path
+        $path = trim($path, '/');
+        $userGroupIds = $user->groups()->pluck('groups.id');
+
+        return SharedFolder::where('path', 'like', $path . '/%')
+            ->whereIn('group_id', $userGroupIds)
+            ->exists();
+    }
+
+    /**
      * Given a list of child paths within a parent, filter out those
      * the user cannot access (due to subfolder overrides).
      * Files (non-folders) always pass -- only subfolder overrides can block.

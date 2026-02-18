@@ -43,15 +43,17 @@ class FileBrowser extends Component
             )->values();
         }
 
-        // Inside a folder: show all items, filtering out blocked subfolders
+        // Inside a folder: show items based on access level
         $allItems = $this->getAdapter()->getItems($this->currentPath);
+        $hasDirectAccess = $service->canAccess($user, $this->currentPath);
 
-        return $allItems->filter(function ($item) use ($user, $service) {
-            if (! $item->isFolder()) {
-                return true;
+        return $allItems->filter(function ($item) use ($user, $service, $hasDirectAccess) {
+            if ($item->isFolder()) {
+                return $service->canNavigate($user, $item->getIdentifier());
             }
 
-            return $service->canAccess($user, $item->getIdentifier());
+            // Only show files if user has direct access to this folder
+            return $hasDirectAccess;
         })->values();
     }
 
@@ -74,7 +76,7 @@ class FileBrowser extends Component
         // Check access for non-root navigation
         if ($path !== '') {
             $user = Auth::user();
-            if (! $this->sharingService()->canAccess($user, $path)) {
+            if (! $this->sharingService()->canNavigate($user, $path)) {
                 abort(403);
             }
         }
