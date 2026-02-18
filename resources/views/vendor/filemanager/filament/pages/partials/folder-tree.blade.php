@@ -41,7 +41,7 @@
             </button>
 
             {{-- Right side container for badge/actions (fixed width to prevent layout shift) --}}
-            <div class="relative shrink-0 flex items-center justify-end" style="min-width: {{ $isReadOnly ? '32px' : '72px' }};">
+            <div class="relative shrink-0 flex items-center justify-end" style="min-width: {{ $isReadOnly ? '32px' : '90px' }};">
                 {{-- File count badge (shown when not hovered or always in read-only mode) --}}
                 @if($folder['file_count'] > 0)
                     <span
@@ -83,6 +83,15 @@
                             title="{{ __('Move') }}"
                         >
                             <x-heroicon-m-arrow-right-circle class="w-3.5 h-3.5" />
+                        </button>
+
+                        {{-- Share --}}
+                        <button
+                            x-on:click.stop="$wire.openShareDialog({{ json_encode($folderId) }})"
+                            class="p-1 rounded hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                            title="{{ __('Share') }}"
+                        >
+                            <x-heroicon-m-share class="w-3.5 h-3.5" />
                         </button>
                     </div>
                 @endif

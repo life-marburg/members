@@ -536,6 +536,8 @@
         </x-slot>
     </x-filament::modal>
 
+    @include('filemanager::filament.pages.partials.share-dialog')
+
     {{-- Preview Modal --}}
     <x-filament::modal id="preview-modal" width="5xl" :close-by-clicking-away="true">
         @if($this->previewItem)
