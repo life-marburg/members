@@ -109,6 +109,15 @@ class SharedFiles extends FileSystem
         return null;
     }
 
+    public function getIsRootFolderProperty(): bool
+    {
+        if (! $this->shareFolderPath) {
+            return false;
+        }
+
+        return ! str_contains($this->shareFolderPath, '/');
+    }
+
     public function getAvailableGroupsProperty(): array
     {
         $existingGroupIds = SharedFolder::where('path', $this->shareFolderPath)

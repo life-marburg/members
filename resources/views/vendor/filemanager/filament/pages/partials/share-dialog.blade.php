@@ -5,8 +5,8 @@
     </x-slot>
 
     @if($this->shareFolderPath)
-        {{-- Inherited info --}}
-        @if($inheritedInfo = $this->inheritedShareInfo)
+        {{-- Inherited info (only for subfolders) --}}
+        @if(! $this->isRootFolder && $inheritedInfo = $this->inheritedShareInfo)
             <div class="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-sm text-blue-700 dark:text-blue-300">
                 {{ __('Inherits access from') }} <strong>{{ $inheritedInfo['path'] }}</strong>:
                 {{ implode(', ', $inheritedInfo['groups']) }}
@@ -56,21 +56,33 @@
     @endif
 
     <x-slot name="footerActions">
-        <x-filament::button
-            wire:click="blockFolder"
-            wire:confirm="{{ __('This will remove all existing shares and block access. Continue?') }}"
-            color="danger"
-        >
-            {{ __('Block access') }}
-        </x-filament::button>
-        @if($this->shareFolderPath && count($this->shares) > 0)
+        @if(! $this->isRootFolder)
             <x-filament::button
-                wire:click="removeAllShares"
-                wire:confirm="{{ __('Remove all share rules? The folder will inherit from its parent.') }}"
-                color="gray"
+                wire:click="blockFolder"
+                wire:confirm="{{ __('This will remove all existing shares and block access. Continue?') }}"
+                color="danger"
             >
-                {{ __('Reset to inherit') }}
+                {{ __('Block access') }}
             </x-filament::button>
+        @endif
+        @if($this->shareFolderPath && count($this->shares) > 0)
+            @if($this->isRootFolder)
+                <x-filament::button
+                    wire:click="removeAllShares"
+                    wire:confirm="{{ __('Remove all shares? The folder will no longer be accessible.') }}"
+                    color="danger"
+                >
+                    {{ __('Remove all shares') }}
+                </x-filament::button>
+            @else
+                <x-filament::button
+                    wire:click="removeAllShares"
+                    wire:confirm="{{ __('Remove all share rules? The folder will inherit from its parent.') }}"
+                    color="gray"
+                >
+                    {{ __('Reset to inherit') }}
+                </x-filament::button>
+            @endif
         @endif
         <x-filament::button
             x-on:click="$dispatch('close-modal', { id: 'share-folder-modal' })"

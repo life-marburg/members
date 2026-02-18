@@ -41,6 +41,18 @@
             {{-- Controls --}}
             <div class="flex items-center gap-2">
                 @if(!$this->isReadOnly())
+                    @if($currentPath)
+                        {{-- Share Button --}}
+                        <x-filament::button
+                            x-on:click="await $wire.openShareDialog({{ json_encode($currentPath) }}); $dispatch('open-modal', { id: 'share-folder-modal' })"
+                            size="sm"
+                            color="gray"
+                            icon="heroicon-o-share"
+                        >
+                            {{ __('Share') }}
+                        </x-filament::button>
+                    @endif
+
                     {{-- New Folder Button --}}
                     <x-filament::button
                         x-on:click="$dispatch('open-modal', { id: 'create-folder-modal' })"
