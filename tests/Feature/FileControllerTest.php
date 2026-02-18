@@ -8,6 +8,7 @@ use App\Models\SharedFolder;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -103,7 +104,7 @@ class FileControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    public function test_download_with_share_access(): void
+    public function test_download_with_share_access_redirects_to_signed_url(): void
     {
         Storage::disk('shared')->put('docs/readme.txt', 'hello world');
 
@@ -112,7 +113,45 @@ class FileControllerTest extends TestCase
         Livewire::actingAs($this->user)
             ->test(FileBrowser::class)
             ->call('download', 'docs/readme.txt')
-            ->assertFileDownloaded('readme.txt');
+            ->assertRedirect();
+    }
+
+    public function test_signed_download_route_serves_file(): void
+    {
+        Storage::disk('shared')->put('docs/readme.txt', 'hello world');
+
+        SharedFolder::create(['path' => 'docs', 'group_id' => $this->group->id]);
+
+        $url = URL::signedRoute('files.download', ['path' => 'docs/readme.txt']);
+
+        $response = $this->actingAs($this->user)->get($url);
+
+        $response->assertOk();
+        $response->assertDownload('readme.txt');
+    }
+
+    public function test_signed_download_route_requires_valid_signature(): void
+    {
+        Storage::disk('shared')->put('docs/readme.txt', 'hello world');
+
+        SharedFolder::create(['path' => 'docs', 'group_id' => $this->group->id]);
+
+        $response = $this->actingAs($this->user)
+            ->get(route('files.download', ['path' => 'docs/readme.txt']));
+
+        $response->assertForbidden();
+    }
+
+    public function test_signed_download_route_checks_share_access(): void
+    {
+        Storage::disk('shared')->put('secret/readme.txt', 'hello world');
+
+        // No share record for this path
+        $url = URL::signedRoute('files.download', ['path' => 'secret/readme.txt']);
+
+        $response = $this->actingAs($this->user)->get($url);
+
+        $response->assertForbidden();
     }
 
     public function test_path_traversal_blocked(): void

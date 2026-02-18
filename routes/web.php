@@ -38,6 +38,9 @@ Route::group([
             Route::get('/download/{sheet}', [SheetController::class, 'download'])->name('download');
         });
     Route::get('/files', \App\Livewire\FileBrowser::class)->name('files.index');
+    Route::get('/files/download', [\App\Http\Controllers\FileDownloadController::class, 'download'])
+        ->name('files.download')
+        ->middleware('signed');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])

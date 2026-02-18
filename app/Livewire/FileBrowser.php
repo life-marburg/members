@@ -4,11 +4,11 @@ namespace App\Livewire;
 
 use App\Services\SharedFolderService;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use League\Flysystem\PathTraversalDetected;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Url;
+use Livewire\Attributes\Url as LivewireUrl;
 use Livewire\Component;
 use MWGuerra\FileManager\Adapters\AdapterFactory;
 use MWGuerra\FileManager\Adapters\StorageAdapter;
@@ -16,7 +16,7 @@ use MWGuerra\FileManager\Adapters\StorageAdapter;
 #[Layout('layouts.app', ['pageTitle' => 'Files'])]
 class FileBrowser extends Component
 {
-    #[Url(as: 'path')]
+    #[LivewireUrl(as: 'path')]
     public string $currentPath = '';
 
     protected function getAdapter(): StorageAdapter
@@ -103,7 +103,7 @@ class FileBrowser extends Component
                 abort(403);
             }
 
-            return Storage::disk('shared')->download($path);
+            return $this->redirect(URL::signedRoute('files.download', ['path' => $path]));
         } catch (PathTraversalDetected) {
             abort(404);
         }
