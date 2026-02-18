@@ -40,8 +40,8 @@
                                 <span class="font-medium text-gray-900">{{ $item->getName() }}</span>
                             </button>
                         @else
-                            <a href="{{ URL::signedRoute('files.download', ['path' => $item->getIdentifier()]) }}"
-                               class="flex items-center justify-between py-3 px-2 w-full hover:bg-gray-50 rounded-lg transition-colors">
+                            <button wire:click="download('{{ $item->getIdentifier() }}')"
+                                    class="flex items-center justify-between py-3 px-2 w-full text-left hover:bg-gray-50 rounded-lg transition-colors">
                                 <span class="flex items-center gap-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
@@ -51,7 +51,7 @@
                                 <span class="text-sm text-gray-400">
                                     {{ $item->getFormattedSize() }}
                                 </span>
-                            </a>
+                            </button>
                         @endif
                     @empty
                         <p class="py-4 text-gray-500">{{ __('No files available.') }}</p>
