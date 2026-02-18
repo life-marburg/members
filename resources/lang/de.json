@@ -882,5 +882,16 @@
     "This file type cannot be previewed in the browser.": "Dieser Dateityp kann nicht im Browser angezeigt werden.",
     "Type": "Typ",
     "Download file": "Datei herunterladen",
-    "My Videos": "Meine Videos"
+    "My Videos": "Meine Videos",
+    "Groups": "Gruppen",
+    "Share": "Teilen",
+    "Current shares": "Aktuelle Freigaben",
+    "Not shared": "Nicht freigegeben",
+    "Select group...": "Gruppe auswählen...",
+    "Block access": "Zugriff sperren",
+    "Reset to inherit": "Auf Vererbung zurücksetzen",
+    "Blocked": "Gesperrt",
+    "Inherits access from": "Erbt Zugriff von",
+    "This will remove all existing shares and block access. Continue?": "Alle Freigaben werden entfernt und der Zugriff gesperrt. Fortfahren?",
+    "Remove all share rules? The folder will inherit from its parent.": "Alle Freigaberegeln entfernen? Der Ordner erbt dann vom übergeordneten Ordner."
 }
