@@ -4,14 +4,11 @@ namespace App\Filament\Pages;
 
 use App\Models\Group;
 use App\Models\SharedFolder;
-use App\Services\SharedFolderService;
 use Illuminate\Contracts\Support\Htmlable;
 use MWGuerra\FileManager\Filament\Pages\FileSystem;
 
 class SharedFiles extends FileSystem
 {
-    public bool $showShareDialog = false;
-
     public ?string $shareFolderPath = null;
 
     public ?string $shareFolderName = null;
@@ -63,15 +60,6 @@ class SharedFiles extends FileSystem
     {
         $this->shareFolderPath = $folderId;
         $this->shareFolderName = basename($folderId);
-        $this->selectedGroupId = null;
-        $this->showShareDialog = true;
-    }
-
-    public function closeShareDialog(): void
-    {
-        $this->showShareDialog = false;
-        $this->shareFolderPath = null;
-        $this->shareFolderName = null;
         $this->selectedGroupId = null;
     }
 

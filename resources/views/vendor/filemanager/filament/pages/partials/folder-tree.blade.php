@@ -87,7 +87,7 @@
 
                         {{-- Share --}}
                         <button
-                            x-on:click.stop="$wire.openShareDialog({{ json_encode($folderId) }})"
+                            x-on:click.stop="await $wire.openShareDialog({{ json_encode($folderId) }}); $dispatch('open-modal', { id: 'share-folder-modal' })"
                             class="p-1 rounded hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
                             title="{{ __('Share') }}"
                         >
