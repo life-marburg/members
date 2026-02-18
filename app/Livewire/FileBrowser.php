@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Services\SharedFolderService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use League\Flysystem\PathTraversalDetected;
 use Livewire\Attributes\Computed;
@@ -22,10 +24,37 @@ class FileBrowser extends Component
         return AdapterFactory::makeStorage();
     }
 
+    protected function sharingService(): SharedFolderService
+    {
+        return app(SharedFolderService::class);
+    }
+
     #[Computed]
     public function items()
     {
-        return $this->getAdapter()->getItems($this->currentPath ?: null);
+        $user = Auth::user();
+        $service = $this->sharingService();
+
+        // Root level: show only shared root folders
+        if ($this->currentPath === '') {
+            $rootPaths = $service->getAccessibleRootPaths($user);
+            $allItems = $this->getAdapter()->getItems(null);
+
+            return $allItems->filter(
+                fn ($item) => $item->isFolder() && $rootPaths->contains($item->getIdentifier())
+            )->values();
+        }
+
+        // Inside a folder: show all items, filtering out blocked subfolders
+        $allItems = $this->getAdapter()->getItems($this->currentPath);
+
+        return $allItems->filter(function ($item) use ($user, $service) {
+            if (! $item->isFolder()) {
+                return true;
+            }
+
+            return $service->canAccess($user, $item->getIdentifier());
+        })->values();
     }
 
     #[Computed]
@@ -42,17 +71,36 @@ class FileBrowser extends Component
 
     public function navigateTo(?string $path = null): void
     {
-        $this->currentPath = $path ? ltrim($path, '/') : '';
+        $path = $path ? ltrim($path, '/') : '';
+
+        // Check access for non-root navigation
+        if ($path !== '') {
+            $user = Auth::user();
+            if (! $this->sharingService()->canAccess($user, $path)) {
+                abort(403);
+            }
+        }
+
+        $this->currentPath = $path;
         unset($this->items, $this->breadcrumbs);
     }
 
     public function download(string $path)
     {
+        if (str_contains($path, '..')) {
+            abort(404);
+        }
+
         try {
             $adapter = $this->getAdapter();
 
             if (! $adapter->isPathSafe($path) || ! $adapter->exists($path)) {
                 abort(404);
+            }
+
+            $user = Auth::user();
+            if (! $this->sharingService()->canAccess($user, $path)) {
+                abort(403);
             }
 
             return Storage::disk('shared')->download($path);
