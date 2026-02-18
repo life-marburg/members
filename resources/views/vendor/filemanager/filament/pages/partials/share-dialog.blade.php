@@ -31,18 +31,23 @@
         </div>
 
         {{-- Add group --}}
-        <div>
-            <div class="flex gap-2">
-                <select wire:model="selectedGroupId" class="flex-1 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 text-sm">
-                    <option value="">{{ __('Select group...') }}</option>
-                    @foreach($this->availableGroups as $id => $name)
-                        <option value="{{ $id }}">{{ $name }}</option>
-                    @endforeach
-                </select>
+        <div x-data="{ groupId: '' }">
+            <div class="flex gap-2 items-end">
+                <x-filament::input.wrapper class="flex-1">
+                    <x-filament::input.select
+                        wire:model.live="selectedGroupId"
+                        x-model="groupId"
+                    >
+                        <option value="">{{ __('Select group...') }}</option>
+                        @foreach($this->availableGroups as $id => $name)
+                            <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </x-filament::input.select>
+                </x-filament::input.wrapper>
                 <x-filament::button
                     wire:click="addGroupShare"
                     size="sm"
-                    :disabled="!$this->selectedGroupId"
+                    x-bind:disabled="!groupId"
                 >
                     {{ __('Add') }}
                 </x-filament::button>
