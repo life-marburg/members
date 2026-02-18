@@ -4,31 +4,31 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Commands
 
-All PHP/artisan commands run inside Docker. Composer runs locally.
+All PHP/artisan commands run inside Docker. You can use the `aa` alias. Composer runs locally.
 
 ```bash
 # Start development environment
 docker compose up -d
 
 # Artisan commands (run in Docker)
-docker compose exec web php artisan migrate
-docker compose exec web php artisan tinker
-docker compose exec web php artisan config:clear
-docker compose exec web php artisan cache:clear
+aa migrate
+aa tinker
+aa config:clear
+aa cache:clear
 
 # Testing (run in Docker)
-docker compose exec web ./vendor/bin/phpunit
-docker compose exec web ./vendor/bin/phpunit tests/Feature/SomeTest.php
-docker compose exec web ./vendor/bin/phpunit --filter test_method_name
+aa test
+aa test tests/Feature/SomeTest.php
+aa test --filter test_method_name
 
 # Composer (run locally)
 composer install
 composer update
 
 # Frontend assets (Vite + Tailwind CSS + Alpine.js)
-yarn install         # Install dependencies
-yarn dev             # Start Vite dev server with HMR (hot module replacement)
-yarn build           # Production build (outputs to public/build/)
+pnpm install         # Install dependencies
+pnpm dev             # Start Vite dev server with HMR (hot module replacement)
+pnpm build           # Production build (outputs to public/build/)
 ```
 
 ## Writing plans
@@ -40,6 +40,7 @@ If you're writing plans to plan an implementation, never commit them. They do no
 - Use conventional commits when creating commits
 - NEVER use `git add -A` or `git commit -am`, always add only the changed files explicitley. Multiple changes might be happening at the same time, committing everything at once will mess up the commit history.
 - NEVER discard unrelated changes that you did not do. These are always in-process changes made by someone else and will be committed separatly.
+- Before comitting, ALWAYS run the lint with `composer lint:fix` and fix any remaining issues. Do not commit files that need linting, that will fail in CI.
 
 ## Architecture Overview
 
@@ -95,13 +96,13 @@ Access the admin panel at `/admin`. Requires user with `admin` role or `manage l
 
 ```bash
 # Generate Filament resources
-docker compose exec web php artisan make:filament-resource ModelName
+aa make:filament-resource ModelName
 
 # Generate relation manager
-docker compose exec web php artisan make:filament-relation-manager ResourceName relationName titleColumn
+aa make:filament-relation-manager ResourceName relationName titleColumn
 
 # Create admin user
-docker compose exec web php artisan make:filament-user
+aa make:filament-user
 ```
 
 ### Admin Panel Features
@@ -116,7 +117,7 @@ docker compose exec web php artisan make:filament-user
 Tests use SQLite in-memory database. Captcha is disabled in test environment.
 
 ```bash
-docker compose exec web ./vendor/bin/phpunit
+aa test
 ```
 
 ## Docker Services
