@@ -178,7 +178,7 @@ return [
     'upload' => [
         'disk' => env('FILEMANAGER_DISK', env('FILESYSTEM_DISK', 'public')),
         'directory' => env('FILEMANAGER_UPLOAD_DIR', 'uploads'),
-        'max_file_size' => 100 * 1024, // 100 MB in kilobytes
+        'max_file_size' => 500 * 1024, // 500 MB in kilobytes
         'allowed_mimes' => [
             // Videos
             'video/mp4', 'video/webm', 'video/ogg', 'video/quicktime', 'video/x-msvideo',
