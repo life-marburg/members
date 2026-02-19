@@ -502,6 +502,20 @@
                 </div>
             </div>
 
+            {{-- Upload validation errors --}}
+            @if($errors->has('uploadedFiles') || $errors->has('uploadedFiles.*'))
+                <div class="rounded-lg bg-danger-50 dark:bg-danger-900/20 p-3 space-y-1">
+                    @foreach($errors->get('uploadedFiles') as $message)
+                        <p class="text-sm text-danger-600 dark:text-danger-400">{{ ucfirst(preg_replace('/^uploadedFiles\s+/i', '', $message)) }}</p>
+                    @endforeach
+                    @foreach($errors->get('uploadedFiles.*') as $messages)
+                        @foreach($messages as $message)
+                            <p class="text-sm text-danger-600 dark:text-danger-400">{{ ucfirst(preg_replace('/^uploadedFiles(\.\d+)?\s+/i', '', $message)) }}</p>
+                        @endforeach
+                    @endforeach
+                </div>
+            @endif
+
             {{-- Selected files preview --}}
             @if(count($uploadedFiles) > 0)
                 <div class="space-y-2">
