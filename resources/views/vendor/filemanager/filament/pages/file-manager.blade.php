@@ -504,13 +504,23 @@
 
             {{-- Upload validation errors --}}
             @if($errors->has('uploadedFiles') || $errors->has('uploadedFiles.*'))
+                @php
+                    $formatUploadError = function (string $message): string {
+                        $message = preg_replace('/^uploadedFiles(\.\d+)?\s+/i', '', $message);
+                        $message = preg_replace_callback('/(\d+)\s*Kilobytes?/i', function ($m) {
+                            $kb = (int) $m[1];
+                            return $kb >= 1024 ? round($kb / 1024) . ' MB' : $kb . ' KB';
+                        }, $message);
+                        return ucfirst($message);
+                    };
+                @endphp
                 <div class="rounded-lg bg-red-50 dark:bg-red-900/20 p-3 space-y-1">
                     @foreach($errors->get('uploadedFiles') as $message)
-                        <p class="text-sm text-red-600 dark:text-red-400">{{ ucfirst(preg_replace('/^uploadedFiles\s+/i', '', $message)) }}</p>
+                        <p class="text-sm text-red-600 dark:text-red-400">{{ $formatUploadError($message) }}</p>
                     @endforeach
                     @foreach($errors->get('uploadedFiles.*') as $messages)
                         @foreach($messages as $message)
-                            <p class="text-sm text-red-600 dark:text-red-400">{{ ucfirst(preg_replace('/^uploadedFiles(\.\d+)?\s+/i', '', $message)) }}</p>
+                            <p class="text-sm text-red-600 dark:text-red-400">{{ $formatUploadError($message) }}</p>
                         @endforeach
                     @endforeach
                 </div>
