@@ -460,7 +460,13 @@
 
         <x-slot name="description">
             @php
-                $maxSizeMB = round(config('filemanager.upload.max_file_size', 102400) / 1024, 0);
+                $filemanagerMaxKB = config('filemanager.upload.max_file_size', 102400);
+                $livewireRules = \Livewire\Features\SupportFileUploads\FileUploadConfiguration::rules();
+                $livewireMaxKB = collect($livewireRules)
+                    ->filter(fn ($rule) => is_string($rule) && str_starts_with($rule, 'max:'))
+                    ->map(fn ($rule) => (int) str_replace('max:', '', $rule))
+                    ->first() ?? $filemanagerMaxKB;
+                $maxSizeMB = round(min($filemanagerMaxKB, $livewireMaxKB) / 1024, 0);
             @endphp
             {{ __('Select one or more files to upload (max :sizeMB per file)', ['size' => $maxSizeMB]) }}
         </x-slot>
