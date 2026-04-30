@@ -12,7 +12,7 @@
         <form wire:submit.prevent="{{ $submit }}">
             @if($hasFormShell)
                 <div
-                    class="px-4 py-5 bg-white sm:p-6 shadow {{ isset($actions) ? 'sm:rounded-tl-md sm:rounded-tr-md' : 'sm:rounded-md' }}">
+                    class="px-4 py-5 bg-white sm:p-6 shadow-sm {{ isset($actions) ? 'sm:rounded-tl-md sm:rounded-tr-md' : 'sm:rounded-md' }}">
                     <div class="grid grid-cols-6 gap-6">
                         {{ $form }}
                     </div>
@@ -25,7 +25,7 @@
 
             @if (isset($actions))
                 <div
-                    class="flex items-center justify-end text-right py-3 {{ $hasFormShell ? 'bg-gray-50 shadow sm:rounded-bl-md sm:rounded-br-md px-4 sm:px-6' : '' }}">
+                    class="flex items-center justify-end text-right py-3 {{ $hasFormShell ? 'bg-gray-50 shadow-sm sm:rounded-bl-md sm:rounded-br-md px-4 sm:px-6' : '' }}">
                     {{ $actions }}
                 </div>
             @endif

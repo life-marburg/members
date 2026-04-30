@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow sm:rounded-lg p-6"
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6"
                  x-data="songSearch({{ \Illuminate\Support\Js::from($songs) }}, {{ \Illuminate\Support\Js::from($songSets->map(fn($s) => ['id' => $s->id, 'title' => $s->title, 'is_new' => $s->is_new])) }})">
 
                 <div class="flex flex-col sm:flex-row gap-4 mb-4">
@@ -17,7 +17,7 @@
                             x-model="query"
                             @input="filter()"
                             placeholder="{{ __('Search songs...') }}"
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            class="w-full rounded-md border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500"
                         />
                     </div>
                     @if($songSets->isNotEmpty())
@@ -25,7 +25,7 @@
                             <select
                                 x-model="selectedSet"
                                 @change="filter()"
-                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                class="w-full rounded-md border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500"
                             >
                                 <option value="">{{ __('All Songs') }}</option>
                                 <template x-for="set in songSets" :key="set.id">
@@ -41,7 +41,7 @@
                        class="block py-2 hover:text-blue-600">
                         <span x-text="song.title"></span>
                         <span x-show="song.is_new"
-                              class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                              class="ml-2 inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-green-100 text-green-800">
                             {{ __('NEW') }}
                         </span>
                     </a>
