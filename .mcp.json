@@ -5,6 +5,7 @@
             "args": [
                 "compose",
                 "exec",
+                "-T",
                 "web",
                 "php",
                 "artisan",
