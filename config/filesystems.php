@@ -48,6 +48,12 @@ return [
             'visibility' => 'private',
         ],
 
+        'sheet-backups' => [
+            'driver' => 'local',
+            'root' => storage_path('app/sheet-backups'),
+            'visibility' => 'private',
+        ],
+
         'shared' => [
             'driver' => 'local',
             'root' => storage_path('app/shared'),
