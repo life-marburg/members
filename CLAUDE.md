@@ -44,13 +44,16 @@ If you're writing plans to plan an implementation, never commit them. They do no
 
 ## Architecture Overview
 
-**Stack:** Laravel 12, Livewire 3, Jetstream 5, Filament 4, Tailwind CSS, Alpine.js
+**Stack:** Laravel 13, Livewire 4, Jetstream 5, Filament 5, PHPUnit 12, Tailwind CSS, Alpine.js
+
+> Note: the auto-generated `<laravel-boost-guidelines>` block at the bottom of this file lags behind on the framework versions (it still says Laravel 12 / Filament 4 / Livewire 3 / PHPUnit 11). When the rules conflict with the actual codebase, trust the existing code. Regenerate the boost block to refresh it.
 
 This is a members' area application for a music group (brass band/orchestra). Core functionality:
 - User registration with admin approval workflow
 - Personal data collection (address, phone)
 - Instrument assignment per user
 - Music sheet distribution via WebDAV
+- Admin-triggered ZIP backups of all sheets, delivered via signed-URL email link
 
 ### User Lifecycle
 
@@ -77,18 +80,28 @@ Uses Spatie/Laravel-Permission. Constants defined in `app/Rights.php`:
 
 ### Sheet/Partition System
 
-Music sheets stored in WebDAV at `/Life/Noten/`. `SheetService` handles:
+Music sheets are stored on the local `sheets` disk (see `config/filesystems.php`). The legacy WebDAV `cloud` disk + `SheetService::getSheetStructureFromWebdav()` + `RefreshSheetsCache` are vestigial and slated for removal. `SheetService` handles:
 - File retrieval and caching
 - Parsing filenames by instrument aliases
 - Naming convention: `Song.Instrument.Part.Variant.pdf`
+
+### Sheet Backups
+
+Admin-triggered ZIP backups of every sheet PDF + a `manifest.csv`:
+- Filament resource at `app/Filament/Resources/SheetBackups/` (admin-only via `R_ADMIN`).
+- `CreateSheetBackupJob` (in `app/Jobs/`) builds the ZIP on the `sheet-backups` local disk, store-mode (no compression — PDFs already are). Single try, 30-min timeout.
+- `SheetBackupReady` / `SheetBackupFailed` notifications send the admin a signed download link via the `sheet-backups.download` route.
+- `sheet-backups:cleanup` (scheduled daily) prunes rows older than 7 days plus orphan files on the disk.
+- Production must use a real queue driver (`database` or `redis`); the default `sync` runs the job inline on the admin's HTTP request.
 
 ### Key Directories
 
 - `app/Filament/` - Filament admin panel resources, pages, and widgets
 - `app/Livewire/` - Interactive components (MembersList, UpdatePersonalDataForm, etc.)
 - `app/Services/` - SheetService, FriendlycaptchaService, MailcowService
+- `app/Jobs/` - Queued jobs (CreateSheetBackupJob)
 - `app/Http/Middleware/` - Custom: MustHaveInstrument, MustHavePersonalData, CheckIfActive, TrackLastActiveAt
-- `resources/lang/` - i18n (German primary, English fallback)
+- `resources/lang/` - i18n. App-level strings live in `de.json` only — there is no `en.json`; English is the source string used as the lookup key. Framework-level strings live in `de/` and `en/` PHP files.
 
 ## Filament Admin Panel
 
