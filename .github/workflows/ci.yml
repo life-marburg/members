@@ -19,7 +19,7 @@ jobs:
       APP_URL: "http://127.0.0.1:8000"
       MAIL_MAILER: log
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Prepare The Environment
         run: cp .env.example .env
       - name: Install Composer Dependencies
@@ -38,7 +38,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Prepare The Environment
         run: cp .env.example .env
       - name: Install Composer Dependencies
@@ -61,7 +61,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:
