@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CleanupSheetBackups;
 use App\Console\Commands\DisableInactiveUsers;
 use App\Console\Commands\RefreshSheetsCache;
 use Illuminate\Console\Scheduling\Schedule;
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command(RefreshSheetsCache::class)->everyFifteenMinutes();
         $schedule->command(DisableInactiveUsers::class)->daily();
+        $schedule->command(CleanupSheetBackups::class)->daily();
     }
 
     /**
