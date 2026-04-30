@@ -31,41 +31,43 @@
         </div>
 
         {{-- Add share --}}
-        <div class="space-y-3">
-            <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-                <x-filament::input.checkbox wire:model.live="isPublic" />
-                {{ __('Share with everyone') }}
-            </label>
+        @unless($this->hasPublicShare)
+            <div>
+                <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 mb-4">
+                    <x-filament::input.checkbox wire:model.live="isPublic" />
+                    {{ __('Share with everyone') }}
+                </label>
 
-            @if($isPublic)
-                <x-filament::button wire:click="addShare" size="sm">
-                    {{ __('Add') }}
-                </x-filament::button>
-            @elseif(count($this->availableGroups) > 0)
-                <div x-data="{ groupId: '' }">
-                    <div class="flex gap-2 items-end">
-                        <x-filament::input.wrapper class="flex-1">
-                            <x-filament::input.select
-                                wire:model.live="selectedGroupId"
-                                x-model="groupId"
+                @if($isPublic)
+                    <x-filament::button wire:click="addShare" size="sm">
+                        {{ __('Add') }}
+                    </x-filament::button>
+                @elseif(count($this->availableGroups) > 0)
+                    <div x-data="{ groupId: '' }">
+                        <div class="flex gap-2 items-end">
+                            <x-filament::input.wrapper class="flex-1">
+                                <x-filament::input.select
+                                    wire:model.live="selectedGroupId"
+                                    x-model="groupId"
+                                >
+                                    <option value="">{{ __('Select group...') }}</option>
+                                    @foreach($this->availableGroups as $id => $name)
+                                        <option value="{{ $id }}">{{ $name }}</option>
+                                    @endforeach
+                                </x-filament::input.select>
+                            </x-filament::input.wrapper>
+                            <x-filament::button
+                                wire:click="addShare"
+                                size="sm"
+                                x-bind:disabled="!groupId"
                             >
-                                <option value="">{{ __('Select group...') }}</option>
-                                @foreach($this->availableGroups as $id => $name)
-                                    <option value="{{ $id }}">{{ $name }}</option>
-                                @endforeach
-                            </x-filament::input.select>
-                        </x-filament::input.wrapper>
-                        <x-filament::button
-                            wire:click="addShare"
-                            size="sm"
-                            x-bind:disabled="!groupId"
-                        >
-                            {{ __('Add') }}
-                        </x-filament::button>
+                                {{ __('Add') }}
+                            </x-filament::button>
+                        </div>
                     </div>
-                </div>
-            @endif
-        </div>
+                @endif
+            </div>
+        @endunless
     @endif
 
     <x-slot name="footerActions">

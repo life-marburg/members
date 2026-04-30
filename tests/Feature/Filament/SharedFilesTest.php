@@ -120,4 +120,27 @@ class SharedFilesTest extends TestCase
         $this->assertSame('docs', $inherited['path']);
         $this->assertContains(__('Everyone'), $inherited['groups']);
     }
+
+    public function test_has_public_share_is_true_when_folder_is_shared_publicly(): void
+    {
+        $this->actingAs($this->admin);
+        SharedFolder::create(['path' => 'docs', 'group_id' => null, 'is_public' => true]);
+
+        $component = Livewire::test(SharedFiles::class)
+            ->call('openShareDialog', 'docs');
+
+        $this->assertTrue($component->instance()->hasPublicShare);
+    }
+
+    public function test_has_public_share_is_false_when_only_group_shares_exist(): void
+    {
+        $this->actingAs($this->admin);
+        $group = Group::factory()->create();
+        SharedFolder::create(['path' => 'docs', 'group_id' => $group->id]);
+
+        $component = Livewire::test(SharedFiles::class)
+            ->call('openShareDialog', 'docs');
+
+        $this->assertFalse($component->instance()->hasPublicShare);
+    }
 }

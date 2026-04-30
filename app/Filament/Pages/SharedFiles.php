@@ -143,6 +143,17 @@ class SharedFiles extends FileSystem
             ->toArray();
     }
 
+    public function getHasPublicShareProperty(): bool
+    {
+        if (! $this->shareFolderPath) {
+            return false;
+        }
+
+        return SharedFolder::where('path', $this->shareFolderPath)
+            ->where('is_public', true)
+            ->exists();
+    }
+
     public function addShare(): void
     {
         if (! $this->shareFolderPath) {
