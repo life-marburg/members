@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InstrumentController;
 use App\Http\Controllers\PersonalDataController;
+use App\Http\Controllers\SheetBackupController;
 use App\Http\Controllers\SheetController;
 use App\Http\Middleware\CheckIfActive;
 use App\Http\Middleware\MustHaveInstrument;
@@ -40,6 +41,10 @@ Route::group([
         });
     Route::get('/files', FileBrowser::class)->name('files.index');
 });
+
+Route::middleware(['signed', 'auth:sanctum'])
+    ->get('/sheet-backups/{backup}/download', [SheetBackupController::class, 'download'])
+    ->name('sheet-backups.download');
 
 Route::middleware(['auth:sanctum', 'verified'])
     ->name('set-instrument.')
