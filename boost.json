@@ -2,10 +2,9 @@
     "agents": [
         "claude_code"
     ],
+    "cloud": false,
     "editors": [
         "claude_code"
     ],
-    "guidelines": [
-        "filament/filament"
-    ]
+    "guidelines": true
 }
