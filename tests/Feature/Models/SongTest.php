@@ -3,6 +3,7 @@
 namespace Tests\Feature\Models;
 
 use App\Models\Song;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,7 +15,7 @@ class SongTest extends TestCase
     {
         $song = Song::factory()->create();
 
-        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Collection::class, $song->sheets);
+        $this->assertInstanceOf(Collection::class, $song->sheets);
     }
 
     public function test_song_can_be_created_with_title(): void

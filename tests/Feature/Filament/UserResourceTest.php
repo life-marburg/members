@@ -8,6 +8,7 @@ use App\Filament\Resources\Users\RelationManagers\InstrumentGroupsRelationManage
 use App\Models\User;
 use App\Notifications\UserStatusChanged;
 use App\Rights;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
@@ -154,7 +155,7 @@ class UserResourceTest extends TestCase
         Livewire::test(ListUsers::class)
             ->callTableAction('sendPasswordReset', $user);
 
-        Notification::assertSentTo($user, \Illuminate\Auth\Notifications\ResetPassword::class);
+        Notification::assertSentTo($user, ResetPassword::class);
     }
 
     public function test_admin_can_set_user_password_directly(): void

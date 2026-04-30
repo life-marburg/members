@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\SharedFolder;
 use App\Models\User;
+use Illuminate\Support\Collection;
 
 class SharedFolderService
 {
@@ -43,7 +44,7 @@ class SharedFolderService
      * Get all root-level paths the user can access.
      * Returns a collection of path strings.
      */
-    public function getAccessibleRootPaths(User $user): \Illuminate\Support\Collection
+    public function getAccessibleRootPaths(User $user): Collection
     {
         $userGroupIds = $user->groups()->pluck('groups.id');
 
@@ -113,7 +114,7 @@ class SharedFolderService
      * Walks up from the exact path to root, returns all records at
      * the most specific level that has any records.
      */
-    private function findSharesForPath(string $path): \Illuminate\Support\Collection
+    private function findSharesForPath(string $path): Collection
     {
         $segments = explode('/', $path);
 

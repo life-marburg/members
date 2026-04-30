@@ -3,6 +3,7 @@
 namespace Tests\Feature\Filament;
 
 use App\Filament\Resources\Pages\PageResource;
+use App\Filament\Resources\Pages\Pages\EditPage;
 use App\Models\Page;
 use App\Models\User;
 use App\Rights;
@@ -83,7 +84,7 @@ class PageResourceTest extends TestCase
         ]);
 
         Livewire::actingAs($this->admin)
-            ->test(\App\Filament\Resources\Pages\Pages\EditPage::class, [
+            ->test(EditPage::class, [
                 'record' => $page->id,
             ])
             ->fillForm([
@@ -107,7 +108,7 @@ class PageResourceTest extends TestCase
         ]);
 
         Livewire::actingAs($this->admin)
-            ->test(\App\Filament\Resources\Pages\Pages\EditPage::class, [
+            ->test(EditPage::class, [
                 'record' => $page->id,
             ])
             ->fillForm([

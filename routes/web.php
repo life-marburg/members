@@ -7,6 +7,7 @@ use App\Http\Controllers\SheetController;
 use App\Http\Middleware\CheckIfActive;
 use App\Http\Middleware\MustHaveInstrument;
 use App\Http\Middleware\MustHavePersonalData;
+use App\Livewire\FileBrowser;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +38,7 @@ Route::group([
             Route::get('/{song}', [SheetController::class, 'show'])->name('show');
             Route::get('/download/{sheet}', [SheetController::class, 'download'])->name('download');
         });
-    Route::get('/files', \App\Livewire\FileBrowser::class)->name('files.index');
+    Route::get('/files', FileBrowser::class)->name('files.index');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])
