@@ -12,8 +12,8 @@ importers:
         specifier: 3.14.8
         version: 3.14.8
       friendly-challenge:
-        specifier: 0.9.18
-        version: 0.9.18
+        specifier: 0.9.19
+        version: 0.9.19
       fuse.js:
         specifier: ^7.1.0
         version: 7.3.0
@@ -38,10 +38,6 @@ importers:
         version: 6.4.2(@types/node@18.14.6)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.16.5)(yaml@2.7.0)
 
 packages:
-
-  '@babel/runtime-corejs3@7.21.0':
-    resolution: {integrity: sha512-TDD4UJzos3JJtM+tHX+w2Uc+KWj7GV+VKKFdMVd2Rx8sdA19hcc3P3AHFYd5LVOw+pYuSd5lICC3gm52B6Rwxw==}
-    engines: {node: '>=6.9.0'}
 
   '@esbuild/aix-ppc64@0.25.12':
     resolution: {integrity: sha512-Hhmwd6CInZ3dwpuGTF8fJG6yoWmsToE+vYgD4nytZVxcu1ulHpUQRAB1UJ8+N1Am3Mz4+xOByoQoSZf4D+CpkA==}
@@ -472,11 +468,8 @@ packages:
   commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
 
-  core-js-pure@3.29.0:
-    resolution: {integrity: sha512-v94gUjN5UTe1n0yN/opTihJ8QBWD2O8i19RfTZR7foONPWArnjB96QA/wk5ozu1mm6ja3udQCzOzwQXTxi3xOQ==}
-
-  core-js@3.29.0:
-    resolution: {integrity: sha512-VG23vuEisJNkGl6XQmFJd3rEG/so/CNatqeE+7uZAwTSwFeB/qaO0be8xZYUNWprJ/GIwL8aMt9cj1kvbpTZhg==}
+  core-js@3.49.0:
+    resolution: {integrity: sha512-es1U2+YTtzpwkxVLwAFdSpaIMyQaq0PBgm3YD1W3Qpsn1NAmO3KSgZfu+oGSWVu6NvLHoHCV/aYcsE5wiB7ALg==}
 
   cssesc@3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
@@ -505,8 +498,8 @@ packages:
       picomatch:
         optional: true
 
-  friendly-challenge@0.9.18:
-    resolution: {integrity: sha512-OCNe3UvSdyy53vOSTYaa98q+yfhAoD74w8uF3lIwPm2vQiZQipwo5HRDbx/dz3LcUg5k3sRd+7iOhMJmi7cD9Q==}
+  friendly-challenge@0.9.19:
+    resolution: {integrity: sha512-DyN9Zn/2RyzXtJKFlpuOgsbeNQfFD0jKCaX8Eji4cQwZqOOaGJQK04TX7PXLNg3AvVd8KNQT4lGHRl0JzcBdyA==}
 
   friendly-pow@0.2.2:
     resolution: {integrity: sha512-oTGCqr6d9iIv8TEWmqJK8p1Gkr9hDEgb7g22pTCDZz+Y9zaaWtCNxmrD+/+KIYbf1/64rgba5Vj4hU7AxE/vkA==}
@@ -641,9 +634,6 @@ packages:
   promis@1.1.4:
     resolution: {integrity: sha512-PYoK1UKLWbi+kKcYFVbNhjfh9RhLzIr0jEO12Enw2HXBAX55l0eUemBjRKoeG/qpN8W2vzyKyZk01XTlff6IWw==}
 
-  regenerator-runtime@0.13.11:
-    resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
-
   rollup@4.60.2:
     resolution: {integrity: sha512-J9qZyW++QK/09NyN/zeO0dG/1GdGfyp9lV8ajHnRVLfo/uFsbji5mHnDgn/qYdUHyCkM2N+8VyspgZclfAh0eQ==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
@@ -734,11 +724,6 @@ packages:
     hasBin: true
 
 snapshots:
-
-  '@babel/runtime-corejs3@7.21.0':
-    dependencies:
-      core-js-pure: 3.29.0
-      regenerator-runtime: 0.13.11
 
   '@esbuild/aix-ppc64@0.25.12':
     optional: true
@@ -1022,9 +1007,7 @@ snapshots:
   commander@2.20.3:
     optional: true
 
-  core-js-pure@3.29.0: {}
-
-  core-js@3.29.0: {}
+  core-js@3.49.0: {}
 
   cssesc@3.0.0: {}
 
@@ -1068,10 +1051,9 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.4
 
-  friendly-challenge@0.9.18:
+  friendly-challenge@0.9.19:
     dependencies:
-      '@babel/runtime-corejs3': 7.21.0
-      core-js: 3.29.0
+      core-js: 3.49.0
       friendly-pow: 0.2.2
       object-assign-polyfill: 0.1.0
       promis: 1.1.4
@@ -1172,8 +1154,6 @@ snapshots:
       source-map-js: 1.2.1
 
   promis@1.1.4: {}
-
-  regenerator-runtime@0.13.11: {}
 
   rollup@4.60.2:
     dependencies:
