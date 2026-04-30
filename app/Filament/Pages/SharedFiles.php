@@ -15,6 +15,8 @@ class SharedFiles extends FileSystem
 
     public ?string $selectedGroupId = null;
 
+    public bool $isPublic = false;
+
     public function isReadOnly(): bool
     {
         return false;
@@ -61,6 +63,7 @@ class SharedFiles extends FileSystem
         $this->shareFolderPath = $folderId;
         $this->shareFolderName = basename($folderId);
         $this->selectedGroupId = null;
+        $this->isPublic = false;
     }
 
     public function getSharesProperty(): array
@@ -74,10 +77,20 @@ class SharedFiles extends FileSystem
             ->get()
             ->map(fn ($sf) => [
                 'id' => $sf->id,
-                'group_name' => $sf->group?->name ?? __('Blocked'),
-                'is_blocked' => $sf->group_id === null,
+                'group_name' => $this->shareLabel($sf),
+                'is_blocked' => $sf->group_id === null && ! $sf->is_public,
+                'is_public' => $sf->is_public,
             ])
             ->toArray();
+    }
+
+    private function shareLabel(SharedFolder $share): string
+    {
+        if ($share->is_public) {
+            return __('Everyone');
+        }
+
+        return $share->group?->name ?? __('Blocked');
     }
 
     public function getInheritedShareInfoProperty(): ?array
@@ -101,7 +114,7 @@ class SharedFiles extends FileSystem
             if ($parentShares->isNotEmpty()) {
                 return [
                     'path' => $parentPath,
-                    'groups' => $parentShares->map(fn ($sf) => $sf->group?->name ?? __('Blocked'))->toArray(),
+                    'groups' => $parentShares->map(fn ($sf) => $this->shareLabel($sf))->toArray(),
                 ];
             }
         }
@@ -130,18 +143,29 @@ class SharedFiles extends FileSystem
             ->toArray();
     }
 
-    public function addGroupShare(): void
+    public function addShare(): void
     {
-        if (! $this->selectedGroupId || ! $this->shareFolderPath) {
+        if (! $this->shareFolderPath) {
             return;
         }
 
-        SharedFolder::create([
-            'path' => $this->shareFolderPath,
-            'group_id' => $this->selectedGroupId,
-        ]);
+        if ($this->isPublic) {
+            SharedFolder::create([
+                'path' => $this->shareFolderPath,
+                'group_id' => null,
+                'is_public' => true,
+            ]);
+        } elseif ($this->selectedGroupId) {
+            SharedFolder::create([
+                'path' => $this->shareFolderPath,
+                'group_id' => $this->selectedGroupId,
+            ]);
+        } else {
+            return;
+        }
 
         $this->selectedGroupId = null;
+        $this->isPublic = false;
     }
 
     public function blockFolder(): void

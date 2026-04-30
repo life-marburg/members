@@ -893,5 +893,7 @@
     "Blocked": "Gesperrt",
     "Inherits access from": "Erbt Zugriff von",
     "This will remove all existing shares and block access. Continue?": "Alle Freigaben werden entfernt und der Zugriff gesperrt. Fortfahren?",
-    "Remove all share rules? The folder will inherit from its parent.": "Alle Freigaberegeln entfernen? Der Ordner erbt dann vom übergeordneten Ordner."
+    "Remove all share rules? The folder will inherit from its parent.": "Alle Freigaberegeln entfernen? Der Ordner erbt dann vom übergeordneten Ordner.",
+    "Share with everyone": "Mit allen teilen",
+    "Everyone": "Alle"
 }
