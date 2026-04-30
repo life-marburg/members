@@ -118,4 +118,82 @@ class SharedFolderServiceTest extends TestCase
         $this->assertContains('docs/public', $filtered);
         $this->assertNotContains('docs/restricted', $filtered);
     }
+
+    public function test_public_folder_is_accessible_to_user_without_groups(): void
+    {
+        $loner = User::factory()->create();
+        SharedFolder::create(['path' => 'docs', 'group_id' => null, 'is_public' => true]);
+
+        $this->assertTrue($this->service->canAccess($loner, 'docs'));
+        $this->assertTrue($this->service->canAccess($loner, 'docs/sub'));
+    }
+
+    public function test_public_folder_is_accessible_to_user_with_unrelated_groups(): void
+    {
+        $otherGroup = Group::factory()->create();
+        $stranger = User::factory()->create();
+        $stranger->groups()->attach($otherGroup);
+
+        SharedFolder::create(['path' => 'docs', 'group_id' => null, 'is_public' => true]);
+
+        $this->assertTrue($this->service->canAccess($stranger, 'docs'));
+    }
+
+    public function test_block_on_child_overrides_public_parent(): void
+    {
+        SharedFolder::create(['path' => 'docs', 'group_id' => null, 'is_public' => true]);
+        SharedFolder::create(['path' => 'docs/private', 'group_id' => null]);
+
+        $this->assertTrue($this->service->canAccess($this->user, 'docs'));
+        $this->assertFalse($this->service->canAccess($this->user, 'docs/private'));
+        $this->assertFalse($this->service->canAccess($this->user, 'docs/private/deep'));
+    }
+
+    public function test_public_child_overrides_unrelated_parent_share(): void
+    {
+        $otherGroup = Group::factory()->create();
+        SharedFolder::create(['path' => 'docs', 'group_id' => $otherGroup->id]);
+        SharedFolder::create(['path' => 'docs/open', 'group_id' => null, 'is_public' => true]);
+
+        $stranger = User::factory()->create();
+
+        $this->assertFalse($this->service->canAccess($stranger, 'docs'));
+        $this->assertTrue($this->service->canAccess($stranger, 'docs/open'));
+        $this->assertTrue($this->service->canAccess($stranger, 'docs/open/deep'));
+    }
+
+    public function test_public_roots_are_returned_for_user_without_groups(): void
+    {
+        $loner = User::factory()->create();
+        SharedFolder::create(['path' => 'public-docs', 'group_id' => null, 'is_public' => true]);
+        SharedFolder::create(['path' => 'group-only', 'group_id' => $this->group->id]);
+
+        $roots = $this->service->getAccessibleRootPaths($loner);
+
+        $this->assertContains('public-docs', $roots);
+        $this->assertNotContains('group-only', $roots);
+    }
+
+    public function test_filter_admits_public_child_override(): void
+    {
+        $otherGroup = Group::factory()->create();
+        $stranger = User::factory()->create();
+
+        SharedFolder::create(['path' => 'docs', 'group_id' => $otherGroup->id]);
+        SharedFolder::create(['path' => 'docs/open', 'group_id' => null, 'is_public' => true]);
+
+        $paths = ['docs/secret', 'docs/open'];
+        $filtered = $this->service->filterAccessiblePaths($stranger, 'docs', $paths);
+
+        $this->assertContains('docs/open', $filtered);
+        $this->assertContains('docs/secret', $filtered);
+    }
+
+    public function test_can_navigate_walks_into_folder_with_only_public_subfolder(): void
+    {
+        $loner = User::factory()->create();
+        SharedFolder::create(['path' => 'top/inner', 'group_id' => null, 'is_public' => true]);
+
+        $this->assertTrue($this->service->canNavigate($loner, 'top'));
+    }
 }

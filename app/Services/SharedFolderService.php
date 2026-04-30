@@ -11,9 +11,10 @@ class SharedFolderService
      * Check if a user can access a given path.
      *
      * Resolution: find the most specific shared_folders record for the path
-     * (exact match or longest parent prefix). If it has group_id = null,
-     * access is blocked. If it has a group_id, check user membership.
-     * If no record found, access is denied.
+     * (exact match or longest parent prefix). At that level a row with
+     * group_id = null and is_public = false blocks access; a row with
+     * is_public = true grants access to anyone; otherwise membership in any
+     * matching group_id grants access.
      */
     public function canAccess(User $user, string $path): bool
     {
@@ -24,9 +25,13 @@ class SharedFolderService
             return false;
         }
 
-        // Null group_id means explicitly blocked
-        if ($shares->contains(fn ($s) => $s->group_id === null)) {
+        // Block (group_id = null, is_public = false) wins over everything else at this level
+        if ($shares->contains(fn ($s) => $s->group_id === null && ! $s->is_public)) {
             return false;
+        }
+
+        if ($shares->contains(fn ($s) => $s->is_public)) {
+            return true;
         }
 
         $userGroupIds = $user->groups()->pluck('groups.id');
@@ -42,7 +47,8 @@ class SharedFolderService
     {
         $userGroupIds = $user->groups()->pluck('groups.id');
 
-        return SharedFolder::whereIn('group_id', $userGroupIds)
+        return SharedFolder::query()
+            ->where(fn ($q) => $q->whereIn('group_id', $userGroupIds)->orWhere('is_public', true))
             ->pluck('path')
             ->map(fn ($path) => explode('/', $path)[0])
             ->unique()
@@ -67,7 +73,7 @@ class SharedFolderService
         $userGroupIds = $user->groups()->pluck('groups.id');
 
         return SharedFolder::where('path', 'like', $path.'/%')
-            ->whereIn('group_id', $userGroupIds)
+            ->where(fn ($q) => $q->whereIn('group_id', $userGroupIds)->orWhere('is_public', true))
             ->exists();
     }
 
@@ -88,8 +94,12 @@ class SharedFolderService
             }
 
             // Has override -- check if user has access via the override
-            if ($childShares->contains(fn ($s) => $s->group_id === null)) {
+            if ($childShares->contains(fn ($s) => $s->group_id === null && ! $s->is_public)) {
                 return false;
+            }
+
+            if ($childShares->contains(fn ($s) => $s->is_public)) {
+                return true;
             }
 
             $userGroupIds = $user->groups()->pluck('groups.id');
