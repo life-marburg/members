@@ -10,7 +10,11 @@ class SharedFolder extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['path', 'group_id'];
+    protected $fillable = ['path', 'group_id', 'is_public'];
+
+    protected $casts = [
+        'is_public' => 'boolean',
+    ];
 
     public function group(): BelongsTo
     {
