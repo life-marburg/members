@@ -101,6 +101,10 @@ class UsersTable
                     ->badge()
                     ->separator(', ')
                     ->label(__('Instruments')),
+                TextColumn::make('groups.name')
+                    ->badge()
+                    ->separator(', ')
+                    ->label(__('Groups')),
                 TextColumn::make('personalData.city')
                     ->label(__('City'))
                     ->sortable(),
@@ -136,6 +140,11 @@ class UsersTable
                         User::STATUS_UNLOCKED => __('Active'),
                         User::STATUS_LOCKED => __('Locked'),
                     ]),
+                SelectFilter::make('groups')
+                    ->label(__('Groups'))
+                    ->relationship('groups', 'name')
+                    ->multiple()
+                    ->preload(),
             ])
             ->headerActions([
                 ExportAction::make()

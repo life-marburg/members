@@ -4,7 +4,9 @@ namespace Tests\Feature\Filament;
 
 use App\Filament\Resources\Users\Pages\EditUser;
 use App\Filament\Resources\Users\Pages\ListUsers;
+use App\Filament\Resources\Users\RelationManagers\GroupsRelationManager;
 use App\Filament\Resources\Users\RelationManagers\InstrumentGroupsRelationManager;
+use App\Models\Group;
 use App\Models\User;
 use App\Notifications\UserStatusChanged;
 use App\Rights;
@@ -124,6 +126,80 @@ class UserResourceTest extends TestCase
 
         Livewire::test(EditUser::class, ['record' => $user->id])
             ->assertSeeLivewire(InstrumentGroupsRelationManager::class);
+    }
+
+    public function test_edit_page_shows_groups_relation_manager(): void
+    {
+        $this->actingAs($this->admin);
+
+        $user = User::factory()->create(['status' => User::STATUS_UNLOCKED]);
+
+        Livewire::withQueryParams(['relation' => '1'])
+            ->test(EditUser::class, ['record' => $user->id])
+            ->assertSeeLivewire(GroupsRelationManager::class);
+    }
+
+    public function test_groups_relation_manager_lists_user_groups(): void
+    {
+        $this->actingAs($this->admin);
+
+        $user = User::factory()->create(['status' => User::STATUS_UNLOCKED]);
+        $memberOf = Group::factory()->create();
+        $notMemberOf = Group::factory()->create();
+        $user->groups()->attach($memberOf);
+
+        Livewire::test(GroupsRelationManager::class, ['ownerRecord' => $user, 'pageClass' => EditUser::class])
+            ->assertCanSeeTableRecords([$memberOf])
+            ->assertCanNotSeeTableRecords([$notMemberOf]);
+    }
+
+    public function test_group_manager_can_attach_and_detach_groups(): void
+    {
+        $this->actingAs($this->admin);
+
+        $user = User::factory()->create(['status' => User::STATUS_UNLOCKED]);
+        $group = Group::factory()->create();
+
+        $component = Livewire::test(GroupsRelationManager::class, ['ownerRecord' => $user, 'pageClass' => EditUser::class])
+            ->callTableAction('attach', data: ['recordId' => $group->id]);
+
+        $this->assertTrue($user->groups()->whereKey($group->id)->exists());
+
+        $component->callTableAction('detach', $group);
+
+        $this->assertFalse($user->groups()->whereKey($group->id)->exists());
+    }
+
+    public function test_member_manager_without_manage_groups_cannot_change_groups(): void
+    {
+        $memberManager = User::factory()->create(['status' => User::STATUS_UNLOCKED]);
+        $memberManager->givePermissionTo(Rights::P_MANAGE_MEMBERS);
+        $this->actingAs($memberManager);
+
+        $user = User::factory()->create(['status' => User::STATUS_UNLOCKED]);
+        $attached = Group::factory()->create();
+        $user->groups()->attach($attached);
+
+        Livewire::test(GroupsRelationManager::class, ['ownerRecord' => $user, 'pageClass' => EditUser::class])
+            ->assertCanSeeTableRecords([$attached])
+            ->assertTableActionHidden('attach')
+            ->assertTableActionHidden('detach', $attached)
+            ->assertTableBulkActionHidden('detach');
+    }
+
+    public function test_admin_can_filter_by_group(): void
+    {
+        $this->actingAs($this->admin);
+
+        $group = Group::factory()->create();
+        $inGroup = User::factory()->create();
+        $inGroup->groups()->attach($group);
+        $notInGroup = User::factory()->create();
+
+        Livewire::test(ListUsers::class)
+            ->filterTable('groups', [$group->id])
+            ->assertCanSeeTableRecords([$inGroup])
+            ->assertCanNotSeeTableRecords([$notInGroup]);
     }
 
     public function test_non_admin_cannot_access_panel(): void
